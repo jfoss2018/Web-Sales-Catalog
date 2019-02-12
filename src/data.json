@@ -1,0 +1,172 @@
+{
+  "items": [
+    {
+      "name": "tractor",
+      "description": "This is a tractor",
+      "mainImg": "/static/media/tractor-1.d7165156.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/tractor-1.jpg"
+        },
+        {
+          "img-url": "../images/tractor-2.jpg"
+        },
+        {
+          "img-url": "../images/tractor-3.jpg"
+        }
+      ],
+      "price": "100",
+      "highest-bid": "90",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "70"
+        },
+        {
+          "index": "2",
+          "bid-amount": "90"
+        }
+      ]
+    },
+    {
+      "name": "Truck",
+      "description": "This is a truck",
+      "mainImg": "/static/media/truck-1.780fbad5.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/truck-1.jpg"
+        },
+        {
+          "img-url": "../images/truck-2.jpg"
+        },
+        {
+          "img-url": "../images/truck-3.jpg"
+        }
+      ],
+      "price": "1500",
+      "highest-bid": "1000",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "850"
+        },
+        {
+          "index": "2",
+          "bid-amount": "1000"
+        }
+      ]
+    },
+    {
+      "name": "tractor",
+      "description": "This is a tractor",
+      "mainImg": "/static/media/tractor-1.d7165156.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/tractor-1.jpg"
+        },
+        {
+          "img-url": "../images/tractor-2.jpg"
+        },
+        {
+          "img-url": "../images/tractor-3.jpg"
+        }
+      ],
+      "price": "100",
+      "highest-bid": "90",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "70"
+        },
+        {
+          "index": "2",
+          "bid-amount": "90"
+        }
+      ]
+    },
+    {
+      "name": "Truck",
+      "description": "This is a truck",
+      "mainImg": "/static/media/truck-1.780fbad5.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/truck-1.jpg"
+        },
+        {
+          "img-url": "../images/truck-2.jpg"
+        },
+        {
+          "img-url": "../images/truck-3.jpg"
+        }
+      ],
+      "price": "1500",
+      "highest-bid": "1000",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "850"
+        },
+        {
+          "index": "2",
+          "bid-amount": "1000"
+        }
+      ]
+    },
+    {
+      "name": "tractor",
+      "description": "This is a tractor",
+      "mainImg": "/static/media/tractor-1.d7165156.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/tractor-1.jpg"
+        },
+        {
+          "img-url": "../images/tractor-2.jpg"
+        },
+        {
+          "img-url": "../images/tractor-3.jpg"
+        }
+      ],
+      "price": "100",
+      "highest-bid": "90",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "70"
+        },
+        {
+          "index": "2",
+          "bid-amount": "90"
+        }
+      ]
+    },
+    {
+      "name": "Truck",
+      "description": "This is a truck",
+      "mainImg": "/static/media/truck-1.780fbad5.jpg",
+      "sub-img": [
+        {
+          "img-url": "../images/truck-1.jpg"
+        },
+        {
+          "img-url": "../images/truck-2.jpg"
+        },
+        {
+          "img-url": "../images/truck-3.jpg"
+        }
+      ],
+      "price": "1500",
+      "highest-bid": "1000",
+      "bids": [
+        {
+          "index": "1",
+          "bid-amount": "850"
+        },
+        {
+          "index": "2",
+          "bid-amount": "1000"
+        }
+      ]
+    }
+  ]
+}

@@ -241,7 +241,60 @@ article button {
   grid-column: 2 / 3;
   grid-row: 3 / 4;
 }
+
 /*==========================================================================
+Detail
 ==========================================================================*/
+
+section {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+section button {
+  grid-column: 1 / 13;
+  height: 40px;
+  font-size: 1.2em;
+}
+
+section h1 {
+  margin: 10px 0 10px 25px;
+  grid-column: 1 / 10;
+  grid-row: 2 / 3;
+}
+
+.price {
+  margin: 12px 25px 0 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: right;
+  grid-column: 10 / 13;
+  grid-row: 2 / 3;
+}
+
+.bid {
+  grid-column: 1 / 13;
+  grid-row: 3 / 4;
+  width: 100%;
+  background-color: yellow;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  margin: 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.gallery-wrapper {
+  width: 100vw;
+  grid-column: 1 / 13;
+  grid-row: 4 / 5;
+}
+
+.description {
+  grid-column: 1 / 13;
+  margin: 10px 25px 0 25px;
+}
+
+
 /*==========================================================================
 ==========================================================================*/

@@ -24,7 +24,7 @@ export default class ModalBox extends Component {
     render() {
         return (
             <section className="modal-section">
-                <input type="button" value="Open" onClick={() => this.openModal()} />
+                <input className="offer-btn" type="button" value={this.props.text} onClick={() => this.openModal()} />
                 <Modal visible={this.state.visible} effect="fadeInRight" onClickAway={() => this.closeModal()}>
                     <div>
                         <h1>Title</h1>

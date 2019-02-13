@@ -13,19 +13,23 @@ const Detail = (props) => {
   const subImg = detailItem.subImg;
 
   return(
-    <section>
-      <button onClick={() => props.browserPath('/')}>Return to Catalog</button>
-      <h1>{detailItem.name}</h1>
-      <div className="offerBtn">
-        <ModalBox />
-      </div>
-      <div className="gallery-wrapper">
-        <MyComponent images={subImg} />
-      </div>
-      <p className="price">${detailItem.price}</p>
-      <p className="bid">Current highest bid: ${detailItem.highestBid}</p>
-      <p className="description">{detailItem.description}</p>
-    </section>
+    <div className="detail-wrapper">
+      <section className="detail-section">
+        <button onClick={() => props.browserPath('/')}>Return to Catalog</button>
+        <h1>{detailItem.name}</h1>
+        <div className="style-block">
+        </div>
+        <div className="offerBtn">
+          <ModalBox text={"Make Offer"} />
+        </div>
+        <div className="gallery-wrapper">
+          <MyComponent images={subImg} />
+        </div>
+        <p className="price">${detailItem.price}</p>
+        <p className="bid">Current highest bid: ${detailItem.highestBid}</p>
+        <p className="description">{detailItem.description}</p>
+      </section>
+    </div>
   );
 
 }

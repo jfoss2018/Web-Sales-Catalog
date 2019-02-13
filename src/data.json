@@ -5,42 +5,43 @@
       "name": "Tractor",
       "description": "This is a tractor. It is the first tractor.",
       "mainImg": "tractor-1.jpg",
+      "featured": "true",
       "subImg": [
         {
-          "original": "/static/media/tractor-1.d7165156.jpg",
-          "thumbnail": "/static/media/tractor-1.d7165156.jpg"
+          "original": "/images/tractor-1.jpg",
+          "thumbnail": "/images/tractor-1.jpg"
         },
         {
-          "original": "/static/media/tractor-2.5d3e0392.jpg",
-          "thumbnail": "/static/media/tractor-2.5d3e0392.jpg"
+          "original": "/images/tractor-2.jpg",
+          "thumbnail": "/images/tractor-2.jpg"
         },
         {
-          "original": "/static/media/tractor-3.d889931e.jpg",
-          "thumbnail": "/static/media/tractor-3.d889931e.jpg"
+          "original": "/images/tractor-3.jpg",
+          "thumbnail": "/images/tractor-3.jpg"
         },
         {
-          "original": "/static/media/tractor-1.d7165156.jpg",
-          "thumbnail": "/static/media/tractor-1.d7165156.jpg"
+          "original": "/images/tractor-1.jpg",
+          "thumbnail": "/images/tractor-1.jpg"
         },
         {
-          "original": "/static/media/tractor-2.5d3e0392.jpg",
-          "thumbnail": "/static/media/tractor-2.5d3e0392.jpg"
+          "original": "/images/tractor-2.jpg",
+          "thumbnail": "/images/tractor-2.jpg"
         },
         {
-          "original": "/static/media/tractor-3.d889931e.jpg",
-          "thumbnail": "/static/media/tractor-3.d889931e.jpg"
+          "original": "/images/tractor-3.jpg",
+          "thumbnail": "/images/tractor-3.jpg"
         },
         {
-          "original": "/static/media/tractor-1.d7165156.jpg",
-          "thumbnail": "/static/media/tractor-1.d7165156.jpg"
+          "original": "/images/tractor-1.jpg",
+          "thumbnail": "/images/tractor-1.jpg"
         },
         {
-          "original": "/static/media/tractor-2.5d3e0392.jpg",
-          "thumbnail": "/static/media/tractor-2.5d3e0392.jpg"
+          "original": "/images/tractor-2.jpg",
+          "thumbnail": "/images/tractor-2.jpg"
         },
         {
-          "original": "/static/media/tractor-3.d889931e.jpg",
-          "thumbnail": "/static/media/tractor-3.d889931e.jpg"
+          "original": "/images/tractor-3.jpg",
+          "thumbnail": "/images/tractor-3.jpg"
         }
       ],
       "price": "100",
@@ -73,6 +74,7 @@
       "name": "Truck",
       "description": "This is a truck. It is the first Truck.",
       "mainImg": "truck-1.jpg",
+      "featured": "false",
       "subImg": [
         {
           "original": "/images/truck-1.jpg",
@@ -105,6 +107,7 @@
       "name": "Tractor",
       "description": "This is a tractor. It is the second tractor.",
       "mainImg": "tractor-1.jpg",
+      "featured": "false",
       "subImg": [
         {
           "original": "/images/tractor-1.jpg",
@@ -137,6 +140,7 @@
       "name": "Truck",
       "description": "This is a truck. It is the second truck.",
       "mainImg": "truck-1.jpg",
+      "featured": "true",
       "subImg": [
         {
           "original": "/images/truck-1.jpg",
@@ -169,6 +173,7 @@
       "name": "Tractor",
       "description": "This is a tractor. It is the third tractor.",
       "mainImg": "tractor-1.jpg",
+      "featured": "true",
       "subImg": [
         {
           "original": "/images/tractor-1.jpg",
@@ -201,6 +206,7 @@
       "name": "Truck",
       "description": "This is a truck. It is the third truck.",
       "mainImg": "truck-1.jpg",
+      "featured": "true",
       "subImg": [
         {
           "original": "/images/truck-1.jpg",

@@ -1,6 +1,7 @@
 import React from 'react';
 import data from '../data.json';
 import MyComponent from './carousel.js';
+import ModalBox from './modal.js';
 
 const Detail = (props) => {
 
@@ -15,6 +16,9 @@ const Detail = (props) => {
     <section>
       <button onClick={() => props.browserPath('/')}>Return to Catalog</button>
       <h1>{detailItem.name}</h1>
+      <div className="offerBtn">
+        <ModalBox />
+      </div>
       <div className="gallery-wrapper">
         <MyComponent images={subImg} />
       </div>

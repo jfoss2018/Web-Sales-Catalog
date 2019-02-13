@@ -7,8 +7,8 @@ const Home = (props) => {
   return (
     <main>
       <Header />
-      <Toolbar />
-      <Catalog browserPath={props.browserPath} />
+      <Toolbar updateState={props.updateState} />
+      <Catalog list={props.list} browserPath={props.browserPath} />
     </main>
   );
 }

@@ -15,8 +15,8 @@ const Detail = (props) => {
   return(
     <div className="detail-wrapper">
       <section className="detail-section">
-        <button onClick={() => props.browserPath('/')}>Return to Catalog</button>
-        <h1>{detailItem.name}</h1>
+        <button className="detail" onClick={() => props.browserPath('/')}>Return to Catalog</button>
+        <h1 className="detail">{detailItem.name}</h1>
         <div className="style-block">
         </div>
         <div className="offerBtn">
@@ -28,6 +28,9 @@ const Detail = (props) => {
         <p className="price">${detailItem.price}</p>
         <p className="bid">Current highest bid: ${detailItem.highestBid}</p>
         <p className="description">{detailItem.description}</p>
+        <div className="appointmentBtn">
+          <ModalBox text={"Schedule Appointment"} />
+        </div>
       </section>
     </div>
   );

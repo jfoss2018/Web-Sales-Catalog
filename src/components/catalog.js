@@ -1,6 +1,5 @@
 import React from 'react';
 import Item from './item.js';
-import data from '../data.json';
 
 const Catalog = (props) => {
   return(

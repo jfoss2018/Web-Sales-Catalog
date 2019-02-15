@@ -18,7 +18,8 @@ class App extends Component {
     super();
     this.state = {
       searchTerm: '',
-      filter: []
+      filter: [],
+
     }
   }
 

@@ -279,18 +279,18 @@ section.detail-section {
   height: 100%;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: 40px 55px 27px min-content auto;
+  grid-template-rows: 40px 55px 30px min-content minmax(100px, min-content);
   max-width: 550px;
   margin: 0 auto;
 }
 
-section button {
+section button.detail {
   grid-column: 1 / 13;
   height: 40px;
   font-size: 1.2em;
 }
 
-section h1 {
+section h1.detail {
   margin: 10px 0 10px 25px;
   grid-column: 1 / 10;
   grid-row: 2 / 3;
@@ -309,17 +309,18 @@ section h1 {
   grid-column: 2 / 10;
   grid-row: 3 / 4;
   width: 100%;
-  height: 25px;
+  height: 24px;
   background-color: yellow;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
   margin: 0;
+  padding-top: 4px;
   text-align: center;
   font-weight: bold;
 }
 
 .style-block {
-  height: 25px;
+  height: 28px;
   width: 100%;
   grid-column: 1 / 2;
   grid-row: 3 / 4;
@@ -337,11 +338,11 @@ section h1 {
   width: 100%;
 }
 
-.modal-section {
+.offerBtn .modal-section {
   display: flex;
 }
 
-.modal-section input {
+.offerBtn .modal-section input {
   margin-left: auto;
   margin-right: 11px;
 }
@@ -359,16 +360,28 @@ section h1 {
 
 .description {
   grid-column: 1 / 13;
-  margin: 10px 25px 0 25px;
+  margin: 10px 25px 15px 25px;
+}
+
+.appointmentBtn {
+  grid-column: 1 / 13;
+  grid-row: 6 / 7;
+  height: 40px;
+  font-size: 1.2em;
+}
+
+.appointmentBtn .modal-section input.offer-btn {
+  width: 100%;
+  height: 40px;
 }
 
 @media screen and (min-width: 590px) {
-  section button {
+  section button.detail {
     margin-left: 20px;
     margin-right: 20px;
   }
 
-  section h1 {
+  section h1.detail {
     margin-left: 35px;
   }
 
@@ -395,20 +408,25 @@ section h1 {
     margin-left: 20px;
     margin-right: 20px;
   }
+
+  .appointmentBtn .modal-section input.offer-btn {
+    width: calc(100% - 40px);
+    margin-left: 20px;
+  }
 }
 
 @media screen and (min-width: 1100px) {
   section.detail-section {
-    grid-template-rows: 65px 27px 27px auto;
+    grid-template-rows: 65px 30px 27px auto;
     max-width: 1100px;
   }
 
-  section button {
+  section button.detail {
     grid-column: 1 / 4;
     grid-row: 1 / 2;
   }
 
-  section h1 {
+  section h1.detail {
     margin: 10px 0 10px 25px;
     grid-column: 7 / 10;
     grid-row: 2 / 4;
@@ -438,12 +456,22 @@ section h1 {
 
   .description {
     grid-column: 7 / 13;
-    grid-row: 4 / 5;
+    grid-row: 4 / 6;
   }
 
   .gallery-wrapper {
     grid-column: 1 / 7;
     grid-row: 3 / 6;
+  }
+
+  .appointmentBtn {
+    grid-column: 10 / 13;
+    grid-row: 1 / 2;
+  }
+
+  .appointmentBtn .modal-section input.offer-btn {
+    width: calc(100% - 20px);
+    margin: 0 20px 0 0;
   }
 }
 
@@ -451,9 +479,113 @@ section h1 {
 Modal
 ==========================================================================*/
 
-section.modal-section div div div:first-child {
+section.modal-section > div > div > div:first-child {
   height: 100vh;
   width: 100vw;
-  max-width: 550px;
+  max-width: 414px;
   margin-left: auto;
+  margin-right: 0;
+}
+
+.modal-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: 40px 75px min-content auto;
+}
+
+.modal-container button.close-btn {
+  grid-column: 9 / 13;
+  grid-row: 1 / 2;
+}
+
+.modal-container h1 {
+  grid-column: 1 / 13;
+  grid-row: 2 / 3;
+  text-align: center;
+  font-size: 29px;
+}
+
+.modal-container p {
+  grid-column: 2 / 12;
+  grid-row: 3 / 4;
+  margin-bottom: 40px;
+}
+
+.modal-container form {
+  grid-column: 2 / 12;
+  grid-row: 4 / 5;
+}
+
+.close-btn {
+  background-color: none;
+  border: none;
+  margin: 15px 20px 0 auto;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #aaa;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+form.modal label {
+  font-size: 20px;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+form.modal input {
+  font-size: 16px;
+  display: block;
+  width: 100%;
+  margin-bottom: 12px;
+  height: 22px;
+  margin-right: 0;
+}
+
+.react-datepicker-wrapper {
+  width: 48%;
+}
+
+.react-datepicker__input-container {
+  width: 100%;
+}
+
+.flex-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+#appointment {
+  font-size: 16px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+  height: 22px;
+  margin-right: 0;
+}
+
+#time {
+  font-size: 16px;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: 12px;
+  height: 22px;
+  margin-right: 0;
+}
+
+form.modal select {
+  margin-bottom: 12px;
+  width: 150px;
+  font-size: 18px;
+}
+
+form.modal button.sub-btn {
+  margin-top: 10px;
+  float: right;
+  width: 100px;
+  height: 40px;
+  font-size: 18px;
 }

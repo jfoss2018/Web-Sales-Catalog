@@ -1,6 +1,5 @@
 import React from 'react';
 import SearchApp from './search.js';
-import Menu from './filter.js';
 
 const Toolbar = (props) => {
   return(

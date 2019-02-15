@@ -1,6 +1,10 @@
 {
   "name": "catalog",
   "version": "0.1.0",
+  "engines": {
+    "node": "10.9.0",
+    "npm": "6.2.0"
+  },
   "dependencies": {
     "history": "^4.7.2",
     "react": "^16.8.1",

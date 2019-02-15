@@ -54,7 +54,7 @@ export default class ModalBox extends Component {
             />
           </div>
       } else {
-        displayP = 'Appointment';
+        displayP = 'Please fill out the form below to schedule an appointment. We cannot guarentee an appointment for your preferred time, but we will contact you regarding alternatives and confirm. All appointments are considered daily.';
         displayForm =
           <div className="date-time-div">
             <label htmlFor="appointment">Preferred Meeting Time</label>
@@ -68,7 +68,7 @@ export default class ModalBox extends Component {
                 name="appointment"
               />
               <DatePicker
-                selected={this.state.date}
+                selected={this.state.startDate}
                 onChange={this.handleChange}
                 id="time"
                 name="time"

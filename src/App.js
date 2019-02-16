@@ -3,6 +3,7 @@ import './App.css';
 import { Router, Route, Switch } from 'react-router-dom';
 import Home from './components/home.js';
 import Detail from './components/detail.js';
+import Dashboard from './components/dashboard.js';
 import { createBrowserHistory } from 'history';
 import { createFilter } from 'react-search-input';
 import data from './data.json';
@@ -40,6 +41,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" render={() => <Home list={filteredItems} updateState={this.updateState} browserPath={this.browserPath} />} />
             <Route path="/catalog/:item" render={() => <Detail browserPath={this.browserPath} />} />
+            <Route path="/dashboard" render={() => <Dashboard />} />
           </Switch>
         </Router>
       </div>

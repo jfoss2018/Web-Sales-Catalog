@@ -590,3 +590,48 @@ form.modal button.sub-btn {
   height: 40px;
   font-size: 18px;
 }
+
+/*==========================================================================
+Dashboard
+==========================================================================*/
+
+.dashboard-wrapper {
+  background-color: #bbb;
+  width: 100vw;
+  height: 100vh;
+}
+
+.dashboard {
+  width: 100vw;
+  height: 100vh;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: min-content min-content;
+}
+
+.dashboard-title {
+  margin: 5px 0;
+  height: 35px;
+  grid-column: 1 / 13;
+}
+
+.dashboard-categories {
+  grid-column: 1 / 13;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dashboard-categories > li {
+  display: block;
+  width: 100%;
+}
+
+/*==========================================================================
+==========================================================================*/
+/*==========================================================================
+==========================================================================*/

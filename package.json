@@ -1,23 +1,19 @@
 {
   "name": "catalog",
-  "version": "0.1.0",
+  "version": "1.0.0",
+  "description": "Web-Sales-Catalog",
+  "main": "server/server.js",
   "engines": {
     "node": "10.9.0",
     "npm": "6.2.0"
   },
-  "dependencies": {
-    "history": "^4.7.2",
-    "react": "^16.8.1",
-    "react-awesome-modal": "^2.0.5",
-    "react-datepicker": "^2.1.0",
-    "react-dom": "^16.8.1",
-    "react-image-gallery": "^0.8.12",
-    "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.4",
-    "react-search-input": "^0.11.3",
-    "react-select": "^2.3.0",
-    "react-text-mask": "^5.4.3",
-    "text-mask-addons": "^3.8.0"
+  "scripts": {
+    "start": "set NODE_ENV=production&& node server/app.js",
+    "server": "set NODE_ENV=development&& nodemon server/server.js",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "set NODE_ENV=test&& mocha",
+    "heroku-postbuild": "cd client&& npm install&& npm run build"
   },
   "author": "James Foss",
   "repository": {
@@ -25,19 +21,17 @@
     "url": "https://github.com/jfoss2018/catalog.git"
   },
   "license": "MIT",
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "dependencies": {
+    "bcrypt": "^3.0.4",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
+    "lodash": "^4.17.11",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.10"
+  }
 }

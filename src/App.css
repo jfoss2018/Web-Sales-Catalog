@@ -614,9 +614,10 @@ Dashboard
 }
 
 .dashboard-title {
-  margin: 5px 0;
+  margin: 10px 0 5px 0;
   height: 35px;
   grid-column: 1 / 13;
+  text-align: center;
 }
 
 .dashboard-categories {
@@ -624,13 +625,67 @@ Dashboard
   list-style: none;
   padding: 0;
   margin: 0;
+  margin-top: 15px;
 }
 
 .dashboard-categories > li {
   display: block;
   width: 100%;
+  border: 1px solid black;
+  margin: 0 0 5px 0;
+  text-align: center;
+  padding: 4px 0;
+  font-size: 18px;
+  font-weight: bold;
 }
 
+.user-block {
+  grid-column: 1 / 13;
+  margin: 0;
+  padding: 0;
+}
+
+.user-controls {
+  width: 100%;
+  display: flex;
+  border: 1px solid black;
+}
+
+.user-control-btn {
+  width: 100px;
+  height: 100px;
+  border: 1px solid blue;
+  margin: 10px 0 10px 10px;
+}
+
+.user-create {
+  background-color: red;
+}
+
+.user-edit {
+  background-color: yellow;
+}
+
+.user-delete {
+  background-color: blue;
+}
+
+.user-list {
+  border: 1px solid black;
+  width: 100%;
+  /*height: 65vh;*/
+  margin: 0;
+  padding: 0;
+  text-align: left;
+}
+
+.user-list-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  height: 65vh;
+  border: 1px solid yellow;
+}
 /*==========================================================================
 ==========================================================================*/
 /*==========================================================================

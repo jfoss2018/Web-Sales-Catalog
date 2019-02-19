@@ -1,5 +1,3 @@
-mongodb://<dbuser>:<dbpassword>@ds139295.mlab.com:39295/heroku_0s7bzwmf
-
 const { databaseKey } = require('../../.config.js');
 
 const config = {};

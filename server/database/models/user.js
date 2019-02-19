@@ -31,6 +31,7 @@ const UserSchema = new Schema({
   }
 });
 
+/*
 // The verifyPassword method is used compare provided password with the saved
 // hashed password.
 UserSchema.methods.verifyPassword = function(password) {
@@ -52,7 +53,8 @@ UserSchema.pre('save', function(next) {
 		next();
 	}
 });
+*/
 
 const User = mongoose.model('User', UserSchema);
 
-module.exports.User = User;
+module.exports = User;

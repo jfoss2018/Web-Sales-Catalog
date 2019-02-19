@@ -701,6 +701,28 @@ Dashboard
 
 }
 /*==========================================================================
+Login
 ==========================================================================*/
+
+.login-wrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: #aaa;
+  overflow: auto;
+}
+
+.login-form {
+  background-color: white;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 400px;
+  position: relative;
+}
+
+.login-form-control {
+  width: calc(100% - 20px);
+  margin: 10px;
+}
+
 /*==========================================================================
 ==========================================================================*/

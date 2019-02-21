@@ -5,6 +5,7 @@ import Home from './components/home.js';
 import Detail from './components/detail.js';
 import Dashboard from './components/dashboard.js';
 import LoginPage from './components/loginPage.js';
+import Pic from './components/pic.js';
 import { createBrowserHistory } from 'history';
 import { createFilter } from 'react-search-input';
 import data from './data.json';
@@ -37,13 +38,14 @@ class App extends Component {
     const filteredItems = items.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
     //console.log(filteredItems);
     return (
-      <div className="App">
+      <div className="ReactApp">
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => <Home list={filteredItems} updateState={this.updateState} browserPath={this.browserPath} />} />
             <Route path="/catalog/:item" render={() => <Detail browserPath={this.browserPath} />} />
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" render={() => <LoginPage />} />
+            <Route path="/pic" render={() => <Pic />} />
           </Switch>
         </Router>
       </div>

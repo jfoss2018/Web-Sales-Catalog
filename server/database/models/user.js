@@ -28,6 +28,9 @@ const UserSchema = new Schema({
   phone: {
     type: Number,
     required: [true, 'Phone Number is required.']
+  },
+  authorization: {
+    type: Number
   }
 });
 

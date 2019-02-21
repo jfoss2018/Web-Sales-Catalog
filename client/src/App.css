@@ -2,7 +2,7 @@
 Main Page
 ==========================================================================*/
 
-.App {
+.ReactApp {
   width: 100vw;
 }
 
@@ -596,7 +596,7 @@ Dashboard
 ==========================================================================*/
 
 .dashboard-wrapper {
-  background-color: #bbb;
+  background-color: white;
   width: 100vw;
   height: 100vh;
 }
@@ -610,7 +610,7 @@ Dashboard
   background-color: white;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: min-content min-content;
+  grid-template-rows: min-content min-content auto;
 }
 
 .dashboard-title {
@@ -620,8 +620,20 @@ Dashboard
   text-align: center;
 }
 
-.dashboard-categories {
+.dashboard-left {
   grid-column: 1 / 13;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-right {
+  grid-column: 1 / 13;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-categories {
+  width: 100%;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -630,44 +642,85 @@ Dashboard
 
 .dashboard-categories > li {
   display: block;
-  width: 100%;
+  width: calc(100% - 20px);
   border: 1px solid black;
-  margin: 0 0 5px 0;
+  margin: 0 10px 5px 10px;
   text-align: center;
   padding: 4px 0;
   font-size: 18px;
   font-weight: bold;
 }
 
+@media screen and (min-width: 940px) {
+  .dashboard {
+    background-color: #777;
+    grid-template-rows: min-content min-content auto;
+  }
+
+  .dashboard-title {
+    margin: 20px 15px 10px 15px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+  }
+
+  .dashboard-left {
+    grid-column: 1 / 5;
+    grid-row: 2 / 3;
+    margin: 0 5px 0 15px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+  }
+
+  .dashboard-right {
+    grid-column: 5 / 13;
+    grid-row: 2 / 3;
+    margin: 0 15px 0 5px;
+    background-color: white;
+    border-radius: 3px;
+    border: 1px solid transparent;
+    border-top: none;
+    border-bottom: 1px solid #DDD;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+  }
+}
+
+
+/*==========================================================================
+User Manage
+==========================================================================*/
+
 .user-block {
-  grid-column: 1 / 13;
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
 .user-controls {
-  width: 100%;
+  width: calc(100% - 20px);
   display: flex;
-  border: 1px solid black;
+  border: 2px solid #666;
+  margin: 10px 10px 4px 10px;
 }
 
 .user-control-btn {
-  width: 100px;
-  height: 100px;
-  border: 1px solid blue;
-  margin: 10px 0 10px 10px;
+  margin: 20px 0 20px 10px;
 }
 
 .user-create {
-  background-color: red;
 }
 
 .user-edit {
-  background-color: yellow;
 }
 
 .user-delete {
-  background-color: blue;
 }
 
 .user-list {
@@ -686,11 +739,13 @@ Dashboard
 }
 
 .user-list-wrapper {
-  width: 100%;
-  margin: 0;
+  width: calc(100% - 20px);
+  border: 2px solid #666;
+  margin: 0 10px 10px 10px;
   padding: 0;
-  height: 220px;
-  overflow-y: scroll;
+  height: auto;
+  max-height: 65vh;
+  overflow-y: auto;
   /*background: repeating-linear-gradient(
     180deg,
     #94bfff,
@@ -700,6 +755,72 @@ Dashboard
   );*/
 
 }
+
+li.active {
+  background-color: #999;
+}
+
+@media screen and (min-width: 940px) {
+  .user-controls {
+    border: none;
+    border-bottom: 2px solid #666;
+    margin-top: 0;
+  }
+
+  .user-list-wrapper {
+    border: none;
+    padding-top: 10px;
+  }
+}
+
+tbody > tr:nth-child(odd) {
+  background-color: #ddd;
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #999;
+}
+
+tbody > tr.active {
+  background-color: lightblue;
+}
+
+.user-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.4);
+}
+
+.user-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 15px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 450px;
+}
+
+.user-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.user-modal-close:hover,
+.user-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /*==========================================================================
 Login
 ==========================================================================*/
@@ -714,9 +835,15 @@ Login
 .login-form {
   background-color: white;
   margin: 0 auto;
-  margin-top: 100px;
-  width: 400px;
+  margin-top: 30px;
+  width: 100%;
   position: relative;
+}
+
+.login-title {
+  margin: 0 auto 30px auto;
+  width: 100%;
+  text-align: center;
 }
 
 .login-form-control {
@@ -724,5 +851,101 @@ Login
   margin: 10px;
 }
 
+/*==========================================================================
+Edit
+==========================================================================*/
+
+.App {
+  width: 100%;
+}
+
+.test-wrapper {
+  width: 100vw;
+  height: 100vh;
+}
+
+/*==========================================================================
+Page
+==========================================================================*/
+
+.page-block {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.page-list-wrapper {
+  width: calc(100% - 20px);
+  margin: 20px 10px 10px 10px;
+  padding: 0;
+  height: auto;
+  overflow-y: hidden;
+  /*background: repeating-linear-gradient(
+    180deg,
+    #94bfff,
+    #94bfff 22px,
+    #5790e6 22px,
+    #5790e6 44px
+  );*/
+}
+
+#Layer_10 {
+  max-width: 600px;
+  display: block;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 940px) {
+  .page-list-wrapper {
+    margin-top: 10px;
+  }
+}
+
+.st10 {
+  fill: white;
+  stroke:#000000;
+  stroke-miterlimit:10;
+  z-index: 105;
+}
+
+.st11 {
+  fill: white;
+  stroke:#000000;
+  stroke-width:0.5;
+  stroke-miterlimit:10;
+}
+
+.st12 {
+  fill:#020202;
+  stroke:#000000;
+  stroke-miterlimit:10;
+}
+
+.st13 {
+  fill: white;
+}
+
+.svg-page,
+.svg-pagination {
+  fill: #eee;
+}
+
+.svg-pointer {
+  cursor: pointer;
+}
+
+.svg-title:hover,
+.svg-main-img:hover,
+.svg-search:hover,
+.svg-pagination:hover,
+.svg-footer:hover {
+  fill: #ccc;
+  cursor: pointer;
+}
+
+/*==========================================================================
+==========================================================================*/
+/*==========================================================================
+==========================================================================*/
 /*==========================================================================
 ==========================================================================*/

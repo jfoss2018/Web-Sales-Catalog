@@ -37,17 +37,14 @@ class Edit extends PureComponent {
     this.setState({ crop });
   };
 
-  savePic = (e) => {
-    e.preventDefault();
+  savePic = () => {
     const input = document.querySelector('.App').childNodes[0].childNodes[0];
     const nameArr = input.value.split('\\');
     const fileName = nameArr.pop();
     this.props.updateState({
-      image: {
-        name: fileName,
-        contentType: input.files[0].type,
-        data: this.state.dataURL
-      }
+      nameNew: fileName,
+      contentTypeNew: input.files[0].type,
+      dataNew: this.state.dataURL
     });
   }
 
@@ -99,8 +96,6 @@ class Edit extends PureComponent {
 
   compress = (url) => {
     const newImage = new Image();
-    /*const width = 512;
-    const height = 384;*/
     const width = this.props.width;
     const height = this.props.height;
     const fileName = 'brandnew.jpeg';
@@ -114,31 +109,36 @@ class Edit extends PureComponent {
       this.setState({
         dataURL: elem.toDataURL('image/jpeg', this.props.quality)
       });
+      this.savePic();
     }
   }
 
-  render() {
+  render(props) {
     const { crop, croppedImageUrl, src } = this.state;
 
     return (
       <div className="App">
         <div>
-          <input type="file" onChange={this.onSelectFile} />
+          <input type="file" className="login-form-control" id="newImage" name="newImage" onChange={this.onSelectFile} />
         </div>
+        {src && (
+          <h4 className="page-image-header">Select Image and Crop</h4>
+        )}
         {src && (
           <ReactCrop
             src={src}
             crop={crop}
+            className={'login-form-control'}
             onImageLoaded={this.onImageLoaded}
             onComplete={this.onCropComplete}
             onChange={this.onCropChange}
           />
         )}
         {croppedImageUrl && (
-          <img alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
+          <h4 className="page-image-header">Preview Selection</h4>
         )}
         {croppedImageUrl && (
-          <button onClick={this.savePic}>Save</button>
+          <img className="login-form-control" alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
         )}
       </div>
     );

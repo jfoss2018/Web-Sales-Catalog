@@ -943,6 +943,10 @@ Page
   cursor: pointer;
 }
 
+.highlighter {
+  fill: #ccc;
+}
+
 .disp-blk {
   display: block;
   margin-top: 20px;
@@ -950,12 +954,19 @@ Page
 }
 
 .checkbox {
-  margin-left: 35px;
+  margin-left: 120px;
 }
 
 .form-grid {
   display: grid;
+}
+
+.col-1 {
   grid-template-columns: 250px auto;
+}
+
+.col-2 {
+  grid-template-columns: 230px auto;
 }
 
 .form-grid > h1 {
@@ -971,8 +982,23 @@ Page
   margin: 20px 0 10px 0;
 }
 
+.form-grid > select {
+  width: 50px;
+}
+
 .form-grid > button {
   grid-column: 1 / 3;
+}
+
+.page-image-header {
+  text-align: center;
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.current-img {
+  width: 100%;
+  margin-bottom: 20px;
 }
 /*==========================================================================
 ==========================================================================*/

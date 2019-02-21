@@ -123,7 +123,7 @@ class PageTitle extends Component {
         <input type="checkbox" value={this.state.showTitle} className="checkbox" checked={this.state.showTitle} name="showTitle" id="showTitle" onChange={this.handleChange} />
         <label className="login-form-control disp-blk" htmlFor="title">Title</label>
         {titleInput}
-        <button className="login-form-control" type="submit">Submit</button>
+        <button className="login-form-control" type="submit">Save</button>
       </form>
     );
   }

@@ -149,7 +149,7 @@ class PageSearch extends Component {
     }
 
     return (
-      <form ref={form => this.editForm = form} className="login-form form-grid" onSubmit={this.handleSubmit}>
+      <form ref={form => this.editForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Search Bar</h1>
         <label className="login-form-control" htmlFor="search">Show Search Bar</label>
         <input type="checkbox" value={this.state.search} className="checkbox" checked={this.state.search} name="search" id="search" onChange={this.handleChange} />
@@ -162,7 +162,7 @@ class PageSearch extends Component {
         <input type="checkbox" value={this.state.priceLowToHigh} className="checkbox" checked={this.state.priceLowToHigh} name="priceLowToHigh" id="priceLowToHigh" onChange={this.handleChange} />
         <label className="login-form-control" htmlFor="priceHighToLow">Price High to Low</label>
         <input type="checkbox" value={this.state.priceHighToLow} className="checkbox" checked={this.state.priceHighToLow} name="priceHighToLow" id="priceHighToLow" onChange={this.handleChange} />
-        <button className="login-form-control" type="submit">Submit</button>
+        <button className="login-form-control" type="submit">Save</button>
       </form>
     );
   }

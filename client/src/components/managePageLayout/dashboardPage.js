@@ -96,7 +96,7 @@ class DashboardPage extends Component {
   render() {
     let modalContents;
     if (this.state.selectedPageModule === 'title') {
-      modalContents = <p>Title</p>
+      modalContents = <PageTitle closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'image') {
       modalContents = <p>Image</p>
     } else if (this.state.selectedPageModule === 'search') {

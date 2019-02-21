@@ -6,29 +6,35 @@ class PageTitle extends Component {
     super(props);
     this.state = {
       id: null,
-      username: null,
-      email: null,
-      phone: null,
-      authorization: null
+      showTitle: false,
+      title: null
     }
 
     this.editForm = React.createRef();
   }
 
   handleChange = (e) => {
+    if (e.target.type === 'checkbox') {
+      if (e.target.checked === true) {
+        e.target.value = Boolean(true);
+      } else {
+        e.target.value = Boolean(false);
+      }
+      const bool = (e.target.value === 'true');
+      this.setState({
+        [e.target.name]: bool
+      });
+      return;
+    }
     this.setState({
       [e.target.name]: e.target.value
     });
   }
 
-  componentWillUpdate() {
-
-  }
-
   componentDidMount() {
     axios({
       method: 'get',
-      url: `/api/v1/users/${this.props.id}`,
+      url: `/api/v1/page`,
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
@@ -46,12 +52,11 @@ class PageTitle extends Component {
       */
 
       this.setState({
-        id: response.data.user._id,
-        username: response.data.user.username,
-        email: response.data.user.email,
-        phone: response.data.user.phone,
-        authorization: response.data.user.authorization
+        id: response.data.page._id,
+        showTitle: response.data.page.showTitle,
+        title: response.data.page.title
       });
+
     })
     .catch((error) => {
       console.log(error);
@@ -60,9 +65,14 @@ class PageTitle extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    const dataObj = {};
+    dataObj.showTitle = this.state.showTitle
+    if (this.state.showTitle) {
+      dataObj.title = this.state.title
+    }
     axios({
       method: 'put',
-      url: `/api/v1/users/${this.state.id}`,
+      url: `/api/v1/page/${this.state.id}`,
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
@@ -70,14 +80,10 @@ class PageTitle extends Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      data: {
-        email: this.state.email,
-        phone: this.state.phone,
-        authorization: this.state.authorization
-      }
+      data: dataObj
     })
     .then(response => {
-
+      /*
       this.editForm[0].value = '';
       this.editForm[1].value = '';
       this.editForm[2].value = '';
@@ -94,6 +100,8 @@ class PageTitle extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
+      */
+      this.props.closeModal('close');
     })
     .catch((error) => {
       console.log(error);
@@ -101,17 +109,20 @@ class PageTitle extends Component {
   }
 
   render() {
+    let titleInput;
+    if (this.state.showTitle === true) {
+      titleInput = <input className="login-form-control" placeholder={this.state.title} name="title" id="title" onChange={this.handleChange} />
+    } else {
+      titleInput = <input className="login-form-control" disabled placeholder={this.state.title} name="title" id="title" onChange={this.handleChange} />
+    }
+
     return (
       <form ref={form => this.editForm = form} className="login-form" onSubmit={this.handleSubmit}>
-        <h1 className="login-title">Edit User</h1>
-        <label className="login-form-control" htmlFor="username">Name</label>
-        <input className="login-form-control" placeholder={this.state.username} disabled name="username" id="username" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="email">Email</label>
-        <input className="login-form-control" placeholder={this.state.email} name="email" id="email" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="phone">Phone</label>
-        <input className="login-form-control" placeholder={this.state.phone} name="phone" id="phone" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="authorization">Authorization</label>
-        <input className="login-form-control" placeholder={this.state.authorization} name="authorization" id="authorization" onChange={this.handleChange} />
+        <h1 className="login-title">Page Title</h1>
+        <label className="login-form-control" htmlFor="showTitle">Show Title</label>
+        <input type="checkbox" value={this.state.showTitle} className="checkbox" checked={this.state.showTitle} name="showTitle" id="showTitle" onChange={this.handleChange} />
+        <label className="login-form-control disp-blk" htmlFor="title">Title</label>
+        {titleInput}
         <button className="login-form-control" type="submit">Submit</button>
       </form>
     );

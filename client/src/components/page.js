@@ -6,11 +6,15 @@ class Page extends Component {
   constructor() {
     super();
     this.state = {
-      image: '',
+      image: {
+        name: '',
+        contentType: '',
+        data: ''
+      },
       title: '',
+      showTitle: '',
       search: '',
       filter: '',
-      filterOptions: '',
       featured: '',
       priceLowToHigh: '',
       priceHighToLow: '',
@@ -37,28 +41,30 @@ class Page extends Component {
     });
   }
 
+  updateState = (object) => {
+    this.setState(object);
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
-    /*
+
     axios({
       method: 'post',
-      url: '/api/v1/login',
+      url: '/api/v1/page',
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
       },*/
-      /*headers: {
+      headers: {
         'Content-Type': 'application/json'
       },
-      data: {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        phone: this.state.phone
-      }
+      data:
+        this.state
+
     })
     .then(response => {
-
+      console.log(response.data);
+      /*
       this.loginForm[0].value = '';
       this.loginForm[1].value = '';
       this.loginForm[2].value = '';
@@ -70,23 +76,24 @@ class Page extends Component {
         email: '',
         phone: ''
       });
+      */
     })
     .catch((error) => {
       console.log(error);
-    });*/
+    });
   }
 
   render() {
     return (
       <form ref={form => this.pageForm = form} className="login-form" onSubmit={this.handleSubmit}>
 
-        <label className="login-form-control" htmlFor="image">Image</label>
-        <input className="login-form-control" name="image" id="image" onChange={this.handleChange} />
+        <Edit updateState={this.updateState} width={1440} height={400} aspectRatio={3.6} quality={.9}/>
 
-        <Edit />
-
-        <label className="login-form-control" htmlFor="title">Title</label>
+        <label className="login-form-control" htmlFor="title">Title Name</label>
         <input className="login-form-control" name="title" id="title" onChange={this.handleChange} />
+
+        <label className="login-form-control" htmlFor="showTitle">Title</label>
+        <input type="checkbox" className="login-form-control" name="showTitle" id="showTitle" onChange={this.handleChange} />
 
         <label className="login-form-control" htmlFor="search">Search</label>
         <input type="checkbox" className="login-form-control" name="search" id="search" onChange={this.handleChange} />

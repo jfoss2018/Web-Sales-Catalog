@@ -5,12 +5,17 @@ const Schema = mongoose.Schema;
 
 const PageSchema = new Schema({
   image: {
+    name: String,
     contentType: String,
     data: Buffer
-  }/*,
+  },
   title: {
     type: String,
     maxlength: [18, 'Title has a maximum length of 18 characters.']
+  },
+  showTitle: {
+    type: Boolean,
+    required: [true, 'Search boolean is required.']
   },
   search: {
     type: Boolean,
@@ -44,7 +49,6 @@ const PageSchema = new Schema({
   },
   itemsPerPage: {
     type: Number
-
   },
   footer: {
     type: Boolean,
@@ -53,7 +57,7 @@ const PageSchema = new Schema({
   message: {
     type: String,
     maxlength: [50, 'Footer has a maximum length of 50 characters.']
-  }*/
+  }
 });
 
 const Page = mongoose.model('Page', PageSchema);

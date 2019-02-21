@@ -1,4 +1,3 @@
-//import ReactDOM from 'react-dom';
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
@@ -9,7 +8,8 @@ class Edit extends PureComponent {
     src: null,
     dataURL: '',
     crop: {
-      aspect: 4/3,
+      /*aspect: 4/3,*/
+      aspect: this.props.aspectRatio,
       x: 0,
       y: 0,
     },
@@ -39,38 +39,15 @@ class Edit extends PureComponent {
 
   savePic = (e) => {
     e.preventDefault();
-    axios({
-      method: 'post',
-      url: '/api/v1/save',
-      /*proxy: {
-        host: '127.0.0.1',
-        port: 3001
-      },*/
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        contentType: 'image/jpeg',
-        dataURL: this.state.dataURL
+    const input = document.querySelector('.App').childNodes[0].childNodes[0];
+    const nameArr = input.value.split('\\');
+    const fileName = nameArr.pop();
+    this.props.updateState({
+      image: {
+        name: fileName,
+        contentType: input.files[0].type,
+        data: this.state.dataURL
       }
-    })
-    .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-
-      this.setState({
-        username: '',
-        password: '',
-        email: '',
-        phone: ''
-      });
-      */
-    })
-    .catch((error) => {
-      console.log(error);
     });
   }
 
@@ -86,7 +63,6 @@ class Edit extends PureComponent {
   }
 
   getCroppedImg(image, pixelCrop, fileName) {
-    console.log(pixelCrop);
     const canvas = document.createElement('canvas');
     canvas.width = pixelCrop.width;
     canvas.height = pixelCrop.height;
@@ -118,16 +94,15 @@ class Edit extends PureComponent {
       }, 'image/jpeg');
 
       this.compress(canvas.toDataURL('image/jpeg'));
-      /*this.setState({
-        dataURL: canvas.toDataURL('image/jpeg', .3)
-      });*/
     });
   }
 
   compress = (url) => {
     const newImage = new Image();
-    const width = 512;
-    const height = 384;
+    /*const width = 512;
+    const height = 384;*/
+    const width = this.props.width;
+    const height = this.props.height;
     const fileName = 'brandnew.jpeg';
     newImage.src = url;
     newImage.onload = () => {
@@ -137,7 +112,7 @@ class Edit extends PureComponent {
       const newCtx = elem.getContext('2d');
       newCtx.drawImage(newImage, 0, 0, width, height);
       this.setState({
-        dataURL: elem.toDataURL('image/jpeg', .9)
+        dataURL: elem.toDataURL('image/jpeg', this.props.quality)
       });
     }
   }

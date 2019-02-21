@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import PageTitle from './pageTitle.js';
+import PageSearch from './pageSearch.js';
 
 class DashboardPage extends Component {
   constructor() {
@@ -100,7 +101,7 @@ class DashboardPage extends Component {
     } else if (this.state.selectedPageModule === 'image') {
       modalContents = <p>Image</p>
     } else if (this.state.selectedPageModule === 'search') {
-      modalContents = <p>Search</p>
+      modalContents = <PageSearch closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'pagination') {
       modalContents = <p>Pagination</p>
     } else if (this.state.selectedPageModule === 'footer') {

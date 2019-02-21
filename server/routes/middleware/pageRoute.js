@@ -32,14 +32,14 @@ function setup(req, res, next) {
 function retrieve(req, res, next) {
   Page.find({}, function(err, page) {
     res.status('200').json({page: page[0]})
-  })
+  });
 }
 
 function edit(req, res, next) {
   console.log(req.body);
   Page.updateOne({_id: req.params.id}, req.body, {runValidators: true}, function(err, page) {
     res.status('200').json({message: 'Updated'})
-  })
+  });
 }
 
 module.exports = { setup, retrieve, edit };

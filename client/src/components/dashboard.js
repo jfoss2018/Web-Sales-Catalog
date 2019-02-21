@@ -6,7 +6,7 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      dashboardNum: null
+      dashboardNum: 0
     }
   }
 
@@ -30,7 +30,7 @@ class Dashboard extends Component {
           <h1 className="dashboard-title">Dashboard</h1>
           <div className="dashboard-left">
             <ul className="dashboard-categories">
-              <li className="list-btn" onClick={this.toggleActive}>Manage Users</li>
+              <li className="list-btn active" onClick={this.toggleActive}>Manage Users</li>
               <li className="list-btn" onClick={this.toggleActive}>Manage Page</li>
               <li className="list-btn" onClick={this.toggleActive}>Manage Contents</li>
               <li className="list-btn" onClick={this.toggleActive}>Manage Visitors</li>

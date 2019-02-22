@@ -970,11 +970,11 @@ Page
 }
 
 .col-3 {
-  grid-template-rows: repeat(11, min-content) 400px;
+  grid-template-rows: repeat(11, min-content);
 }
 
 .col-4 {
-  grid-template-rows: repeat(11, min-content) 800px;
+  grid-template-rows: repeat(11, min-content);
 }
 
 .form-grid > h1 {
@@ -1028,6 +1028,52 @@ div.login-form-control {
 .current-img {
   width: 100%;
   margin-bottom: 20px;
+}
+
+.secondary-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.85);
+}
+
+.secondary-modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 15px;
+  border: 1px solid #888;
+  width: 80%;
+  max-width: 450px;
+}
+
+.secondary-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.secondary-modal-close:hover,
+.secondary-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.img-save-btn {
+  width: calc(100% - 20px);
+  margin: 15px 10px 10px 10px;
+}
+
+.small-btn {
+  width: 150px;
+  margin: 5px 0 15px 10px;
 }
 /*==========================================================================
 ==========================================================================*/

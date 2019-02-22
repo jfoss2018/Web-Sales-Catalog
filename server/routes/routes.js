@@ -28,4 +28,6 @@ router.put('/page/:id', pageMid.pictureMid, pageMid.edit);
 
 router.get('/contents', contentMid.retrieve);
 
+router.post('/contents', contentMid.pictureMid, contentMid.setup);
+
 module.exports = router;

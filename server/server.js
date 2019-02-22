@@ -21,8 +21,8 @@ if (process.env.NODE_ENV === 'development') {
 }
 */
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false, limit: '5mb'}));
+app.use(bodyParser.json({limit: '5mb'}));
 
 app.use('/api/v1', routes);
 

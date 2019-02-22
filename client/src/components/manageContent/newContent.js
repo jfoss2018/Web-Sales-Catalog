@@ -54,7 +54,7 @@ class NewContent extends Component {
     e.preventDefault();
     axios({
       method: 'post',
-      url: '/api/v1/login',
+      url: '/api/v1/contents',
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
@@ -63,15 +63,17 @@ class NewContent extends Component {
         'Content-Type': 'application/json'
       },
       data: {
-        username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        phone: this.state.phone,
-        authorization: this.state.authorization
+        name: this.state.name,
+        description: this.state.description,
+        featured: this.state.featured,
+        price: this.state.price,
+        viewable: this.state.viewable,
+        images: this.state.images
       }
     })
     .then(response => {
-
+      console.log(response.data);
+      /*
       this.loginForm[0].value = '';
       this.loginForm[1].value = '';
       this.loginForm[2].value = '';
@@ -85,7 +87,7 @@ class NewContent extends Component {
         phone: '',
         authorization: ''
       });
-
+      */
       if (this.props.updateList) {
         this.props.updateList();
       }
@@ -93,6 +95,31 @@ class NewContent extends Component {
     .catch((error) => {
       console.log(error);
     });
+  }
+
+  checkModalSecondary = (e) => {
+    const modal = document.querySelector('.secondary-modal');
+    if (e.target === modal) {
+      modal.style.display = "none";
+      /*this.setState({
+        selectedAction: 'empty'
+      });*/
+    }
+  }
+
+  openModalSecondary = (e) => {
+    const modal = document.querySelector('.secondary-modal');
+    modal.style.display = 'block';
+    if (e.target.className === 'secondary-modal-close' || e.target.className === 'img-save-btn') {
+      modal.style.display = 'none';
+      /*this.setState({
+        selectedAction: 'empty'
+      });*/
+    } else {
+      /*this.setState({
+        selectedAction: e.target.value
+      });*/
+    }
   }
 
   render() {
@@ -119,8 +146,19 @@ class NewContent extends Component {
             return <li key={i}>{image.name}</li>
           })}
         </ul>
-        <Edit updateState={this.updateState} width={512} height={384} aspectRatio={1.33} quality={.9} btn={'add'} pushList={this.pushList} />
-        <button className="login-form-control" type="submit">Submit</button>
+        <button type="button" className="small-btn" onClick={this.openModalSecondary}>Add Image</button>
+        <button className="login-form-control" type="submit">Save</button>
+
+        <div onClick={this.checkModalSecondary} className="secondary-modal">
+          <div className="secondary-modal-content">
+            <span onClick={this.openModalSecondary} className="secondary-modal-close">&times;</span>
+            <section className="login-form">
+              <h1 className="login-title">Add Image</h1>
+              <Edit updateState={this.updateState} width={512} height={384} aspectRatio={1.33} quality={.9} btn={'add'} pushList={this.pushList} closeModal={this.openModalSecondary} />
+            </section>
+          </div>
+        </div>
+
       </form>
     );
   }

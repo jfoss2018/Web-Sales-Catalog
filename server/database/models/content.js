@@ -19,7 +19,7 @@ const ContentSchema = new Schema({
     required: [true, 'Featured boolean is required.']
   },
   price: {
-    type: Number,
+    type: String,
     required: false
   },
   viewable: {

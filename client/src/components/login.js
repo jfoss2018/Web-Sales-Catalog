@@ -80,7 +80,7 @@ class Login extends Component {
         <input className="login-form-control" name="phone" id="phone" onChange={this.handleChange} />
         <label className="login-form-control" htmlFor="authorization">Authorization</label>
         <input className="login-form-control" name="authorization" id="authorization" onChange={this.handleChange} />
-        <button className="login-form-control" type="submit">Submit</button>
+        <button className="login-form-control" type="submit">Save</button>
       </form>
     );
   }

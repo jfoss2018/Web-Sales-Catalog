@@ -1,39 +1,43 @@
 const Content = require('../../database/models/content.js');
+const moment = require('moment');
 
-/*function setup(req, res, next) {
-  const { image, title, showTitle, search, filter, featured, priceLowToHigh,
-    priceHighToLow, pagination, allowChange, itemsPerPage, footer, message } = req.body;
-  const pageSetup = new Page({
-    image: {
-      name: image.name,
-      contentType: image.contentType,
-      data: image.data
-    },
-    title: title,
-    showTitle: showTitle,
-    search: search,
-    filter: filter,
-    filterOptions: {
-      featured: featured,
-      priceLowToHigh: priceLowToHigh,
-      priceHighToLow: priceHighToLow,
-    },
-    pagination: pagination,
-    allowChange: allowChange,
-    itemsPerPage: itemsPerPage,
-    footer: footer,
-    message: message
+function setup(req, res, next) {
+  const { name, description, price, featured, viewable, images } = req.body;
+  const contentSetup = new Content({
+    name: name,
+    description: description,
+    featured: featured,
+    price: price,
+    viewable: viewable,
+    images: images,
+    postedDate: moment(),
+    lastEditDate: moment()
   });
-  pageSetup.save(function(err, page) {
-    res.status('201').json({page: page});
+  contentSetup.save(function(err, content) {
+    console.log(err);
+    if (err) return next(err);
+    res.status('201').json({content: content});
   });
 }
-*/
+
+function pictureMid(req, res, next) {
+  if (req.body.hasOwnProperty('images')) {
+    const imgArr = req.body.images;
+    for (let i = 0; i < imgArr.length; i += 1) {
+      const data = imgArr[i].data;
+      const newData = data.replace(/^data:image\/\w+;base64,/, "");
+      const newDataBuf = new Buffer(newData, 'base64');
+      imgArr[i].data = newDataBuf;
+    }
+    req.body.images = imgArr;
+  }
+  next();
+}
+
 function retrieve(req, res, next) {
-  console.log('we made it here.');
   Content.find({}, function(err, contents) {
     res.status('200').json({contents: contents})
   });
 }
 
-module.exports = { retrieve };
+module.exports = { retrieve, setup, pictureMid };

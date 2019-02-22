@@ -125,13 +125,14 @@ class Edit extends PureComponent {
     }
   }
 
-  clear = () => {
+  clear = (e) => {
     this.props.pushList();
     const fileInput = document.querySelector('#newImage');
     fileInput.value = null;
     const formGrid = document.querySelector('.form-grid');
     formGrid.classList.remove('col-4');
     formGrid.classList.remove('col-3');
+    this.props.closeModal(e);
     this.setState({
       src: null,
       croppedImageUrl: null
@@ -177,7 +178,7 @@ class Edit extends PureComponent {
           <img className="login-form-control" alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
         )}
         {addBtn && (
-          <button type="button" onClick={this.clear}>Save Image to List</button>
+          <button type="button" className="img-save-btn" onClick={this.clear}>Save Image to List</button>
         )}
       </div>
     );

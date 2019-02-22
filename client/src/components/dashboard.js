@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DashboardUser from './dashboardUser.js';
 import DashboardPage from './managePageLayout/dashboardPage.js';
+import DashboardContent from './manageContent/dashboardContent.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -33,7 +34,9 @@ class Dashboard extends Component {
               <li className="list-btn active" onClick={this.toggleActive}>Manage Users</li>
               <li className="list-btn" onClick={this.toggleActive}>Manage Page</li>
               <li className="list-btn" onClick={this.toggleActive}>Manage Contents</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Visitors</li>
+              <li className="list-btn" onClick={this.toggleActive}>Manage Appointments</li>
+              <li className="list-btn" onClick={this.toggleActive}>Manage Bids</li>
+              <li className="list-btn" onClick={this.toggleActive}>Manage Questions</li>
             </ul>
           </div>
           <div className="dashboard-right">
@@ -42,6 +45,9 @@ class Dashboard extends Component {
             )}
             {(this.state.dashboardNum === 1) && (
               <DashboardPage />
+            )}
+            {(this.state.dashboardNum === 2) && (
+              <DashboardContent />
             )}
           </div>
         </div>

@@ -3,6 +3,7 @@ const router = express.Router();
 const loginMid = require('./middleware/loginRoute.js');
 const userMid = require('./middleware/userRoute.js');
 const pageMid = require('./middleware/pageRoute.js');
+const contentMid = require('./middleware/contentRoute.js');
 const fs = require('fs');
 const Page = require('../database/models/page.js');
 
@@ -21,10 +22,10 @@ router.put('/users/:id', userMid.edit);
 
 router.get('/page', pageMid.retrieve);
 
-//router.get('/page/pic', pageMid.retrievePic);
-
 router.post('/page', pageMid.setup);
 
 router.put('/page/:id', pageMid.pictureMid, pageMid.edit);
+
+router.get('/contents', contentMid.retrieve);
 
 module.exports = router;

@@ -93,7 +93,19 @@ class Edit extends PureComponent {
       this.compress(canvas.toDataURL('image/jpeg'));
     });
   }
-
+/*
+  changeGrid = () => {
+    const fileInput = document.querySelector('#newImage');
+    if (this.props.btn === 'add') {
+      const formGrid = document.querySelector('.form-grid');
+      if (fileInput.value !== null) {
+        formGrid.classList.add('col-3');
+      } else {
+        formGrid.classList.remove('col-3');
+      }
+    }
+  }
+*/
   compress = (url) => {
     const newImage = new Image();
     const width = this.props.width;
@@ -113,8 +125,32 @@ class Edit extends PureComponent {
     }
   }
 
+  clear = () => {
+    this.props.pushList();
+    const fileInput = document.querySelector('#newImage');
+    fileInput.value = null;
+    const formGrid = document.querySelector('.form-grid');
+    formGrid.classList.remove('col-4');
+    formGrid.classList.remove('col-3');
+    this.setState({
+      src: null,
+      croppedImageUrl: null
+    })
+  }
+
   render(props) {
     const { crop, croppedImageUrl, src } = this.state;
+    const formGrid = document.querySelector('.form-grid');
+    let addBtn = false;
+    if (src && this.props.btn === 'add') {
+      formGrid.classList.add('col-3');
+    }
+    if (croppedImageUrl && this.props.btn === 'add') {
+      addBtn = true;
+    }
+    if (src && croppedImageUrl && this.props.btn === 'add') {
+      formGrid.classList.add('col-4');
+    }
 
     return (
       <div className="App">
@@ -139,6 +175,9 @@ class Edit extends PureComponent {
         )}
         {croppedImageUrl && (
           <img className="login-form-control" alt="Crop" style={{ maxWidth: '100%' }} src={croppedImageUrl} />
+        )}
+        {addBtn && (
+          <button type="button" onClick={this.clear}>Save Image to List</button>
         )}
       </div>
     );

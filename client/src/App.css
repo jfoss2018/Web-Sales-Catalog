@@ -969,6 +969,14 @@ Page
   grid-template-columns: 230px auto;
 }
 
+.col-3 {
+  grid-template-rows: repeat(11, min-content) 400px;
+}
+
+.col-4 {
+  grid-template-rows: repeat(11, min-content) 800px;
+}
+
 .form-grid > h1 {
   grid-column: 1 / 3;
 }
@@ -986,10 +994,31 @@ Page
   width: 50px;
 }
 
-.form-grid > button {
+.form-grid > button,
+.form-grid > input[type='text'],
+.form-grid > textarea,
+.form-grid > ul,
+.form-grid > .App {
   grid-column: 1 / 3;
 }
 
+.form-grid > ul {
+  padding: 10px;
+  width: calc(100% - 40px);
+  list-style: none;
+  border: 1px solid black;
+  margin-top: 0;
+}
+
+.form-grid > ul > li {
+  width: 100%;
+  margin: 2px 5px;
+}
+/*
+div.login-form-control {
+  overflow: visible;
+}
+*/
 .page-image-header {
   text-align: center;
   margin-top: 10px;

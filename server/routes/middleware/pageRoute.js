@@ -36,35 +36,17 @@ function retrieve(req, res, next) {
   });
 }
 
-/*function retrievePic(req, res, next) {
-  Page.find({}, function(req,))
-}
-router.get('/pic', function(req, res, next) {
-  Page.find({}, function(err, docs) {
-    const newImgDoc = docs[0];
-    const newImgSrc = 'data:image/jpeg;base64,' + newImgDoc.image.data.toString('base64');
-    console.log(newImgSrc);
-    res.json({src: newImgSrc});
-  });
-});*/
-
 function pictureMid(req, res, next) {
-  console.log('We are right here.');
-  console.log(req.body.hasOwnProperty('image'));
   if (req.body.hasOwnProperty('image')) {
-    console.log('step1');
     const { data } = req.body.image;
     const newData = data.replace(/^data:image\/\w+;base64,/, "");
     const newDataBuf = new Buffer(newData, 'base64');
     req.body.image.data = newDataBuf;
-    console.log(req.body);
   }
-  console.log('going through here.');
   next();
 }
 
 function edit(req, res, next) {
-  console.log(req.body);
   Page.updateOne({_id: req.params.id}, req.body, {runValidators: true}, function(err, page) {
     res.status('200').json({message: 'Updated'})
   });

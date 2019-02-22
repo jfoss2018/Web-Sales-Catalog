@@ -10,8 +10,8 @@ function setup(req, res, next) {
     price: price,
     viewable: viewable,
     images: images,
-    postedDate: moment(),
-    lastEditDate: moment()
+    postedDate: moment.utc(),
+    lastEditDate: moment.utc()
   });
   contentSetup.save(function(err, content) {
     console.log(err);

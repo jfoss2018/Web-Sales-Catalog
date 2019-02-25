@@ -20,14 +20,31 @@ function setup(req, res, next) {
   });
 }
 
+function edit(req, res, next) {
+  const { name, description, price, featured, viewable, images } = req.body;
+  Content.updateOne({_id: req.params.id}, {
+    name: name,
+    description: description,
+    price: price,
+    featured: featured,
+    viewable: viewable,
+    images: images,
+    lastEditDate: moment.utc()
+  }, {runValidators: true}, function(err, result) {
+    res.status('200').json({message: 'Updated'});
+  });
+}
+
 function pictureMid(req, res, next) {
   if (req.body.hasOwnProperty('images')) {
     const imgArr = req.body.images;
     for (let i = 0; i < imgArr.length; i += 1) {
-      const data = imgArr[i].data;
-      const newData = data.replace(/^data:image\/\w+;base64,/, "");
-      const newDataBuf = new Buffer(newData, 'base64');
-      imgArr[i].data = newDataBuf;
+      if (!imgArr[i].hasOwnProperty('_id')) {
+        const data = imgArr[i].data;
+        const newData = data.replace(/^data:image\/\w+;base64,/, "");
+        const newDataBuf = new Buffer(newData, 'base64');
+        imgArr[i].data = newDataBuf;
+      }
     }
     req.body.images = imgArr;
   }
@@ -40,4 +57,16 @@ function retrieve(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid };
+function retrieveSingle(req, res, next) {
+  Content.find({_id: req.params.id}, function(err, content) {
+    res.status('200').json({content: content})
+  });
+}
+
+function deleteContent(req, res, next) {
+  Content.deleteOne({_id: req.params.id}, function(err) {
+    res.status('200').json({message: 'Deleted!'});
+  });
+}
+
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent };

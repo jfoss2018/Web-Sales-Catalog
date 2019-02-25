@@ -72,7 +72,6 @@ class NewContent extends Component {
       }
     })
     .then(response => {
-      console.log(response.data);
       /*
       this.loginForm[0].value = '';
       this.loginForm[1].value = '';
@@ -122,7 +121,17 @@ class NewContent extends Component {
     }
   }
 
+  removeImg = (e) => {
+    const index = parseInt(e.target.closest('li').dataset.key);
+    this.state.images.splice(index, 1);
+    this.setState({
+      update: true
+    });
+  }
+
   render() {
+    const delBtn = <button type="button" onClick={this.removeImg} className="img-box">Delete</button>
+
     return (
       <form ref={form => this.loginForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Add New Content</h1>
@@ -143,7 +152,7 @@ class NewContent extends Component {
             <li>{'<empty>'}</li>
           )}
           {this.state.images.map(function(image, i) {
-            return <li key={i}>{image.name}</li>
+            return <li className="img-box" data-key={i} key={i}><p className="img-box">{image.name}</p>{delBtn}</li>
           })}
         </ul>
         <button type="button" className="small-btn" onClick={this.openModalSecondary}>Add Image</button>

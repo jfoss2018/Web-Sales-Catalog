@@ -50,7 +50,7 @@ class DeleteUser extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     axios({
-      method: 'put',
+      method: 'delete',
       url: `/api/v1/users/${this.state.id}`,
       /*proxy: {
         host: '127.0.0.1',
@@ -58,11 +58,6 @@ class DeleteUser extends Component {
       },*/
       headers: {
         'Content-Type': 'application/json'
-      },
-      data: {
-        email: this.state.email,
-        phone: this.state.phone,
-        authorization: this.state.authorization
       }
     })
     .then(response => {

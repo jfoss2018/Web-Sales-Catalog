@@ -8,7 +8,7 @@ const ContentItem = (props) => {
       <td>{props.itemInfo.name}</td>
       <td>{props.itemInfo.price}</td>
       <td>{props.itemInfo.bids.length}</td>
-      <td>{props.itemInfo.viewable}</td>
+      <td>{props.itemInfo.viewable ? 'Yes' : 'No'}</td>
     </tr>
   );
 }

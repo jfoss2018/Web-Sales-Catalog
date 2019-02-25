@@ -24,4 +24,10 @@ function edit(req, res, next) {
   });
 }
 
-module.exports = { all, single, edit };
+function deleteOne(req, res, next) {
+  User.deleteOne({_id: req.params.id}, function(err) {
+    res.status('200').json({message: 'Deleted!'});
+  });
+}
+
+module.exports = { all, single, edit, deleteOne };

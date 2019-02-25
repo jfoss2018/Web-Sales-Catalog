@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import NewContent from './newContent.js';
 import ContentItem from './contentItem.js';
+import EditContent from './editContent.js';
+import DeleteContent from './deleteContent.js';
 
 class DashboardContent extends Component {
   constructor() {
@@ -96,9 +98,9 @@ class DashboardContent extends Component {
     if (this.state.selectedAction === 'new') {
       modalContents = <NewContent updateList={this.updateList} />
     } else if (this.state.selectedAction === 'edit') {
-      modalContents = <p>Edit</p>
+      modalContents = <EditContent id={this.state.selectedItem} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {
-      modalContents = <p>Delete</p>
+      modalContents = <DeleteContent id={this.state.selectedItem} updateList={this.updateList} />
     } else {
       modalContents = null;
     }

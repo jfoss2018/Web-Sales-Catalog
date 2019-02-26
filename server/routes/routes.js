@@ -4,6 +4,7 @@ const loginMid = require('./middleware/loginRoute.js');
 const userMid = require('./middleware/userRoute.js');
 const pageMid = require('./middleware/pageRoute.js');
 const contentMid = require('./middleware/contentRoute.js');
+const questionMid = require('./middleware/questionRoute.js');
 const fs = require('fs');
 const Page = require('../database/models/page.js');
 
@@ -33,6 +34,8 @@ router.get('/contents', contentMid.retrieve);
 router.get('/contents/:id', contentMid.retrieveSingle);
 
 router.put('/contents/:id', contentMid.pictureMid, contentMid.edit);
+
+router.post('/contents/:id/questions', questionMid.question, contentMid.pushQuestion, contentMid.retrieveSingle);
 
 router.post('/contents', contentMid.pictureMid, contentMid.setup);
 

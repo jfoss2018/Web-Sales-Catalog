@@ -69,20 +69,29 @@ function retrieve(req, res, next) {
 }
 
 function retrieveSingle(req, res, next) {
-  Content.find({_id: req.params.id}, function(err, content) {
-    for (let i = 0; i < content[0].images.length; i += 1) {
+  Content.findById(req.params.id).populate('questions').exec(function(err, content) {
+    for (let i = 0; i < content.images.length; i += 1) {
       const newImage = {
-        _id: content[0].images[i]._id,
-        name: content[0].images[i].name,
-        contentType: content[0].images[i].contentType,
-        src: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`,
-        original: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`,
-        thumbnail: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`
+        _id: content.images[i]._id,
+        name: content.images[i].name,
+        contentType: content.images[i].contentType,
+        src: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
+        original: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
+        thumbnail: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`
       }
-      content[0].images[i] = newImage;
+      content.images[i] = newImage;
     }
     res.status('200').json({content: content})
   });
+}
+
+function pushQuestion(req, res, next) {
+  Content.findById(req.params.id).exec(function(err, content) {
+    content.questions.push(req.question);
+    content.save(function(err, updatedContnet) {
+      next();
+    })
+  })
 }
 
 function deleteContent(req, res, next) {
@@ -91,4 +100,4 @@ function deleteContent(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent };
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion };

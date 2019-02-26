@@ -418,6 +418,11 @@ section h1.detail {
   text-align: center;
 }
 
+.textarea-form-control {
+  width: calc(100% - 26px);
+  margin: 10px;
+}
+
 @media screen and (min-width: 590px) {
   section button.detail {
     margin-left: 20px;

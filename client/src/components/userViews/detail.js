@@ -42,7 +42,7 @@ class Detail extends Component {
       */
 
       this.setState({
-        contents: response.data.content[0],
+        contents: response.data.content,
         loading: false
       });
 
@@ -53,7 +53,38 @@ class Detail extends Component {
   }
 
   submitQuestion = () => {
-    console.log('must do submit question.');
+    axios({
+      method: 'post',
+      url: `/api/v1/contents/${this.state.contents._id}/questions`,
+      /*proxy: {
+        host: '127.0.0.1',
+        port: 3001
+      },*/
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        question: this.state.question
+      }
+    })
+    .then(response => {
+      /*
+      this.loginForm[0].value = '';
+      this.loginForm[1].value = '';
+      this.loginForm[2].value = '';
+      this.loginForm[3].value = '';
+      */
+
+      this.setState({
+        contents: response.data.content,
+        loading: false,
+        question: ''
+      });
+
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   handleChange = (e) => {
@@ -120,7 +151,7 @@ class Detail extends Component {
             <section className="login-form">
               <h1 className="login-title">Ask Question</h1>
               <p className="login-form-control">Input your question below, and we will do our best to answer it in a timely manner. Thank you for your interest!</p>
-              <textarea className="login-form-control" rows="4" type="text" name="question" id="question" onChange={this.handleChange}></textarea>
+              <textarea className="textarea-form-control" rows="4" type="text" name="question" id="question" onChange={this.handleChange}></textarea>
               <button className="login-form-control" type="button" onClick={this.submitQuestion}>Submit</button>
             </section>
           </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DashboardUser from './manageUser/dashboardUser.js';
 import DashboardPage from './managePageLayout/dashboardPage.js';
 import DashboardContent from './manageContent/dashboardContent.js';
+import DashboardQuestion from './manageQuestions/dashboardQuestions.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -48,6 +49,9 @@ class Dashboard extends Component {
             )}
             {(this.state.dashboardNum === 2) && (
               <DashboardContent />
+            )}
+            {(this.state.dashboardNum === 5) && (
+              <DashboardQuestion />
             )}
           </div>
         </div>

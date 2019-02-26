@@ -31,6 +31,14 @@ router.put('/page/:id', pageMid.pictureMid, pageMid.edit);
 
 router.get('/contents', contentMid.retrieve);
 
+router.get('/contents/questions', questionMid.retrieve);
+
+router.get('/contents/questions/:id', questionMid.retrieveSingle);
+
+router.delete('/contents/:id/questions/:qid', questionMid.deleteQuestion, contentMid.deleteQuestion);
+
+router.put('/contents/:id/questions/:qid/answer', questionMid.answerQuestion);
+
 router.get('/contents/:id', contentMid.retrieveSingle);
 
 router.put('/contents/:id', contentMid.pictureMid, contentMid.edit);

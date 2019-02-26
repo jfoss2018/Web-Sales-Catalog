@@ -100,4 +100,14 @@ function deleteContent(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion };
+function deleteQuestion(req, res, next) {
+  Content.findById(req.params.id).exec(function(err, content) {
+    const index = content.questions.indexOf(req.params.qid);
+    content.questions.splice(index, 1);
+    content.save(function(err, newContent) {
+      res.status('200').json({message: 'Deleted!'});
+    });
+  });
+}
+
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion };

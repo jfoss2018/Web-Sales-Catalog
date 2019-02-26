@@ -15,4 +15,31 @@ function question(req, res, next) {
   });
 }
 
-module.exports = { question };
+function retrieve(req, res, next) {
+  Question.find({}, null, {sort: {askDate: -1}}).populate('content', 'name').exec(function(err, questions) {
+    res.status('200').json({questions: questions});
+  });
+}
+
+function retrieveSingle(req, res, next) {
+  Question.findById(req.params.id).populate('content', 'name').exec(function(err, question) {
+    res.status('200').json({question: question});
+  });
+}
+
+function deleteQuestion(req, res, next) {
+  Question.deleteOne({_id: req.params.qid}, function(err) {
+    next();
+  });
+}
+
+function answerQuestion(req, res, next) {
+  Question.updateOne({_id: req.params.qid}, {answer: {
+    answer: req.body.answer,
+    answerDate: moment.utc()
+  }}, {runValidators: true}, function(err, result) {
+    res.status('200').json({message: 'Updated'});
+  });
+}
+
+module.exports = { question, retrieve, retrieveSingle, deleteQuestion, answerQuestion };

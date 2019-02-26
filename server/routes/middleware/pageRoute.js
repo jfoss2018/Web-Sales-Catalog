@@ -31,6 +31,7 @@ function setup(req, res, next) {
 
 function retrieve(req, res, next) {
   Page.find({}, function(err, page) {
+    console.log(page);
     const src = `data:${page[0].image.contentType};base64,${page[0].image.data.toString('base64')}`;
     res.status('200').json({page: page[0], src: src})
   });

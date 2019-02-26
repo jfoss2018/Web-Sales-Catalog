@@ -36,16 +36,16 @@ class EditContent extends Component {
     })
     .then(response => {
       this.setState({
-        name: response.data.content[0].name,
-        description: response.data.content[0].description,
-        featured: response.data.content[0].featured,
-        price: response.data.content[0].price,
-        viewable: response.data.content[0].viewable,
-        images: response.data.content[0].images,
-        bids: response.data.content[0].bids,
-        questions: response.data.content[0].questions,
-        postedDate: moment.utc(response.data.content[0].postedDate).toDate(),
-        lastEditDate: moment.utc(response.data.content[0].lastEditDate).toDate()
+        name: response.data.content.name,
+        description: response.data.content.description,
+        featured: response.data.content.featured,
+        price: response.data.content.price,
+        viewable: response.data.content.viewable,
+        images: response.data.content.images,
+        bids: response.data.content.bids,
+        questions: response.data.content.questions,
+        postedDate: moment.utc(response.data.content.postedDate).toDate(),
+        lastEditDate: moment.utc(response.data.content.lastEditDate).toDate()
       });
     })
     .catch((error) => {

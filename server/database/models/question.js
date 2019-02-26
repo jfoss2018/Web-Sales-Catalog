@@ -13,7 +13,7 @@ const QuestionSchema = new Schema({
     type: String,
     required: [true, 'Question is required.']
   },
-  answers: [{
+  answer: {
     answer: {
       type: String,
       required: false
@@ -27,7 +27,7 @@ const QuestionSchema = new Schema({
       type: Date,
       required: false
     }
-  }],
+  },
   askDate: {
     type: Date,
     required: [true, 'Posting date is required.']

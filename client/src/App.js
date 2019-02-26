@@ -75,7 +75,7 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <Route exact path="/" render={() => <Home list={filteredItems} updateState={this.updateState} page={this.state.page} src={this.state.src} browserPath={this.browserPath} />} />
-            <Route path="/catalog/:item" render={() => <Detail browserPath={this.browserPath} />} />
+            <Route path="/catalog/:item" render={() => <Detail page={this.state.page} browserPath={this.browserPath} />} />
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" render={() => <LoginPage />} />
           </Switch>

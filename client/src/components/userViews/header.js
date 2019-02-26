@@ -1,9 +1,13 @@
 import React from 'react';
 
-const Header = () => {
+const Header = (props) => {
   return (
     <header>
-      <svg version="1.1" id="Layer_1" x="0px" y="0px"
+      {(props.page.showTitle) && (
+        <h1 className="page-title">{props.page.title}</h1>
+      )}
+      <img className="header-img" src={props.src} alt="Header" />
+      {/*<svg version="1.1" id="Layer_1" x="0px" y="0px"
          viewBox="0 0 1440 400">
         <line className="st0" x1="456" y1="38.9" x2="456" y2="38.9"/>
         <rect x="0" y="0" className="st1" width="1440" height="400"/>
@@ -54,7 +58,7 @@ const Header = () => {
           <circle className="st6" cx="636.9" cy="260.6" r="20.1"/>
           <ellipse className="st6" cx="784.1" cy="246" rx="35.3" ry="36.5"/>
         </g>
-      </svg>
+      </svg>*/}
     </header>
   );
 }

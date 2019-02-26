@@ -53,12 +53,34 @@ function pictureMid(req, res, next) {
 
 function retrieve(req, res, next) {
   Content.find({}, function(err, contents) {
+    for (let i = 0; i < contents.length; i += 1) {
+      for (let j = 0; j < contents[i].images.length; j += 1) {
+        const newImage = {
+          _id: contents[i].images[j]._id,
+          name: contents[i].images[j].name,
+          contentType: contents[i].images[j].contentType,
+          src: `data:${contents[i].images[j].contentType};base64,${contents[i].images[j].data.toString('base64')}`
+        }
+        contents[i].images[j] = newImage;
+      }
+    }
     res.status('200').json({contents: contents})
   });
 }
 
 function retrieveSingle(req, res, next) {
   Content.find({_id: req.params.id}, function(err, content) {
+    for (let i = 0; i < content[0].images.length; i += 1) {
+      const newImage = {
+        _id: content[0].images[i]._id,
+        name: content[0].images[i].name,
+        contentType: content[0].images[i].contentType,
+        src: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`,
+        original: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`,
+        thumbnail: `data:${content[0].images[i].contentType};base64,${content[0].images[i].data.toString('base64')}`
+      }
+      content[0].images[i] = newImage;
+    }
     res.status('200').json({content: content})
   });
 }

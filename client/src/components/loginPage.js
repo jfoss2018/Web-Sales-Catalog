@@ -1,11 +1,11 @@
 import React from 'react';
-import Login from './login.js';
+import CreateUser from './manageUser/createUser.js';
 import Page from './page.js';
 
 const LoginPage = () => {
   return (
     <div className="login-wrapper">
-      <Login title={'Register'} />
+      <CreateUser title={'Register'} />
       <Page />
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import DashboardUser from './dashboardUser.js';
+import DashboardUser from './manageUser/dashboardUser.js';
 import DashboardPage from './managePageLayout/dashboardPage.js';
 import DashboardContent from './manageContent/dashboardContent.js';
 

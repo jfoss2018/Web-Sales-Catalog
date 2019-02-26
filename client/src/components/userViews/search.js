@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SearchInput, { createFilter } from 'react-search-input';
-import data from '../data.json';
+import data from '../../data.json';
 const items = data.items;
 
 const KEYS_TO_FILTERS = ['name'];

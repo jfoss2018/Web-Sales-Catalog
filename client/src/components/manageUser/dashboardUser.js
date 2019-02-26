@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DashboardUserItem from './dashboardUserItem.js';
-import Login from './login.js';
+import CreateUser from './createUser.js';
 import EditUser from './editUser.js';
 import DeleteUser from './deleteUser.js';
 
@@ -96,7 +96,7 @@ class DashboardUser extends Component {
   render() {
     let modalContents;
     if (this.state.selectedAction === 'new') {
-      modalContents = <Login title={'Create User'} updateList={this.updateList} />
+      modalContents = <CreateUser title={'Create User'} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'edit') {
       modalContents = <EditUser id={this.state.selectedUser} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {

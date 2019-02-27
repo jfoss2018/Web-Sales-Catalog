@@ -119,4 +119,14 @@ function deleteQuestion(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion, pushBid };
+function deleteBid(req, res, next) {
+  Content.findById(req.params.id).exec(function(err, content) {
+    const index = content.bids.indexOf(req.params.bid);
+    content.bids.splice(index, 1);
+    content.save(function(err, newContent) {
+      res.status('200').json({message: 'Deleted!'});
+    });
+  });
+}
+
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion, pushBid, deleteBid };

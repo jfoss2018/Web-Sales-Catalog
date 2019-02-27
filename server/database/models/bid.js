@@ -39,6 +39,10 @@ const BidSchema = new Schema({
   content: {
     type: ObjectId,
     ref: 'Content'
+  },
+  viewed: {
+    type: Boolean,
+    required: [true, 'Viewed Boolean is required.']
   }
 });
 

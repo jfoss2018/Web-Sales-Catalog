@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import AppointmentItem from './appointmentItem.js';
-import DeleteAppointment from './deleteAppointment.js';
-import ViewAppointment from './viewAppointment.js';
+import BidItem from './bidItem.js';
+import DeleteBid from './deleteBid.js';
+import ViewBid from './viewBid.js';
 
 class DashboardAppointment extends Component {
   constructor() {
     super();
     this.state = {
-      appointments: [],
+      bids: [],
       selectedItem: null,
       selectedAction: ''
     }
@@ -19,7 +19,7 @@ class DashboardAppointment extends Component {
   updateList = () => {
     axios({
       method: 'get',
-      url: '/api/v1/appointments',
+      url: '/api/v1/contents/bids',
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
@@ -36,7 +36,7 @@ class DashboardAppointment extends Component {
       this.loginForm[3].value = '';
       */
       this.setState({
-        appointments: response.data.appointments,
+        bids: response.data.bids,
         selectedItem: null,
         selectedAction: 'empty'
       });
@@ -95,9 +95,9 @@ class DashboardAppointment extends Component {
   render() {
     let modalContents;
     if (this.state.selectedAction === 'view') {
-      modalContents = <ViewAppointment id={this.state.selectedItem} updateList={this.updateList} />
+      modalContents = <ViewBid id={this.state.selectedItem} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {
-      modalContents = <DeleteAppointment id={this.state.selectedItem} updateList={this.updateList} />
+      modalContents = <DeleteBid id={this.state.selectedItem} updateList={this.updateList} />
     } else {
       modalContents = null;
     }
@@ -107,14 +107,14 @@ class DashboardAppointment extends Component {
     if (this.state.selectedItem) {
       buttons =
         <div className="user-controls">
-          <button value="view" onClick={this.openModal} className="user-edit user-control-btn">View Appointment</button>
-          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Appointment</button>
+          <button value="view" onClick={this.openModal} className="user-edit user-control-btn">View Bid</button>
+          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Bid</button>
         </div>
     } else {
       buttons =
         <div className="user-controls">
-          <button disabled className="user-edit user-control-btn">View Appointment</button>
-          <button disabled className="user-delete user-control-btn">Delete Appointment</button>
+          <button disabled className="user-edit user-control-btn">View Bid</button>
+          <button disabled className="user-delete user-control-btn">Delete Bid</button>
         </div>
     }
 
@@ -126,14 +126,14 @@ class DashboardAppointment extends Component {
             <thead>
               <tr>
                 <th>Record</th>
-                <th>Name</th>
-                <th>Preferred Time</th>
+                <th>Item</th>
+                <th>Amount</th>
                 <th>Viewed</th>
               </tr>
             </thead>
             <tbody onClick={this.toggleActive}>
-              {this.state.appointments.map(function(appoint, i) {
-                return <AppointmentItem key={i} record={i} appointInfo={appoint} />
+              {this.state.bids.map(function(bid, i) {
+                return <BidItem key={i} record={i} bidInfo={bid} />
               })}
             </tbody>
           </table>

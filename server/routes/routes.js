@@ -33,13 +33,21 @@ router.put('/page/:id', pageMid.pictureMid, pageMid.edit);
 
 router.get('/contents', contentMid.retrieve);
 
+router.get('/contents/bids', bidMid.retrieve);
+
+router.get('/contents/bids/:id', bidMid.retrieveSingle);
+
 router.get('/contents/questions', questionMid.retrieve);
 
 router.get('/contents/questions/:id', questionMid.retrieveSingle);
 
 router.delete('/contents/:id/questions/:qid', questionMid.deleteQuestion, contentMid.deleteQuestion);
 
+router.delete('/contents/:id/bids/:bid', bidMid.deleteBid, contentMid.deleteBid);
+
 router.put('/contents/:id/questions/:qid/answer', questionMid.answerQuestion);
+
+router.put('/contents/:id/bids/:bid', bidMid.edit);
 
 router.get('/contents/:id', contentMid.retrieveSingle);
 

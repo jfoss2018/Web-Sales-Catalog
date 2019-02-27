@@ -4,6 +4,7 @@ import DashboardPage from './managePageLayout/dashboardPage.js';
 import DashboardContent from './manageContent/dashboardContent.js';
 import DashboardQuestion from './manageQuestions/dashboardQuestions.js';
 import DashboardAppointment from './manageAppointments/dashboardAppointments.js';
+import DashboardBid from './manageBids/dashboardBids.js';
 
 class Dashboard extends Component {
   constructor() {
@@ -53,6 +54,9 @@ class Dashboard extends Component {
             )}
             {(this.state.dashboardNum === 3) && (
               <DashboardAppointment />
+            )}
+            {(this.state.dashboardNum === 4) && (
+              <DashboardBid />
             )}
             {(this.state.dashboardNum === 5) && (
               <DashboardQuestion />

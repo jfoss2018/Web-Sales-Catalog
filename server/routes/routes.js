@@ -57,4 +57,10 @@ router.post('/appointments', appointmentMid.setup);
 
 router.get('/appointments', appointmentMid.retrieve);
 
+router.get('/appointments/:id', appointmentMid.retrieveSingle);
+
+router.put('/appointments/:id', appointmentMid.edit);
+
+router.delete('/appointments/:id', appointmentMid.deleteAppointment);
+
 module.exports = router;

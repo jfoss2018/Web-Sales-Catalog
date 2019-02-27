@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import AppointmentItem from './appointmentItem.js';
+import DeleteAppointment from './deleteAppointment.js';
+import ViewAppointment from './viewAppointment.js';
 
 class DashboardAppointment extends Component {
   constructor() {
@@ -93,12 +95,10 @@ class DashboardAppointment extends Component {
 
   render() {
     let modalContents;
-    if (this.state.selectedAction === 'new') {
-      modalContents = <p>New</p>
-    } else if (this.state.selectedAction === 'edit') {
-      modalContents = <p>Edit</p>
+    if (this.state.selectedAction === 'view') {
+      modalContents = <ViewAppointment id={this.state.selectedItem} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {
-      modalContents = <p>Delete</p>
+      modalContents = <DeleteAppointment id={this.state.selectedItem} updateList={this.updateList} />
     } else {
       modalContents = null;
     }
@@ -108,16 +108,14 @@ class DashboardAppointment extends Component {
     if (this.state.selectedItem) {
       buttons =
         <div className="user-controls">
-          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New Item</button>
-          <button value="edit" onClick={this.openModal} className="user-edit user-control-btn">Edit Item</button>
-          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Item</button>
+          <button value="view" onClick={this.openModal} className="user-edit user-control-btn">View Appointment</button>
+          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Appointment</button>
         </div>
     } else {
       buttons =
         <div className="user-controls">
-          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New Item</button>
-          <button disabled className="user-edit user-control-btn">Edit Item</button>
-          <button disabled className="user-delete user-control-btn">Delete Item</button>
+          <button disabled className="user-edit user-control-btn">View Appointment</button>
+          <button disabled className="user-delete user-control-btn">Delete Appointment</button>
         </div>
     }
 

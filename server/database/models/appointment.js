@@ -21,7 +21,7 @@ const AppointmentSchema = new Schema({
     required: [true, 'Bidder Email is required.']
   },
   phone: {
-    type: Number,
+    type: String,
     required: [true, 'Phone Number is required.']
   },
   preference: {
@@ -36,9 +36,9 @@ const AppointmentSchema = new Schema({
     type: Date,
     required: [true, 'Preferred date is required.']
   },
-  preferredTime: {
-    type: Date,
-    required: [true, 'Preferred time is required.']
+  viewed: {
+    type: Boolean,
+    required: [true, 'Viewed Boolean is required.']
   }
 });
 

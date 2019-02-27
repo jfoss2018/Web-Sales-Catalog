@@ -163,7 +163,7 @@ class Detail extends Component {
         <div className="style-block">
         </div>
         <div className="offerBtn">
-          <ModalBox text={"Make Offer"} />
+          <ModalBox id={this.state.contents._id} text={"Make Offer"} />
         </div>
         <div className="gallery-wrapper">
           <MyComponent images={this.state.contents.images} />
@@ -172,7 +172,7 @@ class Detail extends Component {
         <p className="bid">Current highest bid: ${'sort from database'}</p>
         <p className="description">{this.state.contents.description}</p>
         <div className="appointmentBtn">
-          <ModalBox text={"Schedule Appointment"} />
+          <ModalBox id={this.state.contents._id} text={"Schedule Appointment"} />
         </div>
         <p className="question">Have a question about this item?</p>
         <p className="question-2"><button onClick={this.openModalDetail}>Ask Question</button></p>

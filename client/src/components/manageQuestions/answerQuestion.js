@@ -9,7 +9,7 @@ class AnswerQuestion extends Component {
       question: null,
       item: null,
       contentId: null,
-      answer: null
+      answer: ''
     }
   }
 

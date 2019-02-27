@@ -5,6 +5,8 @@ const userMid = require('./middleware/userRoute.js');
 const pageMid = require('./middleware/pageRoute.js');
 const contentMid = require('./middleware/contentRoute.js');
 const questionMid = require('./middleware/questionRoute.js');
+const appointmentMid = require('./middleware/appointmentRoute.js');
+const bidMid = require('./middleware/bidRoute.js');
 const fs = require('fs');
 const Page = require('../database/models/page.js');
 
@@ -45,8 +47,14 @@ router.put('/contents/:id', contentMid.pictureMid, contentMid.edit);
 
 router.post('/contents/:id/questions', questionMid.question, contentMid.pushQuestion, contentMid.retrieveSingle);
 
+router.post('/contents/:id/bids', bidMid.setup, contentMid.pushBid);
+
 router.post('/contents', contentMid.pictureMid, contentMid.setup);
 
 router.delete('/contents/:id', contentMid.deleteContent);
+
+router.post('/appointments', appointmentMid.setup);
+
+router.get('/appointments', appointmentMid.retrieve);
 
 module.exports = router;

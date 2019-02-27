@@ -94,6 +94,15 @@ function pushQuestion(req, res, next) {
   })
 }
 
+function pushBid(req, res, next) {
+  Content.findById(req.params.id).exec(function(err, content) {
+    content.bids.push(req.bid._id);
+    content.save(function(err, updatedContnet) {
+      res.status('200').json({message: 'Added!'});
+    });
+  });
+}
+
 function deleteContent(req, res, next) {
   Content.deleteOne({_id: req.params.id}, function(err) {
     res.status('200').json({message: 'Deleted!'});
@@ -110,4 +119,4 @@ function deleteQuestion(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion };
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion, pushBid };

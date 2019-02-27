@@ -4,6 +4,7 @@ import MaskedInput from 'react-text-mask';
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from 'axios';
 
 export default class ModalBox extends Component {
     constructor(props) {
@@ -13,6 +14,92 @@ export default class ModalBox extends Component {
             startDate: new Date()
         }
         this.handleChange = this.handleChange.bind(this);
+        this.modalForm = React.createRef();
+    }
+
+    submitForm = (e) => {
+      e.preventDefault();
+      if (this.props.text === 'Make Offer') {
+        this.submitBid();
+      } else if (this.props.text === 'Schedule Appointment') {
+        this.submitAppointment();
+      }
+    }
+
+    submitAppointment = () => {
+      axios({
+        method: 'post',
+        url: '/api/v1/appointments',
+        /*proxy: {
+          host: '127.0.0.1',
+          port: 3001
+        },*/
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name: this.modalForm[0].value,
+          email: this.modalForm[1].value,
+          phone: this.modalForm[2].value,
+          preference: this.modalForm[3].value,
+          preferredDate: this.modalForm[4].value,
+          preferredTime: this.modalForm[5].value
+        }
+      })
+      .then(response => {
+
+        this.modalForm[0].value = '';
+        this.modalForm[1].value = '';
+        this.modalForm[2].value = '';
+        this.modalForm[4].value = '';
+        this.modalForm[5].value = '';
+
+        this.setState({
+          startDate: new Date()
+        });
+
+        this.closeModal();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+
+    submitBid = () => {
+      axios({
+        method: 'post',
+        url: `/api/v1/contents/${this.props.id}/bids`,
+        /*proxy: {
+          host: '127.0.0.1',
+          port: 3001
+        },*/
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name: this.modalForm[0].value,
+          email: this.modalForm[1].value,
+          phone: this.modalForm[2].value,
+          preference: this.modalForm[3].value,
+          amount: this.modalForm[4].value
+        }
+      })
+      .then(response => {
+
+        this.modalForm[0].value = '';
+        this.modalForm[1].value = '';
+        this.modalForm[2].value = '';
+        this.modalForm[4].value = '';
+
+        this.setState({
+          startDate: new Date()
+        });
+
+        this.closeModal();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
     }
 
     openModal() {
@@ -91,7 +178,7 @@ export default class ModalBox extends Component {
                     <h1>{this.props.text}</h1>
                     <p>{displayP}</p>
                     <button className="close-btn" onClick={() => this.closeModal()}>X</button>
-                    <form className="modal">
+                    <form ref={form => this.modalForm = form} className="modal" onSubmit={this.submitForm}>
                       <label htmlFor="name">Name</label>
                       <input id="name" name="name" type="text" />
                       <label htmlFor="email">Email</label>

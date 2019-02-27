@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
-
+const ObjectId = Schema.Types.ObjectId;
 
 const BidSchema = new Schema({
   name: {
@@ -21,11 +21,11 @@ const BidSchema = new Schema({
     required: [true, 'Bidder Email is required.']
   },
   phone: {
-    type: Number,
+    type: String,
     required: [true, 'Phone Number is required.']
   },
   amount: {
-    type: Number,
+    type: String,
     required: [true, 'Bidder must offer an amount.']
   },
   preference: {
@@ -35,6 +35,10 @@ const BidSchema = new Schema({
   bidDate: {
     type: Date,
     required: [true, 'Bid date is required.']
+  },
+  content: {
+    type: ObjectId,
+    ref: 'Content'
   }
 });
 

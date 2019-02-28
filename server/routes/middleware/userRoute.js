@@ -1,4 +1,24 @@
 const User = require('../../database/models/user.js');
+const error = require('./errorRoute.js');
+
+function setup(req, res, next) {
+  const { username, password, email, phone } = req.body;
+  User.findOne({username: username}, function(err, user) {
+    if (err) return next(err);
+    if (user) return next(error.duplicateUser());
+    const newUser = new User({
+      username: username,
+      password: password,
+      email: email,
+      phone: phone,
+      authorization: '0'
+    });
+    newUser.save(function(err, savedUser) {
+      if (err) return next(err);
+      res.status('201').json({message: 'User created!'});
+    });
+  });
+}
 
 function all(req, res, next) {
   User.find({}, function(err, docs) {
@@ -30,4 +50,4 @@ function deleteOne(req, res, next) {
   });
 }
 
-module.exports = { all, single, edit, deleteOne };
+module.exports = { all, single, edit, deleteOne, setup };

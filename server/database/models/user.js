@@ -26,11 +26,11 @@ const UserSchema = new Schema({
     required: [true, 'Email is required.']
   },
   phone: {
-    type: Number,
+    type: String,
     required: [true, 'Phone Number is required.']
   },
   authorization: {
-    type: Number
+    type: String
   }
 });
 

@@ -692,7 +692,7 @@ Dashboard
 ==========================================================================*/
 
 .dashboard-wrapper {
-  background-color: white;
+  background-image: linear-gradient(#7bd1e6, #3b95ab);
   width: 100vw;
   height: 100vh;
 }
@@ -703,7 +703,7 @@ Dashboard
   max-width: 1080px;
   margin-left: auto;
   margin-right: auto;
-  background-color: white;
+  background-image: linear-gradient(#7bd1e6, #3b95ab);
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: min-content min-content auto;
@@ -739,12 +739,16 @@ Dashboard
 .dashboard-categories > li {
   display: block;
   width: calc(100% - 20px);
-  border: 1px solid black;
+  height: 36px;
   margin: 0 10px 5px 10px;
   text-align: center;
-  padding: 4px 0;
   font-size: 18px;
   font-weight: bold;
+}
+
+.li-btn {
+  width: 100%;
+  height: 100%;
 }
 
 @media screen and (min-width: 940px) {
@@ -801,6 +805,7 @@ User Manage
 
 .user-controls {
   width: calc(100% - 20px);
+  background-image: linear-gradient(#eee, #ddd);
   display: flex;
   border: 2px solid #666;
   margin: 10px 10px 4px 10px;
@@ -837,6 +842,7 @@ User Manage
 .user-list-wrapper {
   width: calc(100% - 20px);
   border: 2px solid #666;
+  background-image: linear-gradient(#ddd, #bbb);
   margin: 0 10px 10px 10px;
   padding: 0;
   height: auto;
@@ -1187,6 +1193,202 @@ button.img-box {
 }
 
 /*==========================================================================
+Login
 ==========================================================================*/
+
+.init-login-wrapper {
+  width: 100vw;
+  height: 100%;
+  min-height: 100vh;
+  background-image: linear-gradient(#7bd1e6, #3b95ab);
+  overflow: auto;
+}
+
+.init-login-form {
+  margin: 15% auto 0 auto;
+  background-image: linear-gradient(#eee, #bbb);
+  width: 98vw;
+  overflow: auto;
+  border-radius: 4px;
+  max-width: 500px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.init-login-title {
+  margin: 0 25px 20px 25px;
+  padding-top: 25px;
+  font-family: 'Exo', sans-serif;
+  font-size: 1.3rem;
+}
+
+.init-login-form-control {
+  display: block;
+  margin: 0 25px 0 25px;
+}
+
+label.init-login-form-control {
+  padding-bottom: 3px;
+  font-family: 'Exo', sans-serif;
+  font-size: 1rem;
+  margin-left: 35px;
+}
+
+input.init-login-form-control {
+  font-family: arial;
+  margin-bottom: 10px;
+  height: 30px;
+  width: calc(100% - 64px);
+  border-radius: 4px;
+  line-height: 30px;
+  font-size: 1.1rem;
+  padding-left: 8px;
+}
+
+input.init-login-form-control:hover {
+  background-color: rgba(80, 169, 237, .2);
+}
+
+.init-login-hr,
+.init-login-hr-2 {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.init-login-hr-2 {
+  margin-top: 15px;
+}
+
+.init-login-btn {
+  /*-webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+	-o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);*/
+	transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  font-family: 'Exo', sans-serif;
+  font-size: 1.1rem;
+	margin: 15px 25px 15px auto;
+	width: 180px;
+	text-decoration: none;
+	border-radius: 4px;
+	padding: 5px 30px;
+  color: rgba(61, 61, 57);
+	box-shadow: rgba(204, 207, 196) 0 0px 0px 1px inset;
+  cursor: pointer;
+}
+
+.init-login-btn:hover {
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.85);
+	box-shadow: rgba(40, 191, 34, 0.7) 0 80px 0px 2px inset;
+}
+
+.init-register {
+  margin: 0 25px 5px 35px;
+  font-size: .9rem;
+}
+
+.init-login-register-btn {
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  color: #0000ee;
+  outline: none;
+}
+
+.init-login-register-btn:active {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  color: red;
+}
+
+.init-login-modal,
+.init-message-modal {
+  display: none;
+  position: fixed;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0,0,0);
+  background-color: rgba(0,0,0,0.6);
+}
+
+.init-message-modal {
+  z-index: 7;
+}
+
+.init-login-modal-content,
+.init-message-modal-content {
+  background-image: linear-gradient(#eee, #bbb);
+  margin: 15% auto 0 auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: calc(98vw - 2px);
+  max-width: 500px;
+}
+
+.init-message-modal-content {
+  margin: 20% auto 0 auto;
+  width: calc(98vw - 2px);
+  max-width: 750px;
+}
+
+.success {
+  background-image: linear-gradient(rgba(137, 255, 78, .8), rgba(168, 255, 128, .9));
+}
+
+.fail {
+  background-image: linear-gradient(rgba(255, 124, 109, .8), rgba(255, 75, 59, .9));
+}
+
+.init-message-title {
+  margin: 0 25px 20px 25px;
+  padding-top: 25px;
+  font-family: 'Exo', sans-serif;
+  font-size: 1.3rem;
+  display: block;
+  text-align: center;
+}
+
+.init-message-form-control {
+  display: block;
+  margin: 0 25px 25px 25px;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.init-login-modal-close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 10px 25px 0 auto;
+}
+
+.init-login-modal-close:hover,
+.init-login-modal-close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.invalid-feedback,
+.c-pass {
+  color: red;
+  font-weight: bold;
+  margin: -8px 35px 30px 35px;
+}
+
+.c-pass,
+.phone-val,
+.email-val {
+  margin-top: 0;
+}
 /*==========================================================================
 ==========================================================================*/

@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   res.json({message: 'We did it!'});
 });
 
-router.post('/login', loginMid);
+router.post('/users', userMid.setup);
 
 router.get('/users', userMid.all);
 

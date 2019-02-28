@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import axios from 'axios';
 
 class Edit extends PureComponent {
   state = {
@@ -110,7 +109,6 @@ class Edit extends PureComponent {
     const newImage = new Image();
     const width = this.props.width;
     const height = this.props.height;
-    const fileName = 'brandnew.jpeg';
     newImage.src = url;
     newImage.onload = () => {
       const elem = document.createElement('canvas');

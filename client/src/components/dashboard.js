@@ -10,7 +10,7 @@ class Dashboard extends Component {
   constructor() {
     super();
     this.state = {
-      dashboardNum: 0
+      dashboardBtn: 'users'
     }
   }
 
@@ -18,13 +18,11 @@ class Dashboard extends Component {
     const listItems = document.querySelectorAll('.list-btn');
     for (let i = 0; i < listItems.length; i += 1) {
       listItems[i].classList.remove('active');
-      if (e.target === listItems[i]) {
-        this.setState({
-          dashboardNum: i
-        });
-      }
     }
-    e.target.classList.add('active');
+    this.setState({
+      dashboardBtn: e.target.name
+    });
+    e.target.closest('li').classList.add('active');
   }
 
   render() {
@@ -34,31 +32,31 @@ class Dashboard extends Component {
           <h1 className="dashboard-title">Dashboard</h1>
           <div className="dashboard-left">
             <ul className="dashboard-categories">
-              <li className="list-btn active" onClick={this.toggleActive}>Manage Users</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Page</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Contents</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Appointments</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Bids</li>
-              <li className="list-btn" onClick={this.toggleActive}>Manage Questions</li>
+              <li className="list-btn active"><button className="li-btn" name="users" onClick={this.toggleActive}>Manage Users</button></li>
+              <li className="list-btn"><button className="li-btn" name="page" onClick={this.toggleActive}>Manage Page</button></li>
+              <li className="list-btn"><button className="li-btn" name="contents" onClick={this.toggleActive}>Manage Contents</button></li>
+              <li className="list-btn"><button className="li-btn" name="appointments" onClick={this.toggleActive}>Manage Appointments</button></li>
+              <li className="list-btn"><button className="li-btn" name="bids" onClick={this.toggleActive}>Manage Bids</button></li>
+              <li className="list-btn"><button className="li-btn" name="questions" onClick={this.toggleActive}>Manage Questions</button></li>
             </ul>
           </div>
           <div className="dashboard-right">
-            {(this.state.dashboardNum === 0) && (
+            {(this.state.dashboardBtn === 'users') && (
               <DashboardUser />
             )}
-            {(this.state.dashboardNum === 1) && (
+            {(this.state.dashboardBtn === 'page') && (
               <DashboardPage />
             )}
-            {(this.state.dashboardNum === 2) && (
+            {(this.state.dashboardBtn === 'contents') && (
               <DashboardContent />
             )}
-            {(this.state.dashboardNum === 3) && (
+            {(this.state.dashboardBtn === 'appointments') && (
               <DashboardAppointment />
             )}
-            {(this.state.dashboardNum === 4) && (
+            {(this.state.dashboardBtn === 'bids') && (
               <DashboardBid />
             )}
-            {(this.state.dashboardNum === 5) && (
+            {(this.state.dashboardBtn === 'questions') && (
               <DashboardQuestion />
             )}
           </div>

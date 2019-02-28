@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import data from '../../data.json';
 import MyComponent from './carousel.js';
 import ModalBox from './modal.js';
 import axios from 'axios';

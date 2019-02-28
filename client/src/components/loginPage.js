@@ -1,12 +1,10 @@
 import React from 'react';
-import CreateUser from './manageUser/createUser.js';
-import Page from './page.js';
+import Login from './login.js';
 
 const LoginPage = () => {
   return (
-    <div className="login-wrapper">
-      <CreateUser title={'Register'} />
-      <Page />
+    <div className="init-login-wrapper">
+      <Login title={'Register'} />
     </div>
   );
 }

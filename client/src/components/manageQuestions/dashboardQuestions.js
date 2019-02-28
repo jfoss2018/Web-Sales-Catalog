@@ -107,14 +107,14 @@ class DashboardQuestion extends Component {
     if (this.state.selectedItem) {
       buttons =
         <div className="user-controls">
-          <button value="answer" onClick={this.openModal} className="user-edit user-control-btn">Answer Question</button>
-          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Question</button>
+          <button value="answer" onClick={this.openModal} className="user-edit user-control-btn">Answer</button>
+          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete</button>
         </div>
     } else {
       buttons =
         <div className="user-controls">
-          <button disabled className="user-edit user-control-btn">Answer Question</button>
-          <button disabled className="user-delete user-control-btn">Delete Question</button>
+          <button disabled className="user-edit user-control-btn">Answer</button>
+          <button disabled className="user-delete user-control-btn">Delete</button>
         </div>
     }
 

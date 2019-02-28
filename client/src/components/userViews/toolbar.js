@@ -1,22 +1,13 @@
 import React from 'react';
 import SearchApp from './search.js';
+import Filter from './filter.js';
 
 const Toolbar = (props) => {
   return(
     <nav>
       <section className="toolbar">
         {(props.page.filter) && (
-          <select className="filter">
-            {(props.page.filterOptions.featured) && (
-              <option value="featured">Featured</option>
-            )}
-            {(props.page.filterOptions.priceLowToHigh) && (
-              <option value="priceLowToHigh">Price Low to High</option>
-            )}
-            {(props.page.filterOptions.PriceHighToLow) && (
-              <option value="priceHighToLow">Price High to Low</option>
-            )}
-          </select>
+          <Filter page={props.page} updateState={props.updateState} />
         )}
         {/*
 

@@ -30,6 +30,7 @@ class Dashboard extends Component {
       <div className="dashboard-wrapper">
         <div className="dashboard">
           <h1 className="dashboard-title">Dashboard</h1>
+          <button className="log-out-btn" name="log-out">Log Out</button>
           <div className="dashboard-left">
             <ul className="dashboard-categories">
               <li className="list-btn active"><button className="li-btn" name="users" onClick={this.toggleActive}>Manage Users</button></li>

@@ -2,7 +2,7 @@ const User = require('../../database/models/user.js');
 const error = require('./errorRoute.js');
 
 function setup(req, res, next) {
-  const { username, password, email, phone } = req.body;
+  const { username, password, email, phone, authorization } = req.body;
   User.findOne({username: username}, function(err, user) {
     if (err) return next(err);
     if (user) return next(error.duplicateUser());
@@ -11,7 +11,7 @@ function setup(req, res, next) {
       password: password,
       email: email,
       phone: phone,
-      authorization: '0'
+      authorization: authorization || '0'
     });
     newUser.save(function(err, savedUser) {
       if (err) return next(err);

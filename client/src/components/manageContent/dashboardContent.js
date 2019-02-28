@@ -110,16 +110,16 @@ class DashboardContent extends Component {
     if (this.state.selectedItem) {
       buttons =
         <div className="user-controls">
-          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New Item</button>
-          <button value="edit" onClick={this.openModal} className="user-edit user-control-btn">Edit Item</button>
-          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete Item</button>
+          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New</button>
+          <button value="edit" onClick={this.openModal} className="user-edit user-control-btn">Edit</button>
+          <button value="delete" onClick={this.openModal} className="user-delete user-control-btn">Delete</button>
         </div>
     } else {
       buttons =
         <div className="user-controls">
-          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New Item</button>
-          <button disabled className="user-edit user-control-btn">Edit Item</button>
-          <button disabled className="user-delete user-control-btn">Delete Item</button>
+          <button value="new" onClick={this.openModal} className="user-create user-control-btn">New</button>
+          <button disabled className="user-edit user-control-btn">Edit</button>
+          <button disabled className="user-delete user-control-btn">Delete</button>
         </div>
     }
 

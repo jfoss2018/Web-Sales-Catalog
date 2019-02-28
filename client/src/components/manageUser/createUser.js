@@ -25,7 +25,7 @@ class CreateUser extends Component {
     e.preventDefault();
     axios({
       method: 'post',
-      url: '/api/v1/login',
+      url: '/api/v1/users',
       /*proxy: {
         host: '127.0.0.1',
         port: 3001

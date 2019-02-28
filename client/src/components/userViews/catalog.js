@@ -56,7 +56,7 @@ class Catalog extends Component {
       </ul>
     }
     return(
-      <div>
+      <div className="catalog-div">
         {itemList}
         {(this.props.page.footer) && (
           <h3 className="page-footer">{message}</h3>

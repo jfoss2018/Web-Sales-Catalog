@@ -160,15 +160,18 @@ class Detail extends Component {
         <button className="detail" onClick={() => this.props.browserPath('/')}>Return to Catalog</button>
         <h1 className="detail">{this.state.contents.name}</h1>
         <div className="style-block">
-        </div>
-        <div className="offerBtn">
-          <ModalBox id={this.state.contents._id} text={"Make Offer"} />
+          <p className="bid">Current highest bid: ${'sort'}</p>
+          <div className="offerBtn">
+            <ModalBox id={this.state.contents._id} text={"Make Offer"} />
+          </div>
         </div>
         <div className="gallery-wrapper">
-          <MyComponent images={this.state.contents.images} />
+          <div className="imgborder-2">
+            <MyComponent images={this.state.contents.images} />
+          </div>
         </div>
         <p className="price">{this.state.contents.price}</p>
-        <p className="bid">Current highest bid: ${'sort from database'}</p>
+
         <p className="description">{this.state.contents.description}</p>
         <div className="appointmentBtn">
           <ModalBox id={this.state.contents._id} text={"Schedule Appointment"} />
@@ -201,11 +204,11 @@ class Detail extends Component {
     return(
       <div className="detail-wrapper">
         {(this.props.page.showTitle) && (
-          <h1 className="page-title">{title}</h1>
+          <h1 className="page-title-2">{title}</h1>
         )}
         {card}
         {(this.props.page.footer) && (
-          <h3 className="page-footer">{message}</h3>
+          <h3 className="page-footer-2">{message}</h3>
         )}
       </div>
     );

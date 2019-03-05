@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Edit from '../imageEdit.js';
 import moment from 'moment';
+import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
+import { validate } from '../../validate.js';
 
 class EditContent extends Component {
   constructor(props) {
@@ -19,7 +22,20 @@ class EditContent extends Component {
       lastEditDate: ''
     }
 
-    this.loginForm = React.createRef();
+    this.editForm = React.createRef();
+  }
+
+  handleChange = (e) => {
+    if (e.target.type === 'checkbox') {
+      const bool = (e.target.checked === true);
+      this.setState({
+        [e.target.name]: bool
+      });
+      return;
+    }
+    this.setState({
+      [e.target.name]: e.target.value
+    });
   }
 
   componentDidMount() {
@@ -50,29 +66,16 @@ class EditContent extends Component {
     })
     .catch((error) => {
       console.log(error);
-    });
-  }
-
-  updateState = (object) => {
-    this.setState(object);
-  }
-
-  handleChange = (e) => {
-    if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
-      this.setState({
-        [e.target.name]: bool
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
       });
-      return;
-    }
-    this.setState({
-      [e.target.name]: e.target.value
+      this.props.openModal();
     });
+  }
+
+  updateState = (obj) => {
+    this.setState(obj);
   }
 
   pushList = () => {
@@ -88,57 +91,65 @@ class EditContent extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    axios({
-      method: 'put',
-      url: `/api/v1/contents/${this.props.id}`,
-      /*proxy: {
-        host: '127.0.0.1',
-        port: 3001
-      },*/
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        name: this.state.name,
-        description: this.state.description,
-        featured: this.state.featured,
-        price: this.state.price,
-        viewable: this.state.viewable,
-        images: this.state.images
-      }
-    })
-    .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      this.loginForm[4].value = '';
-
-      this.setState({
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        authorization: ''
+    if (validate(this.editForm)) {
+      axios({
+        method: 'put',
+        url: `/api/v1/contents/${this.props.id}`,
+        /*proxy: {
+          host: '127.0.0.1',
+          port: 3001
+        },*/
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name: this.state.name,
+          description: this.state.description,
+          featured: this.state.featured,
+          price: this.state.price,
+          viewable: this.state.viewable,
+          images: this.state.images
+        }
+      })
+      .then(response => {
+        this.props.updateState({
+          resStatus: '204',
+          resMessage: 'Content Item Updated!'
+        });
+        if (this.props.updateList) {
+          this.props.updateList();
+        }
+        this.setState({
+          name: '',
+          description: '',
+          featured: false,
+          price: '',
+          viewable: false,
+          images: [],
+          bids: [],
+          questions: [],
+          postedDate: '',
+          lastEditDate: ''
+        });
+        if (this.props.updateList) {
+          this.props.updateList();
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        this.props.updateState({
+          resStatus: error.response.status.toString(),
+          resMessage: error.response.data.message.toString()
+        });
+        this.props.openModal();
       });
-      */
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+    }
   }
 
   checkModalSecondary = (e) => {
     const modal = document.querySelector('.secondary-modal');
     if (e.target === modal) {
       modal.style.display = "none";
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
     }
   }
 
@@ -147,13 +158,6 @@ class EditContent extends Component {
     modal.style.display = 'block';
     if (e.target.className === 'secondary-modal-close' || e.target.className === 'img-save-btn') {
       modal.style.display = 'none';
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
-    } else {
-      /*this.setState({
-        selectedAction: e.target.value
-      });*/
     }
   }
 
@@ -166,44 +170,95 @@ class EditContent extends Component {
   }
 
   render() {
+    // Delete Button declaration================================================
     const delBtn = <button type="button" onClick={this.removeImg} className="img-box">Delete</button>
+    // Number Mask declaration==================================================
+    const numberMask = createNumberMask({
+      prefix: '$',
+      allowDecimal: true
+    });
 
     return (
-      <form ref={form => this.loginForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
+      /*=============Edit Content Item Form=================*/
+      <form ref={form => this.editForm = form} noValidate className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Edit Content</h1>
-
-        <label className="login-form-control" htmlFor="name">Name</label>
-        <input className="login-form-control" type="text" name="name" value={this.state.name} id="name" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="description">Description</label>
-        <textarea rows="4" className="login-form-control" name="description" value={this.state.description} id="description" onChange={this.handleChange}></textarea>
-        <label className="login-form-control" htmlFor="price">Price</label>
-        <input className="login-form-control" type="text" name="price" value={this.state.price} id="price" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="featured">Featured Item</label>
-        <input type="checkbox" value={this.state.featured} className="checkbox" checked={this.state.featured} name="featured" id="featured" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="viewable">Show Item</label>
-        <input type="checkbox" value={this.state.viewable} className="checkbox" checked={this.state.viewable} name="viewable" id="viewable" onChange={this.handleChange} />
-
-        <label className="login-form-control" htmlFor="postedDate">Created Date</label>
-        <input className="login-form-control" disabled readOnly type="text" name="postedDate" value={moment(this.state.postedDate).format('LLL')} id="postedDate" />
-        <label className="login-form-control" htmlFor="lastEditDate">Last Editted Date</label>
-        <input className="login-form-control" disabled readOnly type="text" name="lastEditDate" value={moment(this.state.lastEditDate).format('LLL')} id="lastEditDate" />
-        <label className="login-form-control" htmlFor="bids">Number of Bids</label>
-        <input className="login-form-control" disabled readOnly type="text" name="bids" value={this.state.bids.length} id="bids" />
-        <label className="login-form-control" htmlFor="questions">Number of Questions</label>
-        <input className="login-form-control" disabled readOnly type="text" name="questions" value={this.state.questions.length} id="questions" />
-
-        <label className="login-form-control" htmlFor="image-list">Images</label>
-        <ul className="login-form-control">
-          {(this.state.images.length === 0) && (
-            <li>{'<empty>'}</li>
-          )}
-          {this.state.images.map(function(image, i) {
-            return <li className="img-box" data-key={i} key={i}><p className="img-box">{image.name}</p>{delBtn}</li>
-          })}
-        </ul>
+        {/*=======Edit Name=======*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="name">Name</label>
+          <input className="login-form-control" type="text" minLength="3" maxLength="40" name="name" value={this.state.name} id="name" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*====Edit Description====*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="description">Description</label>
+          <textarea rows="4" className="login-form-control" required name="description" value={this.state.description} id="description" onChange={this.handleChange}></textarea>
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*========Edit Price=======*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="price">Price</label>
+          <MaskedInput
+            mask={numberMask}
+            id="price"
+            name="price"
+            type="text"
+            value={this.state.price}
+            onChange={this.handleChange}
+            className="login-form-control"
+          />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*====Edit Featured Item====*/}
+        <div className="form-group form-grid col-1">
+          <label className="login-form-control" htmlFor="featured">Featured Item</label>
+          <input type="checkbox" value={this.state.featured} className="checkbox" checked={this.state.featured} name="featured" id="featured" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Edit Show Item=======*/}
+        <div className="form-group form-grid col-1">
+          <label className="login-form-control" htmlFor="viewable">Show Item</label>
+          <input type="checkbox" value={this.state.viewable} className="checkbox" checked={this.state.viewable} name="viewable" id="viewable" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Created Date======*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="postedDate">Created Date</label>
+          <input className="login-form-control" disabled readOnly type="text" name="postedDate" value={moment(this.state.postedDate).format('LLL')} id="postedDate" />
+        </div>
+        {/*====Last Editted Date===*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="lastEditDate">Last Editted Date</label>
+          <input className="login-form-control" disabled readOnly type="text" name="lastEditDate" value={moment(this.state.lastEditDate).format('LLL')} id="lastEditDate" />
+        </div>
+        {/*=====Number of Bids=====*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="bids">Number of Bids</label>
+          <input className="login-form-control" disabled readOnly type="text" name="bids" value={this.state.bids.length} id="bids" />
+        </div>
+        {/*===Number of Questions==*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="questions">Number of Questions</label>
+          <input className="login-form-control" disabled readOnly type="text" name="questions" value={this.state.questions.length} id="questions" />
+        </div>
+        {/*===Edit Image List======*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="image-list">Images</label>
+          <ul className="login-form-control img-ul">
+            {(this.state.images.length === 0) && (
+              <li>{'<empty>'}</li>
+            )}
+            {this.state.images.map(function(image, i) {
+              return <li className="img-box" data-key={i} key={i}><p className="img-box">{image.name}</p>{delBtn}</li>
+            })}
+          </ul>
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*====Add Image Button======*/}
         <button type="button" className="small-btn" onClick={this.openModalSecondary}>Add Image</button>
-        <button className="login-form-control" type="submit">Save</button>
+        {/*=====Submit========*/}
+        <button className="login-form-control mt-1" type="submit">Save</button>
 
+        {/*====Add Image Modal=======*/}
         <div onClick={this.checkModalSecondary} className="secondary-modal">
           <div className="secondary-modal-content">
             <span onClick={this.openModalSecondary} className="secondary-modal-close">&times;</span>
@@ -213,8 +268,10 @@ class EditContent extends Component {
             </section>
           </div>
         </div>
+        {/*=====End Add Image Modal=====*/}
 
       </form>
+      /*=========End Edit Content Item Form================*/
     );
   }
 }

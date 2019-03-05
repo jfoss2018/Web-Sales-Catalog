@@ -56,23 +56,29 @@ function validate(form) {
 // passes or not.
 function testFields(pw, cp, p, e) {
   let returnBool = true;
-  if (pw !== cp) {
-    const errorLabel = document.querySelector('.c-pass');
-    errorLabel.style.display = 'inline-block';
-    errorLabel.textContent = 'The confirm password field must match the password field.'
-    returnBool = false;
+  if (pw && cp) {
+    if (pw !== cp) {
+      const errorLabel = document.querySelector('.c-pass');
+      errorLabel.style.display = 'inline-block';
+      errorLabel.textContent = 'The confirm password field must match the password field.'
+      returnBool = false;
+    }
   }
-  if (!/^\(\d{3}\)\s\d{3}-\d{4}$/.test(p) && !/^([^0-9]*)$/.test(p)) {
-    const errorLabel = document.querySelector('.phone-val');
-    errorLabel.style.display = 'inline-block';
-    errorLabel.textContent = 'Please complete the phone number.'
-    returnBool = false;
+  if (p) {
+    if (!/^\(\d{3}\)\s\d{3}-\d{4}$/.test(p) && !/^([^0-9]*)$/.test(p)) {
+      const errorLabel = document.querySelector('.phone-val');
+      errorLabel.style.display = 'inline-block';
+      errorLabel.textContent = 'Please complete the phone number.'
+      returnBool = false;
+    }
   }
-  if (e !== '' && !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(e)) {
-    const errorLabel = document.querySelector('.email-val');
-    errorLabel.style.display = 'inline-block';
-    errorLabel.textContent = 'Please correct invalid email address.'
-    returnBool = false;
+  if (e) {
+    if (e !== '' && !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(e)) {
+      const errorLabel = document.querySelector('.email-val');
+      errorLabel.style.display = 'inline-block';
+      errorLabel.textContent = 'Please correct invalid email address.'
+      returnBool = false;
+    }
   }
   return returnBool;
 }

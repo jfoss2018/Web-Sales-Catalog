@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Question = require('./question.js');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 const ObjectId = Schema.Types.ObjectId;
@@ -9,7 +10,9 @@ const ContentSchema = new Schema({
     type: String,
     minlength: [4, 'Item Name Invalid. Name must be 4 or more characters.'],
     maxlength: [24, 'Item Name Invalid. Name must be 24 or less characters.'],
-    required: [true, 'Item name is required.']
+    required: [true, 'Item name is required.'],
+    unique: true,
+    uniqueCaseInsensitive: true
   },
   description: {
     type: String,
@@ -21,6 +24,10 @@ const ContentSchema = new Schema({
   },
   price: {
     type: String,
+    required: false
+  },
+  priceNum: {
+    type: Number,
     required: false
   },
   viewable: {
@@ -36,6 +43,10 @@ const ContentSchema = new Schema({
     type: ObjectId,
     ref: 'Bid'
   }],
+  bidLength: {
+    type: Number,
+    required: false
+  },
   questions: [{
     type: ObjectId,
     ref: 'Question'
@@ -50,6 +61,7 @@ const ContentSchema = new Schema({
   }
 });
 
+ContentSchema.plugin(uniqueValidator);
 
 const Content = mongoose.model('Content', ContentSchema);
 

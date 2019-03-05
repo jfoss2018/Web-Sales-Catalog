@@ -23,13 +23,6 @@ class DeleteContent extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.content._id,
         name: response.data.content.name
@@ -37,6 +30,11 @@ class DeleteContent extends Component {
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -61,35 +59,38 @@ class DeleteContent extends Component {
       }
     })
     .then(response => {
-      console.log(response.data);
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-      */
-      this.setState({
-        id: '',
-        username: ''
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'Content Item Deleted!'
       });
-
       if (this.props.updateList) {
         this.props.updateList();
       }
+      this.setState({
+        id: '',
+        name: ''
+      });
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
   render() {
     return (
+      /*=======Content Item Delete Form===========*/
       <form ref={form => this.deleteForm = form} className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Delete Content</h1>
         <p className="login-title">Are you sure you want to delete {this.state.name}?</p>
         <button className="login-form-control" type="submit">Yes</button>
         <button className="login-form-control" onClick={this.cancel}>No</button>
       </form>
+      /*=====End Content Item Delete Form========*/
     );
   }
 }

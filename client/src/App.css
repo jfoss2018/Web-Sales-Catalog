@@ -421,7 +421,7 @@ article {
   margin-bottom: 15px;
   display: grid;
   border-radius: 2px;
-  grid-template-columns: min-content repeat(8, 1fr);
+  grid-template-columns: minmax(150px, min-content) min-content repeat(7, 1fr);
   grid-template-rows: repeat(12, 1fr);
   cursor: pointer;
   -webkit-box-shadow: 0 28px 16px -26px rgba(0, 0, 0);
@@ -467,6 +467,7 @@ article {
 
 article > .imgborder-2 > img {
   width: 30vw;
+  min-width: 120px;
   max-width: 180px;
   border: 1px solid #aaa;
 }
@@ -1568,6 +1569,19 @@ Page
 }
 
 .form-grid > ul > li {
+  width: 100%;
+  margin: 2px 5px;
+}
+
+.img-ul {
+  padding: 10px;
+  width: calc(100% - 40px);
+  list-style: none;
+  border: 1px solid black;
+  margin-top: 10px;
+}
+
+.img-ul > li {
   width: 100%;
   margin: 2px 5px;
 }

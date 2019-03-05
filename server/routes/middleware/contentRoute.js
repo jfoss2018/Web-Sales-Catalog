@@ -1,5 +1,6 @@
 const Content = require('../../database/models/content.js');
 const moment = require('moment');
+const error = require('./errorRoute.js');
 
 function setup(req, res, next) {
   const { name, description, price, featured, viewable, images } = req.body;
@@ -14,8 +15,13 @@ function setup(req, res, next) {
     lastEditDate: moment.utc()
   });
   contentSetup.save(function(err, content) {
-    console.log(err);
-    if (err) return next(err);
+    if (err) {
+      if (err.errors.hasOwnProperty('name')) {
+        return next(error.duplicateItem());
+      } else {
+        return next(err);
+      }
+    }
     res.status('201').json({content: content});
   });
 }
@@ -30,8 +36,15 @@ function edit(req, res, next) {
     viewable: viewable,
     images: images,
     lastEditDate: moment.utc()
-  }, {runValidators: true}, function(err, result) {
-    res.status('200').json({message: 'Updated'});
+  }, {runValidators: true, context: 'query'}, function(err, result) {
+    if (err) {
+      if (err.errors.hasOwnProperty('name')) {
+        return next(error.duplicateItem());
+      } else {
+        return next(err);
+      }
+    }
+    res.status('204').json({message: 'Content Item Updated!'});
   });
 }
 
@@ -52,7 +65,7 @@ function pictureMid(req, res, next) {
 }
 
 function retrieve(req, res, next) {
-  Content.find({}, function(err, contents) {
+  Content.find({}, null, {sort: {postedDate: 1}}, function(err, contents) {
     for (let i = 0; i < contents.length; i += 1) {
       for (let j = 0; j < contents[i].images.length; j += 1) {
         if (contents[i].images[j].data) {
@@ -65,6 +78,8 @@ function retrieve(req, res, next) {
           contents[i].images[j] = newImage;
         }
       }
+      contents[i].bidLength = contents[i].bids.length;
+      contents[i].priceNum = parseInt(contents[i].price.replace(/\D/g, ''));
     }
     res.status('200').json({contents: contents})
   });
@@ -110,14 +125,14 @@ function pushBid(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
     content.bids.push(req.bid._id);
     content.save(function(err, updatedContnet) {
-      res.status('200').json({message: 'Added!'});
+      res.status('201').json({message: 'Your bid was successfully submitted!'});
     });
   });
 }
 
 function deleteContent(req, res, next) {
   Content.deleteOne({_id: req.params.id}, function(err) {
-    res.status('200').json({message: 'Deleted!'});
+    res.status('204').json({message: 'Content Item Deleted!'});
   });
 }
 
@@ -126,7 +141,7 @@ function deleteQuestion(req, res, next) {
     const index = content.questions.indexOf(req.params.qid);
     content.questions.splice(index, 1);
     content.save(function(err, newContent) {
-      res.status('200').json({message: 'Deleted!'});
+      res.status('204').json({message: 'Question Deleted!'});
     });
   });
 }
@@ -136,7 +151,7 @@ function deleteBid(req, res, next) {
     const index = content.bids.indexOf(req.params.bid);
     content.bids.splice(index, 1);
     content.save(function(err, newContent) {
-      res.status('200').json({message: 'Deleted!'});
+      res.status('204').json({message: 'Bid Deleted!'});
     });
   });
 }

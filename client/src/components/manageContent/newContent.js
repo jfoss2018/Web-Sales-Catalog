@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Edit from '../imageEdit.js';
+import { validate } from '../../validate.js';
+import MaskedInput from 'react-text-mask';
+import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 
 class NewContent extends Component {
   constructor(props) {
@@ -14,21 +17,12 @@ class NewContent extends Component {
       images: []
     }
 
-    this.loginForm = React.createRef();
-  }
-
-  updateState = (object) => {
-    this.setState(object);
+    this.itemForm = React.createRef();
   }
 
   handleChange = (e) => {
     if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
+      const bool = (e.target.checked === true);
       this.setState({
         [e.target.name]: bool
       });
@@ -37,6 +31,10 @@ class NewContent extends Component {
     this.setState({
       [e.target.name]: e.target.value
     });
+  }
+
+  updateState = (object) => {
+    this.setState(object);
   }
 
   pushList = () => {
@@ -50,59 +48,62 @@ class NewContent extends Component {
     });
   }
 
+
+
   handleSubmit = (e) => {
     e.preventDefault();
-    axios({
-      method: 'post',
-      url: '/api/v1/contents',
-      /*proxy: {
-        host: '127.0.0.1',
-        port: 3001
-      },*/
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        name: this.state.name,
-        description: this.state.description,
-        featured: this.state.featured,
-        price: this.state.price,
-        viewable: this.state.viewable,
-        images: this.state.images
-      }
-    })
-    .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      this.loginForm[4].value = '';
-
-      this.setState({
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        authorization: ''
-      });
-      */
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
-    })
-    .catch((error) => {
+    if (validate(this.itemForm)) {
+      axios({
+        method: 'post',
+        url: '/api/v1/contents',
+        /*proxy: {
+          host: '127.0.0.1',
+          port: 3001
+        },*/
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: {
+          name: this.state.name,
+          description: this.state.description,
+          featured: this.state.featured,
+          price: this.state.price,
+          viewable: this.state.viewable,
+          images: this.state.images
+        }
+      })
+      .then(response => {
+        this.props.updateState({
+          resStatus: '201',
+          resMessage: 'Content Item Created!'
+        });
+        if (this.props.updateList) {
+          this.props.updateList();
+        }
+        this.setState({
+          name: null,
+          description: null,
+          featured: false,
+          price: null,
+          viewable: false,
+          images: []
+        });
+      })
+      .catch((error) => {
       console.log(error);
-    });
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
+      });
+    }
   }
 
   checkModalSecondary = (e) => {
     const modal = document.querySelector('.secondary-modal');
     if (e.target === modal) {
       modal.style.display = "none";
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
     }
   }
 
@@ -111,13 +112,6 @@ class NewContent extends Component {
     modal.style.display = 'block';
     if (e.target.className === 'secondary-modal-close' || e.target.className === 'img-save-btn') {
       modal.style.display = 'none';
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
-    } else {
-      /*this.setState({
-        selectedAction: e.target.value
-      });*/
     }
   }
 
@@ -130,34 +124,75 @@ class NewContent extends Component {
   }
 
   render() {
+    // Button declaration=======================================================
     const delBtn = <button type="button" onClick={this.removeImg} className="img-box">Delete</button>
+    // Number Mask declaration==================================================
+    const numberMask = createNumberMask({
+      prefix: '$',
+      allowDecimal: true
+    });
 
     return (
-      <form ref={form => this.loginForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
+      /*========New Content Form================*/
+      <form ref={form => this.itemForm = form} noValidate className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Add New Content</h1>
-
-        <label className="login-form-control" htmlFor="name">Name</label>
-        <input className="login-form-control" type="text" name="name" id="name" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="description">Description</label>
-        <textarea rows="4" className="login-form-control" name="description" id="description" onChange={this.handleChange}></textarea>
-        <label className="login-form-control" htmlFor="price">Price</label>
-        <input className="login-form-control" type="text" name="price" id="price" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="featured">Featured Item</label>
-        <input type="checkbox" value={this.state.featured} className="checkbox" checked={this.state.featured} name="featured" id="featured" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="viewable">Show Item</label>
-        <input type="checkbox" value={this.state.viewable} className="checkbox" checked={this.state.viewable} name="viewable" id="viewable" onChange={this.handleChange} />
-        <label className="login-form-control" htmlFor="image-list">Images</label>
-        <ul className="login-form-control">
-          {(this.state.images.length === 0) && (
-            <li>{'<empty>'}</li>
-          )}
-          {this.state.images.map(function(image, i) {
-            return <li className="img-box" data-key={i} key={i}><p className="img-box">{image.name}</p>{delBtn}</li>
-          })}
-        </ul>
+        {/*=======Content Name===========*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="name">Name</label>
+          <input className="login-form-control" required type="text" minLength="3" maxLength="40" name="name" id="name" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Content Description======*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="description">Description</label>
+          <textarea rows="4" className="login-form-control" required name="description" id="description" onChange={this.handleChange}></textarea>
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Content Price============*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="price">Price</label>
+          {/*<input id="offer" name="offer" type="number" />*/}
+          <MaskedInput
+            mask={numberMask}
+            id="price"
+            name="price"
+            type="text"
+            onChange={this.handleChange}
+            className="login-form-control"
+          />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Content Featured Item======*/}
+        <div className="form-group form-grid col-1">
+          <label className="login-form-control" htmlFor="featured">Featured Item</label>
+          <input type="checkbox" value={this.state.featured} className="checkbox" checked={this.state.featured} name="featured" id="featured" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*======Content Show Item==========*/}
+        <div className="form-group form-grid col-1">
+          <label className="login-form-control" htmlFor="viewable">Show Item</label>
+          <input type="checkbox" value={this.state.viewable} className="checkbox" checked={this.state.viewable} name="viewable" id="viewable" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*=======Content Image List=========*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="image-list">Images</label>
+          <ul className="login-form-control img-ul">
+            {(this.state.images.length === 0) && (
+              <li>{'<empty>'}</li>
+            )}
+            {this.state.images.map(function(image, i) {
+              return <li className="img-box" data-key={i} key={i}><p className="img-box">{image.name}</p>{delBtn}</li>
+            })}
+          </ul>
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*=======Add Image Button==========*/}
         <button type="button" className="small-btn" onClick={this.openModalSecondary}>Add Image</button>
-        <button className="login-form-control" type="submit">Save</button>
+        {/*========Submit===================*/}
+        <button className="login-form-control mt-1" type="submit">Save</button>
 
+        {/*========Add Image Modal==========*/}
         <div onClick={this.checkModalSecondary} className="secondary-modal">
           <div className="secondary-modal-content">
             <span onClick={this.openModalSecondary} className="secondary-modal-close">&times;</span>
@@ -167,8 +202,10 @@ class NewContent extends Component {
             </section>
           </div>
         </div>
-
+        {/*======End Add Image Modal==========*/}
+        
       </form>
+      /*===========End New Content Form==================*/
     );
   }
 }

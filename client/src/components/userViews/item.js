@@ -10,13 +10,20 @@ const Item = (props) => {
     imgSrc = '/images/Item-default.jpg';
   }
 
+  let displayDescription;
+  if (props.itemInfo.description.length > 50) {
+    displayDescription = props.itemInfo.description.slice(0, 50) + ' ...';
+  } else {
+    displayDescription = props.itemInfo.description;
+  }
+
   return(
     <article onClick={() => props.browserPath('/catalog/' + props.itemInfo._id)}>
       <div className="imgborder-2">
         <img src={imgSrc} alt={props.itemInfo.name} />
       </div>
       <h4>{props.itemInfo.name}</h4>
-      <p className="description">{props.itemInfo.description}</p>
+      <p className="description">{displayDescription}</p>
       <p className="price">{props.itemInfo.price}</p>
     </article>
   );

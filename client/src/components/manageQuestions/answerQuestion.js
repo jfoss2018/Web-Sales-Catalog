@@ -32,13 +32,6 @@ class AnswerQuestion extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.question._id,
         question: response.data.question.question,
@@ -49,14 +42,16 @@ class AnswerQuestion extends Component {
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
-  cancel = (e) => {
-    e.preventDefault();
-    if (this.props.updateList) {
-      this.props.updateList();
-    }
+  updateState = (obj) => {
+    this.setState(obj);
   }
 
   handleSubmit = (e) => {
@@ -76,37 +71,42 @@ class AnswerQuestion extends Component {
       }
     })
     .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-      */
-      this.setState({
-        id: '',
-        username: '',
-        item: '',
-        contentId: ''
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'Question Answered!'
       });
-
       if (this.props.updateList) {
         this.props.updateList();
       }
+      this.setState({
+        id: null,
+        question: null,
+        item: null,
+        contentId: null,
+        answer: ''
+      });
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
   render() {
     return (
-      <form ref={form => this.deleteForm = form} className="login-form" onSubmit={this.handleSubmit}>
+      /*===========Answer Question Form=============*/
+      <form ref={form => this.answerForm = form} className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Answer Question</h1>
         <p className="login-title">Answer the following question about {this.state.item}.</p>
         <p className="login-title">"{this.state.question}"</p>
         <textarea className="textarea-form-control" rows="4" name="answer" value={this.state.answer} id="answer" onChange={this.handleChange}></textarea>
-        <button className="login-form-control" type="submit">Submit</button>
+        <button className="login-form-control mt-1" type="submit">Submit</button>
       </form>
+      /*=========End Answer Question Form===========*/
     );
   }
 }

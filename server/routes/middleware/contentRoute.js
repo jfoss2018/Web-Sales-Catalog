@@ -80,7 +80,7 @@ function retrieve(req, res, next) {
         }
       }
       contents[i].bidLength = contents[i].bids.length;
-      contents[i].priceNum = parseInt(contents[i].price.replace(/\D/g, ''));
+      contents[i].priceNum = parseFloat(contents[i].price.replace(/[^\d.-]/g, ''));
     }
     res.status('200').json({contents: contents})
   });

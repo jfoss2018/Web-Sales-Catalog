@@ -16,19 +16,26 @@ function question(req, res, next) {
 }
 
 function retrieve(req, res, next) {
-  Question.find({}, null, {sort: {askDate: -1}}).populate('content', 'name').exec(function(err, questions) {
+  Question.find({}, null, {sort: {askDate: 1}}).populate('content', 'name').exec(function(err, questions) {
+    if (err) return next(err);
+    for (let i = 0; i < questions.length; i += 1) {
+      questions[i].contentName = questions[i].content.name;
+      questions[i].answered = (questions[i].answer.answer) ? true : false;
+    }
     res.status('200').json({questions: questions});
   });
 }
 
 function retrieveSingle(req, res, next) {
   Question.findById(req.params.id).populate('content', 'name').exec(function(err, question) {
+    if (err) return next(err);
     res.status('200').json({question: question});
   });
 }
 
 function deleteQuestion(req, res, next) {
   Question.deleteOne({_id: req.params.qid}, function(err) {
+    if (err) return next(err);
     next();
   });
 }
@@ -47,6 +54,7 @@ function answerQuestion(req, res, next) {
     answer: req.body.answer,
     answerDate: moment.utc()
   }}, {runValidators: true}, function(err, result) {
+    if (err) return next(err);
     res.status('200').json({message: 'Updated'});
   });
 }

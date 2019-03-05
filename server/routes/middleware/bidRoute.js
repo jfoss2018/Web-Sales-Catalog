@@ -20,25 +20,33 @@ function setup(req, res, next) {
 }
 
 function retrieve(req, res, next) {
-  Bid.find({}).populate('content', 'name').exec(function(err, bids) {
+  Bid.find({}).sort({bidDate: 1}).populate('content', 'name').exec(function(err, bids) {
+    if (err) return next(err);
+    for (let i = 0; i < bids.length; i += 1) {
+      bids[i].contentName = bids[i].content.name;
+      bids[i].amountNum = parseFloat(bids[i].amount.replace(/[^\d.-]/g, ''));
+    }
     res.status('200').json({bids: bids});
   });
 }
 
 function retrieveSingle(req, res, next) {
   Bid.findById(req.params.id).populate('content', 'name').exec(function(err, bid) {
+    if (err) return next(err);
     res.status('200').json({bid: bid});
   });
 }
 
 function edit(req, res, next) {
   Bid.updateOne({_id: req.params.bid}, req.body, {runValidators: true}, function(err, result) {
-    res.status('200').json({message: 'Updated'});
+    if (err) return next(err);
+    res.status('204').json({message: 'Bid Updated'});
   });
 }
 
 function deleteBid(req, res, next) {
   Bid.deleteOne({_id: req.params.bid}, function(err) {
+    if (err) return next(err);
     next();
   });
 }

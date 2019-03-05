@@ -666,6 +666,7 @@ section h1.detail {
 .textarea-form-control {
   width: calc(100% - 26px);
   margin: 10px;
+  border: 1px solid black;
 }
 
 .q-and-a-div {

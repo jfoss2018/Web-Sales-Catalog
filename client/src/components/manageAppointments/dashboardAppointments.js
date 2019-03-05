@@ -26,6 +26,9 @@ class DashboardAppointment extends Component {
   }
 
   updateList = () => {
+    this.setState({
+      loading: true
+    });
     axios({
       method: 'get',
       url: '/api/v1/appointments',
@@ -213,9 +216,9 @@ class DashboardAppointment extends Component {
     return (
       /*==============Appointments Dashboard Panel==============*/
       <div className="user-block">
-        {/*========New, Edit & Delete Buttons=======*/}
+        {/*========View & Delete Buttons=======*/}
         {buttons}
-        {/*======End New, Edit & Delete Buttons=====*/}
+        {/*======End View & Delete Buttons=====*/}
         <div className="user-list-wrapper">
           {/*=======Appointments List===========*/}
           <table className="user-list">

@@ -3,20 +3,32 @@ import axios from 'axios';
 import BidItem from './bidItem.js';
 import DeleteBid from './deleteBid.js';
 import ViewBid from './viewBid.js';
+import { compareValues } from '../../sort.js';
 
 class DashboardAppointment extends Component {
   constructor() {
     super();
     this.state = {
       bids: [],
+      filteredBids: [],
       selectedItem: null,
-      selectedAction: ''
+      selectedAction: '',
+      loading: true,
+      sortName: null,
+      sortDir: null,
+      resStatus: null,
+      resMessage: null
     }
   }
 
-
+  updateState = (obj) => {
+    this.setState(obj);
+  }
 
   updateList = () => {
+    this.setState({
+      loading: true
+    });
     axios({
       method: 'get',
       url: '/api/v1/contents/bids',
@@ -29,31 +41,66 @@ class DashboardAppointment extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-      this.setState({
-        bids: response.data.bids,
-        selectedItem: null,
-        selectedAction: 'empty'
-      });
+      // Close Action Modal
       const modal = document.querySelector('.user-modal');
       modal.style.display = 'none';
+      // Remove Active Row
       const rows = document.querySelectorAll('.user-data-row');
       for (let i = 0; i < rows.length; i += 1) {
         rows[i].classList.remove('active');
       }
+      // Set State with filter if it exists
+      let filtItems;
+      if (this.state.sortName) {
+        filtItems = response.data.bids.sort(compareValues(this.state.sortName, this.state.sortDir));
+      } else {
+        filtItems = response.data.bids;
+      }
+      // Open Message Modal
+      if (this.state.resStatus) {
+        this.openModalMessage();
+      }
+      this.setState({
+        bids: response.data.bids,
+        filteredBids: filtItems,
+        selectedItem: null,
+        selectedAction: 'empty',
+        loading: false
+      });
     })
     .catch((error) => {
       console.log(error);
+      this.setState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
   componentDidMount() {
     this.updateList();
+  }
+
+  handleSort = (e) => {
+    this.setState({
+      loading: true
+    });
+    if (e.target.dataset.name === this.state.sortName && this.state.sortDir === 'asc') {
+      this.setState({
+        filteredBids: this.state.bids.sort(compareValues(e.target.dataset.name, 'desc')),
+        loading: false,
+        sortName: e.target.dataset.name,
+        sortDir: 'desc'
+      });
+    } else {
+      this.setState({
+        filteredBids: this.state.bids.sort(compareValues(e.target.dataset.name, 'asc')),
+        loading: false,
+        sortName: e.target.dataset.name,
+        sortDir: 'asc'
+      });
+    }
   }
 
   toggleActive = (e) => {
@@ -92,17 +139,36 @@ class DashboardAppointment extends Component {
     }
   }
 
+  openModalMessage = (e) => {
+    const modal = document.querySelector('.init-message-modal');
+    modal.style.display = 'block';
+    if (e) {
+      if (e.target.className === 'init-login-modal-close' || e.target === modal) {
+        this.modalClose(modal);
+      }
+    }
+  }
+
+  modalClose = (modal) => {
+    modal.style.display = 'none';
+    this.setState({
+      resStatus: null,
+      resMessage: null
+    });
+  }
+
   render() {
+    // Modal Contents ==========================================================
     let modalContents;
     if (this.state.selectedAction === 'view') {
-      modalContents = <ViewBid id={this.state.selectedItem} updateList={this.updateList} />
+      modalContents = <ViewBid id={this.state.selectedItem} openModal={this.openModalMessage} updateState={this.updateState} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {
-      modalContents = <DeleteBid id={this.state.selectedItem} updateList={this.updateList} />
+      modalContents = <DeleteBid id={this.state.selectedItem} openModal={this.openModalMessage} updateState={this.updateState} updateList={this.updateList} />
     } else {
       modalContents = null;
     }
 
-
+    // Buttons =================================================================
     let buttons;
     if (this.state.selectedItem) {
       buttons =
@@ -118,35 +184,88 @@ class DashboardAppointment extends Component {
         </div>
     }
 
+    // Bids List Contents ==================================================
+    let bodyContents;
+    if (this.state.loading) {
+      bodyContents = <p>Loading...</p>
+    } else {
+      bodyContents = this.state.bids.map(function(bid, i) {
+        return <BidItem key={i} record={i} bidInfo={bid} />
+      })
+    }
+
+    // Message Modal Contents ==================================================
+    let secondaryModalContents;
+    if (this.state.resStatus) {
+      const modalBG = document.querySelector('.init-message-modal-content');
+      if (this.state.resStatus === '204') {
+        modalBG.classList.remove('fail');
+        modalBG.classList.add('success');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">{this.state.resMessage}</h5>
+        </section>
+      } else if (this.state.resStatus === '500') {
+        modalBG.classList.add('fail');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">Error: {this.state.resStatus}</h5>
+          <p className="init-message-form-control">{this.state.resMessage}</p>
+        </section>
+      }
+    }
+
     return (
+      /*=============Bids Dashboard Panel=====================*/
       <div className="user-block">
+        {/*=======View & Delete Buttons=======*/}
         {buttons}
+        {/*=====End View & Delete Buttons=====*/}
         <div className="user-list-wrapper">
+          {/*=========Bids List===========*/}
           <table className="user-list">
             <thead>
               <tr>
                 <th>Record</th>
-                <th>Item</th>
-                <th>Amount</th>
-                <th>Viewed</th>
+                <th className="table-header" data-name="contentName" onClick={this.handleSort}>Item</th>
+                <th className="table-header" data-name="amountNum" onClick={this.handleSort}>Amount</th>
+                <th className="table-header" data-name="viewed" onClick={this.handleSort}>Viewed</th>
               </tr>
             </thead>
             <tbody onClick={this.toggleActive}>
-              {this.state.bids.map(function(bid, i) {
-                return <BidItem key={i} record={i} bidInfo={bid} />
-              })}
+              {(!this.state.loading) && (
+                bodyContents
+              )}
             </tbody>
           </table>
+          {/*======End Bids List=========*/}
+          {/*=======Loading Message========*/}
+          {(this.state.loading) && (
+            bodyContents
+          )}
+          {/*====End Loading Message=======*/}
         </div>
 
+        {/*==========Action Modal==========*/}
         <div onClick={this.checkModal} className="user-modal">
           <div className="user-modal-content centered">
             <span onClick={this.openModal} className="user-modal-close">&times;</span>
             {modalContents}
           </div>
         </div>
+        {/*========End Action Modal========*/}
+
+        {/*=======Message Modal============*/}
+        <div onClick={this.openModalMessage} className="init-message-modal">
+          <div className="init-message-modal-content">
+            <span onClick={this.openModalMessage} className="init-login-modal-close">&times;</span>
+            {(this.state.resStatus) && (
+              secondaryModalContents
+            )}
+          </div>
+        </div>
+        {/*====End Message Modal===========*/}
 
       </div>
+      /*==============End Bids Dashboard Panel==============*/
     );
   }
 }

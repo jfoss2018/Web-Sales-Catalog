@@ -9,6 +9,10 @@ const QuestionSchema = new Schema({
     type: ObjectId,
     ref: 'Content'
   },
+  contentName: {
+    type: String,
+    required: false
+  },
   question: {
     type: String,
     required: [true, 'Question is required.']
@@ -27,6 +31,10 @@ const QuestionSchema = new Schema({
       type: Date,
       required: false
     }
+  },
+  answered: {
+    type: Boolean,
+    required: false
   },
   askDate: {
     type: Date,

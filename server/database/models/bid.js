@@ -28,6 +28,10 @@ const BidSchema = new Schema({
     type: String,
     required: [true, 'Bidder must offer an amount.']
   },
+  amountNum: {
+    type: Number,
+    required: false
+  },
   preference: {
     type: String,
     required: [true, 'Preference is required.']
@@ -39,6 +43,10 @@ const BidSchema = new Schema({
   content: {
     type: ObjectId,
     ref: 'Content'
+  },
+  contentName: {
+    type: String,
+    required: false
   },
   viewed: {
     type: Boolean,

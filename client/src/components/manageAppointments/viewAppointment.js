@@ -139,7 +139,7 @@ class ViewAppointment extends Component {
         <label className="login-form-control" htmlFor="viewed">Mark Viewed</label>
         <input type="checkbox" value={this.state.viewed} className="checkbox" checked={this.state.viewed} name="viewed" id="viewed" onChange={this.handleChange} />
         {/*============Save==========================*/}
-        <button className="login-form-control" type="submit">Save</button>
+        <button className="login-form-control mt-1" type="submit">Save</button>
       </form>
       /*============End Appointment View Form===============*/
     );

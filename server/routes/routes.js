@@ -59,7 +59,7 @@ router.post('/contents/:id/bids', bidMid.setup, contentMid.pushBid);
 
 router.post('/contents', contentMid.pictureMid, contentMid.setup);
 
-router.delete('/contents/:id', contentMid.deleteContent);
+router.delete('/contents/:id', contentMid.retrieveDelete, questionMid.deletedContent, bidMid.deletedContent, contentMid.deleteContent);
 
 router.post('/appointments', appointmentMid.setup);
 

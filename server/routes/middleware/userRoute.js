@@ -1,5 +1,6 @@
 const User = require('../../database/models/user.js');
 const error = require('./errorRoute.js');
+const moment = require('moment');
 
 function setup(req, res, next) {
   const { username, password, email, phone, authorization } = req.body;
@@ -11,7 +12,8 @@ function setup(req, res, next) {
       password: password,
       email: email,
       phone: phone,
-      authorization: authorization || '0'
+      authorization: authorization || '0',
+      createDate: moment.utc()
     });
     newUser.save(function(err, savedUser) {
       if (err) return next(err);
@@ -21,7 +23,10 @@ function setup(req, res, next) {
 }
 
 function all(req, res, next) {
-  User.find({}, function(err, docs) {
+  User.find({}, null, {sort: {createDate: 1}}, function(err, docs) {
+    /*for (let i = 0; i < docs.length; i += 1) {
+      console.log(docs[i].createDate.valueOf());
+    }*/
     res.status('200').json({users: docs});
   })
   /*
@@ -39,14 +44,16 @@ function single(req, res, next) {
 }
 
 function edit(req, res, next) {
-  User.updateOne({_id: req.params.id}, req.body, {runValidators: true}, function(err, result) {
-    res.status('200').json({message: 'Updated'});
+  User.updateOne({_id: req.params.id}, req.body, {runValidators: true, context: 'query'}, function(err, result) {
+    if (err) return next(err);
+    res.status('204').json({message: 'User Updated!'});
   });
 }
 
 function deleteOne(req, res, next) {
   User.deleteOne({_id: req.params.id}, function(err) {
-    res.status('200').json({message: 'Deleted!'});
+    if (err) return next(err);
+    res.status('204').json({message: 'User Deleted!'});
   });
 }
 

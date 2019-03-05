@@ -33,6 +33,15 @@ function deleteQuestion(req, res, next) {
   });
 }
 
+function deletedContent(req, res, next) {
+  for (let i = 0; i < req.content.questions.length; i += 1) {
+    Question.deleteOne({_id: req.content.questions[i]._id}, function(err) {
+      if (err) return next(err);
+    });
+  }
+  next();
+}
+
 function answerQuestion(req, res, next) {
   Question.updateOne({_id: req.params.qid}, {answer: {
     answer: req.body.answer,
@@ -42,4 +51,4 @@ function answerQuestion(req, res, next) {
   });
 }
 
-module.exports = { question, retrieve, retrieveSingle, deleteQuestion, answerQuestion };
+module.exports = { question, retrieve, retrieveSingle, deleteQuestion, answerQuestion, deletedContent };

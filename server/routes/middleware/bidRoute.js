@@ -43,4 +43,13 @@ function deleteBid(req, res, next) {
   });
 }
 
-module.exports = { setup, retrieve, retrieveSingle, deleteBid, edit }
+function deletedContent(req, res, next) {
+  for (let i = 0; i < req.content.bids.length; i += 1) {
+    Bid.deleteOne({_id: req.content.bids[i]._id}, function(err) {
+      if (err) return next(err);
+    });
+  }
+  next();
+}
+
+module.exports = { setup, retrieve, retrieveSingle, deleteBid, edit, deletedContent }

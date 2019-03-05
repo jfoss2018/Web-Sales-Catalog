@@ -113,8 +113,8 @@ class DashboardQuestion extends Component {
     } else {
       buttons =
         <div className="user-controls">
-          <button disabled className="user-edit user-control-btn">Answer</button>
-          <button disabled className="user-delete user-control-btn">Delete</button>
+          <button disabled className="user-control-btn-dis">Answer</button>
+          <button disabled className="user-control-btn-dis">Delete</button>
         </div>
     }
 
@@ -140,7 +140,7 @@ class DashboardQuestion extends Component {
         </div>
 
         <div onClick={this.checkModal} className="user-modal">
-          <div className="user-modal-content">
+          <div className="user-modal-content centered">
             <span onClick={this.openModal} className="user-modal-close">&times;</span>
             {modalContents}
           </div>

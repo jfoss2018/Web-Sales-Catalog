@@ -107,17 +107,29 @@ class DashboardPage extends Component {
     }
   }
 
+  changeClass = (modal, newClass) => {
+    modal.classList.remove('centered');
+    modal.classList.remove('non-centered');
+    modal.classList.add(newClass);
+  }
+
   render() {
     let modalContents;
+    let modal = document.querySelector('.user-modal-content');
     if (this.state.selectedPageModule === 'title') {
+      this.changeClass(modal, 'centered');
       modalContents = <PageTitle closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'image') {
+      this.changeClass(modal, 'non-centered');
       modalContents = <PageImage closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'search') {
+      this.changeClass(modal, 'centered');
       modalContents = <PageSearch closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'pagination') {
+      this.changeClass(modal, 'centered');
       modalContents = <PagePagination closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'footer') {
+      this.changeClass(modal, 'centered');
       modalContents = <PageFooter closeModal={this.checkPage} />
     } else {
       modalContents = null;
@@ -165,7 +177,7 @@ class DashboardPage extends Component {
         </div>
 
         <div onClick={this.checkModal} className="user-modal">
-          <div className="user-modal-content">
+          <div className="user-modal-content centered">
             <span onClick={() => this.openModal('close')} className="user-modal-close">&times;</span>
             {modalContents}
           </div>

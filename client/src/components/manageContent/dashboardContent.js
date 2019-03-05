@@ -11,13 +11,17 @@ class DashboardContent extends Component {
     this.state = {
       items: [],
       selectedItem: null,
-      selectedAction: ''
+      selectedAction: '',
+      loading: true
     }
   }
 
 
 
   updateList = () => {
+    this.setState({
+      loading: true
+    });
     axios({
       method: 'get',
       url: '/api/v1/contents',
@@ -36,17 +40,19 @@ class DashboardContent extends Component {
       this.loginForm[2].value = '';
       this.loginForm[3].value = '';
       */
-      this.setState({
-        items: response.data.contents,
-        selectedItem: null,
-        selectedAction: 'empty'
-      });
+
       const modal = document.querySelector('.user-modal');
       modal.style.display = 'none';
       const rows = document.querySelectorAll('.user-data-row');
       for (let i = 0; i < rows.length; i += 1) {
         rows[i].classList.remove('active');
       }
+      this.setState({
+        items: response.data.contents,
+        selectedItem: null,
+        selectedAction: 'empty',
+        loading: false
+      });
     })
     .catch((error) => {
       console.log(error);
@@ -93,13 +99,23 @@ class DashboardContent extends Component {
     }
   }
 
+  changeClass = (modal, newClass) => {
+    modal.classList.remove('centered');
+    modal.classList.remove('non-centered');
+    modal.classList.add(newClass);
+  }
+
   render() {
     let modalContents;
+    let modal = document.querySelector('.user-modal-content');
     if (this.state.selectedAction === 'new') {
+      this.changeClass(modal, 'non-centered');
       modalContents = <NewContent updateList={this.updateList} />
     } else if (this.state.selectedAction === 'edit') {
+      this.changeClass(modal, 'non-centered');
       modalContents = <EditContent id={this.state.selectedItem} updateList={this.updateList} />
     } else if (this.state.selectedAction === 'delete') {
+      this.changeClass(modal, 'centered');
       modalContents = <DeleteContent id={this.state.selectedItem} updateList={this.updateList} />
     } else {
       modalContents = null;
@@ -118,9 +134,18 @@ class DashboardContent extends Component {
       buttons =
         <div className="user-controls">
           <button value="new" onClick={this.openModal} className="user-create user-control-btn">New</button>
-          <button disabled className="user-edit user-control-btn">Edit</button>
-          <button disabled className="user-delete user-control-btn">Delete</button>
+          <button disabled className="user-control-btn-dis">Edit</button>
+          <button disabled className="user-control-btn-dis">Delete</button>
         </div>
+    }
+
+    let bodyContents;
+    if (this.state.loading) {
+      bodyContents = <p>Loading...</p>
+    } else {
+      bodyContents = this.state.items.map(function(item, i) {
+        return <ContentItem key={i} record={i} itemInfo={item} />
+      })
     }
 
     return (
@@ -138,15 +163,18 @@ class DashboardContent extends Component {
               </tr>
             </thead>
             <tbody onClick={this.toggleActive}>
-              {this.state.items.map(function(item, i) {
-                return <ContentItem key={i} record={i} itemInfo={item} />
-              })}
+              {(!this.state.loading) && (
+                bodyContents
+              )}
             </tbody>
           </table>
+          {(this.state.loading) && (
+            bodyContents
+          )}
         </div>
 
         <div onClick={this.checkModal} className="user-modal">
-          <div className="user-modal-content">
+          <div className="user-modal-content centered">
             <span onClick={this.openModal} className="user-modal-close">&times;</span>
             {modalContents}
           </div>

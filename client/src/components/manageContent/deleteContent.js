@@ -31,8 +31,8 @@ class DeleteContent extends Component {
       */
 
       this.setState({
-        id: response.data.content[0]._id,
-        name: response.data.content[0].name
+        id: response.data.content._id,
+        name: response.data.content.name
       });
     })
     .catch((error) => {

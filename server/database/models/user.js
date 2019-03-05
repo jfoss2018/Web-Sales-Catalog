@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const uniqueValidator = require('mongoose-unique-validator');
 
 const Schema = mongoose.Schema;
 
@@ -9,7 +10,9 @@ const UserSchema = new Schema({
     type: String,
     minlength: [4, 'Username Invalid. Username must be 4 or more characters.'],
     maxlength: [16, 'Username Invalid. Username must be 16 or less characters.'],
-    required: [true, 'Username is required.']
+    required: [true, 'Username is required.'],
+    unique: true,
+    uniqueCaseInsensitive: true
   },
   password: {
     type: String,
@@ -23,7 +26,9 @@ const UserSchema = new Schema({
       },
       message: props => `${props.value} is not a valid email address!`
     },
-    required: [true, 'Email is required.']
+    required: [true, 'Email is required.'],
+    unique: true,
+    uniqueCaseInsensitive: true
   },
   phone: {
     type: String,
@@ -31,8 +36,14 @@ const UserSchema = new Schema({
   },
   authorization: {
     type: String
+  },
+  createDate: {
+    type: Date,
+    required: [true, 'Create Date is required.']
   }
 });
+
+UserSchema.plugin(uniqueValidator);
 
 /*
 // The verifyPassword method is used compare provided password with the saved

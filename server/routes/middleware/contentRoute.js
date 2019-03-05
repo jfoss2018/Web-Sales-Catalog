@@ -55,13 +55,15 @@ function retrieve(req, res, next) {
   Content.find({}, function(err, contents) {
     for (let i = 0; i < contents.length; i += 1) {
       for (let j = 0; j < contents[i].images.length; j += 1) {
-        const newImage = {
-          _id: contents[i].images[j]._id,
-          name: contents[i].images[j].name,
-          contentType: contents[i].images[j].contentType,
-          src: `data:${contents[i].images[j].contentType};base64,${contents[i].images[j].data.toString('base64')}`
+        if (contents[i].images[j].data) {
+          const newImage = {
+            _id: contents[i].images[j]._id,
+            name: contents[i].images[j].name,
+            contentType: contents[i].images[j].contentType,
+            src: `data:${contents[i].images[j].contentType};base64,${contents[i].images[j].data.toString('base64')}`
+          }
+          contents[i].images[j] = newImage;
         }
-        contents[i].images[j] = newImage;
       }
     }
     res.status('200').json({contents: contents})
@@ -71,17 +73,27 @@ function retrieve(req, res, next) {
 function retrieveSingle(req, res, next) {
   Content.findById(req.params.id).populate('questions').exec(function(err, content) {
     for (let i = 0; i < content.images.length; i += 1) {
-      const newImage = {
-        _id: content.images[i]._id,
-        name: content.images[i].name,
-        contentType: content.images[i].contentType,
-        src: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
-        original: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
-        thumbnail: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`
+      if (content.images[i].data) {
+        const newImage = {
+          _id: content.images[i]._id,
+          name: content.images[i].name,
+          contentType: content.images[i].contentType,
+          src: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
+          original: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
+          thumbnail: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`
+        }
+        content.images[i] = newImage;
       }
-      content.images[i] = newImage;
     }
     res.status('200').json({content: content})
+  });
+}
+
+function retrieveDelete(req, res, next) {
+  Content.findById(req.params.id).exec(function(err, content) {
+    if (err) return next(err);
+    req.content = content;
+    next();
   });
 }
 
@@ -129,4 +141,4 @@ function deleteBid(req, res, next) {
   });
 }
 
-module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion, pushBid, deleteBid };
+module.exports = { retrieve, setup, pictureMid, retrieveSingle, edit, deleteContent, pushQuestion, deleteQuestion, pushBid, deleteBid, retrieveDelete };

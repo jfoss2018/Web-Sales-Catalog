@@ -23,13 +23,6 @@ class DeleteUser extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.user._id,
         username: response.data.user.username
@@ -37,6 +30,11 @@ class DeleteUser extends Component {
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -61,34 +59,38 @@ class DeleteUser extends Component {
       }
     })
     .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-      */
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'User Deleted!'
+      });
+      if (this.props.updateList) {
+        this.props.updateList();
+      }
       this.setState({
         id: '',
         username: ''
       });
-
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
   render() {
     return (
+      /*===========User Delete Form==========*/
       <form ref={form => this.deleteForm = form} className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Delete User</h1>
         <p className="login-title">Are you sure you want to delete {this.state.username}?</p>
         <button className="login-form-control" type="submit">Yes</button>
         <button className="login-form-control" onClick={this.cancel}>No</button>
       </form>
+      /*=========End User Delete Form==========*/
     );
   }
 }

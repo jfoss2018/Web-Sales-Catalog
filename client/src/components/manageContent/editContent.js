@@ -131,9 +131,6 @@ class EditContent extends Component {
           postedDate: '',
           lastEditDate: ''
         });
-        if (this.props.updateList) {
-          this.props.updateList();
-        }
       })
       .catch((error) => {
         console.log(error);

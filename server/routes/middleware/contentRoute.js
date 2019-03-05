@@ -73,6 +73,7 @@ function retrieve(req, res, next) {
             _id: contents[i].images[j]._id,
             name: contents[i].images[j].name,
             contentType: contents[i].images[j].contentType,
+            data: contents[i].images[j].data,
             src: `data:${contents[i].images[j].contentType};base64,${contents[i].images[j].data.toString('base64')}`
           }
           contents[i].images[j] = newImage;
@@ -93,6 +94,7 @@ function retrieveSingle(req, res, next) {
           _id: content.images[i]._id,
           name: content.images[i].name,
           contentType: content.images[i].contentType,
+          data: content.images[i].data,
           src: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
           original: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`,
           thumbnail: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`

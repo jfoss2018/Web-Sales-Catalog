@@ -241,9 +241,13 @@ class DashboardContent extends Component {
     }
 
     return (
+      /*===========Contents Dashboard Panel==============*/
       <div className="user-block">
+        {/*=========New, Edit & Delete Buttons==========*/}
         {buttons}
+        {/*=======End New, Edit & Delete Buttons========*/}
         <div className="user-list-wrapper">
+          {/*=====Content List=========*/}
           <table className="user-list">
             <thead>
               <tr>
@@ -260,18 +264,24 @@ class DashboardContent extends Component {
               )}
             </tbody>
           </table>
+          {/*======End Content List========*/}
+          {/*=======Loading Message========*/}
           {(this.state.loading) && (
             bodyContents
           )}
+          {/*====End Loading Message=======*/}
         </div>
 
+        {/*=========Action Modal===========*/}
         <div onClick={this.checkModal} className="user-modal">
           <div className="user-modal-content centered">
             <span onClick={this.openModal} className="user-modal-close">&times;</span>
             {modalContents}
           </div>
         </div>
+        {/*=======End Action Modal=========*/}
 
+        {/*=======Message Modal============*/}
         <div onClick={this.openModalMessage} className="init-message-modal">
           <div className="init-message-modal-content">
             <span onClick={this.openModalMessage} className="init-login-modal-close">&times;</span>
@@ -280,8 +290,10 @@ class DashboardContent extends Component {
             )}
           </div>
         </div>
+        {/*=====End Message Modal==========*/}
 
       </div>
+      /*===========End Content Dashboard Panel==============*/
     );
   }
 }

@@ -88,9 +88,6 @@ class EditUser extends Component {
           phone: '',
           authorization: ''
         });
-        if (this.props.updateList) {
-          this.props.updateList();
-        }
       })
       .catch((error) => {
         console.log(error);

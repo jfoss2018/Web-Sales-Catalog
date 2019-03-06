@@ -31,8 +31,9 @@ function setup(req, res, next) {
 
 function retrieve(req, res, next) {
   Page.find({}, function(err, page) {
+    if (err) return next(err);
     const src = `data:${page[0].image.contentType};base64,${page[0].image.data.toString('base64')}`;
-    res.status('200').json({page: page[0], src: src})
+    res.status('200').json({page: page[0], src: src});
   });
 }
 
@@ -48,7 +49,8 @@ function pictureMid(req, res, next) {
 
 function edit(req, res, next) {
   Page.updateOne({_id: req.params.id}, req.body, {runValidators: true}, function(err, page) {
-    res.status('200').json({message: 'Updated'})
+    if (err) return next(err);
+    res.status('204').json({message: 'Page Updated!'});
   });
 }
 

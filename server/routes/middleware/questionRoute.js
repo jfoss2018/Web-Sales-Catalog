@@ -10,6 +10,7 @@ function question(req, res, next) {
     askDate: moment.utc()
   });
   newQuestion.save(function(err, q) {
+    if (err) return next(err);
     req.question = q;
     next();
   });
@@ -55,7 +56,7 @@ function answerQuestion(req, res, next) {
     answerDate: moment.utc()
   }}, {runValidators: true}, function(err, result) {
     if (err) return next(err);
-    res.status('200').json({message: 'Updated'});
+    res.status('204').json({message: 'Question Answered!'});
   });
 }
 

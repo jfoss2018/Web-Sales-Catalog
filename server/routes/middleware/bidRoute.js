@@ -14,6 +14,7 @@ function setup(req, res, next) {
     viewed: false
   });
   bid.save(function(err, bid) {
+    if (err) return next(err);
     req.bid = bid;
     next();
   });

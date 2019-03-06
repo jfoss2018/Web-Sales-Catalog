@@ -182,7 +182,7 @@ class EditContent extends Component {
         {/*=======Edit Name=======*/}
         <div className="form-group">
           <label className="login-form-control" htmlFor="name">Name</label>
-          <input className="login-form-control" type="text" minLength="3" maxLength="40" name="name" value={this.state.name} id="name" onChange={this.handleChange} />
+          <input className="login-form-control" type="text" minLength="3" maxLength="23" name="name" value={this.state.name} id="name" onChange={this.handleChange} />
           <span className="invalid-feedback"></span>
         </div>
         {/*====Edit Description====*/}

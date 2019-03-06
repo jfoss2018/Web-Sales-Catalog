@@ -4,17 +4,11 @@ class Filter extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedOption: null,
       filter: false,
       featured: false,
       htol: false,
       ltoh: false
     }
-  }
-
-  handleChange = (selectedOption) => {
-    this.setState({ selectedOption });
-    console.log(`Option selected:`, selectedOption);
   }
 
   filterBtn = () => {
@@ -24,9 +18,17 @@ class Filter extends Component {
       this.setState({
         filter: true
       });
+      this.props.updateState({
+        filter: true,
+        needsUpdate: true
+      });
     } else {
       this.setState({
         filter: false
+      });
+      this.props.updateState({
+        filter: false,
+        needsUpdate: true
       });
     }
   }
@@ -47,11 +49,21 @@ class Filter extends Component {
           ltoh: e.target.classList.contains('li-highlight'),
           htol: false
         });
+        this.props.updateState({
+          ltoh: e.target.classList.contains('li-highlight'),
+          htol: false,
+          needsUpdate: true
+        });
       } else {
         e.target.previousElementSibling.classList.remove('li-highlight');
         this.setState({
           htol: e.target.classList.contains('li-highlight'),
           ltoh: false
+        });
+        this.props.updateState({
+          htol: e.target.classList.contains('li-highlight'),
+          ltoh: false,
+          needsUpdate: true
         });
       }
     } else {
@@ -63,10 +75,13 @@ class Filter extends Component {
     this.setState({
       [key]: cond
     });
+    this.props.updateState({
+      [key]: cond,
+      needsUpdate: true
+    });
   }
 
   render() {
-    const { selectedOption } = this.state;
 
     return (
       <div className="filter-div">

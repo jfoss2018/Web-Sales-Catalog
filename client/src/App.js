@@ -6,13 +6,8 @@ import Detail from './components/userViews/detail.js';
 import Dashboard from './components/dashboard.js';
 import LoginPage from './components/loginPage.js';
 import { createBrowserHistory } from 'history';
-import { createFilter } from 'react-search-input';
-import data from './data.json';
 import axios from 'axios';
 
-const items = data.items;
-
-const KEYS_TO_FILTERS = ['name'];
 
 const history = createBrowserHistory();
 
@@ -20,8 +15,6 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      searchTerm: '',
-      filter: [],
       page: {},
       src: null
     }
@@ -67,14 +60,12 @@ class App extends Component {
   }
 
   render() {
-    const filteredItems = items.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS));
-    //console.log(filteredItems);
     return (
       <div className="ReactApp">
 
         <Router history={history}>
           <Switch>
-            <Route exact path="/" render={() => <Home list={filteredItems} updateState={this.updateState} page={this.state.page} src={this.state.src} browserPath={this.browserPath} />} />
+            <Route exact path="/" render={() => <Home page={this.state.page} src={this.state.src} browserPath={this.browserPath} />} />
             <Route path="/catalog/:item" render={() => <Detail page={this.state.page} browserPath={this.browserPath} />} />
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" render={() => <LoginPage />} />

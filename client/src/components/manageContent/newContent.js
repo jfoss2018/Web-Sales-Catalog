@@ -139,7 +139,7 @@ class NewContent extends Component {
         {/*=======Content Name===========*/}
         <div className="form-group">
           <label className="login-form-control" htmlFor="name">Name</label>
-          <input className="login-form-control" required type="text" minLength="3" maxLength="40" name="name" id="name" onChange={this.handleChange} />
+          <input className="login-form-control" required type="text" minLength="3" maxLength="23" name="name" id="name" onChange={this.handleChange} />
           <span className="invalid-feedback"></span>
         </div>
         {/*======Content Description======*/}
@@ -203,7 +203,7 @@ class NewContent extends Component {
           </div>
         </div>
         {/*======End Add Image Modal==========*/}
-        
+
       </form>
       /*===========End New Content Form==================*/
     );

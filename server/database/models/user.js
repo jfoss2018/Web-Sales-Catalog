@@ -9,13 +9,14 @@ const UserSchema = new Schema({
   username: {
     type: String,
     minlength: [4, 'Username Invalid. Username must be 4 or more characters.'],
-    maxlength: [16, 'Username Invalid. Username must be 16 or less characters.'],
+    maxlength: [28, 'Username Invalid. Username must be 16 or less characters.'],
     required: [true, 'Username is required.'],
     unique: true,
     uniqueCaseInsensitive: true
   },
   password: {
     type: String,
+    minlength: [4, 'Password must be 4 or more characters.'],
     required: [true, 'Password is required.']
   },
   email: {
@@ -26,9 +27,7 @@ const UserSchema = new Schema({
       },
       message: props => `${props.value} is not a valid email address!`
     },
-    required: [true, 'Email is required.'],
-    unique: true,
-    uniqueCaseInsensitive: true
+    required: [true, 'Email is required.']
   },
   phone: {
     type: String,

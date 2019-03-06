@@ -3,10 +3,10 @@ import React from 'react';
 const Header = (props) => {
   return (
     <header>
+      {(props.page.showTitle) && (
+        <h1 className="page-title">{props.page.title}</h1>
+      )}
       <div className="imgborder">
-        {(props.page.showTitle) && (
-          <h1 className="page-title">{props.page.title}</h1>
-        )}
         <img className="header-img" src={props.src} alt="Header" />
       </div>
       {/*<svg version="1.1" id="Layer_1" x="0px" y="0px"

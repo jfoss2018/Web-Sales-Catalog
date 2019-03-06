@@ -66,6 +66,7 @@ function pictureMid(req, res, next) {
 
 function retrieve(req, res, next) {
   Content.find({}, null, {sort: {postedDate: 1}}, function(err, contents) {
+    if (err) return next(err);
     for (let i = 0; i < contents.length; i += 1) {
       for (let j = 0; j < contents[i].images.length; j += 1) {
         if (contents[i].images[j].data) {
@@ -80,7 +81,9 @@ function retrieve(req, res, next) {
         }
       }
       contents[i].bidLength = contents[i].bids.length;
-      contents[i].priceNum = parseFloat(contents[i].price.replace(/[^\d.-]/g, ''));
+      if (contents[i].price) {
+        contents[i].priceNum = parseFloat(contents[i].price.replace(/[^\d.-]/g, ''));
+      }
     }
     res.status('200').json({contents: contents})
   });
@@ -88,6 +91,7 @@ function retrieve(req, res, next) {
 
 function retrieveSingle(req, res, next) {
   Content.findById(req.params.id).populate('questions').exec(function(err, content) {
+    if (err) return next(err);
     for (let i = 0; i < content.images.length; i += 1) {
       if (content.images[i].data) {
         const newImage = {
@@ -116,6 +120,7 @@ function retrieveDelete(req, res, next) {
 
 function pushQuestion(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
+    if (err) return next(err);
     content.questions.push(req.question);
     content.save(function(err, updatedContnet) {
       next();
@@ -125,6 +130,7 @@ function pushQuestion(req, res, next) {
 
 function pushBid(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
+    if (err) return next(err);
     content.bids.push(req.bid._id);
     content.save(function(err, updatedContnet) {
       res.status('201').json({message: 'Your bid was successfully submitted!'});
@@ -134,12 +140,14 @@ function pushBid(req, res, next) {
 
 function deleteContent(req, res, next) {
   Content.deleteOne({_id: req.params.id}, function(err) {
+    if (err) return next(err);
     res.status('204').json({message: 'Content Item Deleted!'});
   });
 }
 
 function deleteQuestion(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
+    if (err) return next(err);
     const index = content.questions.indexOf(req.params.qid);
     content.questions.splice(index, 1);
     content.save(function(err, newContent) {
@@ -150,6 +158,7 @@ function deleteQuestion(req, res, next) {
 
 function deleteBid(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
+    if (err) return next(err);
     const index = content.bids.indexOf(req.params.bid);
     content.bids.splice(index, 1);
     content.save(function(err, newContent) {

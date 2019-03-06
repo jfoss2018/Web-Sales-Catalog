@@ -16,31 +16,36 @@ function setup(req, res, next) {
     viewed: false
   });
   appoint.save(function(err, appointment) {
-    res.status('200').json({appointment: appointment});
+    if (err) return next(err);
+    res.status('201').json({appointment: appointment});
   });
 }
 
 function retrieve(req, res, next) {
   Appointment.find({}, null, {sort: {preferredDate: 1}}, function(err, appointments) {
+    if (err) return next(err);
     res.status('200').json({appointments: appointments});
   });
 }
 
 function retrieveSingle(req, res, next) {
   Appointment.findById(req.params.id).exec(function(err, appointment) {
+    if (err) return next(err);
     res.status('200').json({appointment: appointment});
   });
 }
 
 function edit(req, res, next) {
   Appointment.updateOne({_id: req.params.id}, req.body, {runValidators: true}, function(err, result) {
-    res.status('200').json({message: 'Updated'});
+    if (err) return next(err);
+    res.status('204').json({message: 'Appointment Updated!'});
   });
 }
 
 function deleteAppointment(req, res, next) {
   Appointment.deleteOne({_id: req.params.id}, function(err) {
-    res.status('200').json({message: 'Deleted!'});
+    if (err) return next(err);
+    res.status('204').json({message: 'Appointment Deleted!'});
   });
 }
 

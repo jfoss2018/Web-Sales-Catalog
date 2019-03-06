@@ -24,21 +24,14 @@ function setup(req, res, next) {
 
 function all(req, res, next) {
   User.find({}, null, {sort: {createDate: 1}}, function(err, docs) {
-    /*for (let i = 0; i < docs.length; i += 1) {
-      console.log(docs[i].createDate.valueOf());
-    }*/
-    res.status('200').json({users: docs});
-  })
-  /*
-  newUser.save(function(err, savedUser) {
     if (err) return next(err);
-    res.status('201').json(savedUser);
+    res.status('200').json({users: docs});
   });
-  */
 }
 
 function single(req, res, next) {
   User.findOne({_id: req.params.id}, function(err, doc) {
+    if (err) return next(err);
     res.status('200').json({user: doc});
   });
 }

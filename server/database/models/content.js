@@ -8,8 +8,8 @@ const ObjectId = Schema.Types.ObjectId;
 const ContentSchema = new Schema({
   name: {
     type: String,
-    minlength: [4, 'Item Name Invalid. Name must be 4 or more characters.'],
-    maxlength: [24, 'Item Name Invalid. Name must be 24 or less characters.'],
+    minlength: [3, 'Item Name Invalid. Name must be 3 or more characters.'],
+    maxlength: [23, 'Item Name Invalid. Name must be 23 or less characters.'],
     required: [true, 'Item name is required.'],
     unique: true,
     uniqueCaseInsensitive: true

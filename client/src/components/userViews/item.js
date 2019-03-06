@@ -11,20 +11,22 @@ const Item = (props) => {
   }
 
   let displayDescription;
-  if (props.itemInfo.description.length > 50) {
-    displayDescription = props.itemInfo.description.slice(0, 50) + ' ...';
+  if (props.itemInfo.description.length > 120) {
+    displayDescription = props.itemInfo.description.slice(0, 120) + ' ...';
   } else {
     displayDescription = props.itemInfo.description;
   }
 
   return(
     <article onClick={() => props.browserPath('/catalog/' + props.itemInfo._id)}>
-      <div className="imgborder-2">
+      <div className="imgborder-3">
         <img src={imgSrc} alt={props.itemInfo.name} />
       </div>
-      <h4>{props.itemInfo.name}</h4>
-      <p className="description">{displayDescription}</p>
-      <p className="price">{props.itemInfo.price}</p>
+      <div className="card-wrapper">
+        <h4>{props.itemInfo.name}</h4>
+        <p className="description">{displayDescription}</p>
+        <p className="price">{props.itemInfo.price}</p>
+      </div>
     </article>
   );
 }

@@ -70,12 +70,6 @@ class DeleteBid extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: '',
-        bidName: '',
-        item: '',
-        contentId: ''
-      });
     })
     .catch((error) => {
       console.log(error);

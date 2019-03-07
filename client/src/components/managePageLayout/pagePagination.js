@@ -11,17 +11,12 @@ class PagePagination extends Component {
       allowChange: false
     }
 
-    this.editForm = React.createRef();
+    this.pageForm = React.createRef();
   }
 
   handleChange = (e) => {
     if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
+      const bool = (e.target.checked === true);
       this.setState({
         [e.target.name]: bool
       });
@@ -45,23 +40,20 @@ class PagePagination extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.page._id,
         pagination: response.data.page.pagination,
         itemsPerPage: response.data.page.itemsPerPage,
         allowChange: response.data.page.allowChange
       });
-
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -86,28 +78,20 @@ class PagePagination extends Component {
       data: dataObj
     })
     .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-
-      this.setState({
-        id: '',
-        username: '',
-        email: '',
-        phone: '',
-        authorization: ''
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'Page Pagination Updated!'
       });
-
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
-      */
       this.props.closeModal('close');
+      this.props.openModal();
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -133,7 +117,7 @@ class PagePagination extends Component {
 
 
     return (
-      <form ref={form => this.editForm = form} className="login-form form-grid col-2" onSubmit={this.handleSubmit}>
+      <form ref={form => this.pageForm = form} className="login-form form-grid col-2" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Page Pagination</h1>
         <label className="login-form-control" htmlFor="pagination">Show Pagination</label>
         <input type="checkbox" value={this.state.pagination} className="checkbox" checked={this.state.pagination} name="pagination" id="pagination" onChange={this.handleChange} />

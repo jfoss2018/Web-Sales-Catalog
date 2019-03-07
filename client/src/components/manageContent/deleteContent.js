@@ -66,10 +66,6 @@ class DeleteContent extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: '',
-        name: ''
-      });
     })
     .catch((error) => {
       console.log(error);

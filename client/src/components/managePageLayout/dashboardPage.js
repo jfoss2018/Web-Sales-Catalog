@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import PageTitle from './pageTitle.js';
 import PageSearch from './pageSearch.js';
 import PageFooter from './pageFooter.js';
@@ -10,63 +9,14 @@ class DashboardPage extends Component {
   constructor() {
     super();
     this.state = {
-      users: [],
-      selectedUser: null,
-      selectedPageModule: ''
+      selectedPageModule: '',
+      resStatus: null,
+      resMessage: null
     }
   }
 
-
-
-  updateList = () => {
-    axios({
-      method: 'get',
-      url: '/api/v1/users',
-      /*proxy: {
-        host: '127.0.0.1',
-        port: 3001
-      },*/
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-      this.setState({
-        users: response.data.users,
-        selectedUser: null,
-        selectedPageModule: 'empty'
-      });
-      const modal = document.querySelector('.user-modal');
-      modal.style.display = 'none';
-      const rows = document.querySelectorAll('.user-data-row');
-      for (let i = 0; i < rows.length; i += 1) {
-        rows[i].classList.remove('active');
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  }
-
-  componentDidMount() {
-    this.updateList();
-  }
-
-  toggleActive = (e) => {
-    const rows = document.querySelectorAll('.user-data-row');
-    for (let i = 0; i < rows.length; i += 1) {
-      rows[i].classList.remove('active');
-    }
-    e.target.closest('tr').classList.add('active');
-    this.setState({
-      selectedUser: e.target.closest('tr').childNodes[0].innerHTML
-    });
+  updateState = (obj) => {
+    this.setState(obj);
   }
 
   checkModal = (e) => {
@@ -113,31 +63,76 @@ class DashboardPage extends Component {
     modal.classList.add(newClass);
   }
 
+  openModalMessage = (e) => {
+    const modal = document.querySelector('.init-message-modal');
+    modal.style.display = 'block';
+    if (e) {
+      if (e.target.className === 'init-login-modal-close' || e.target === modal) {
+        this.modalClose(modal);
+      }
+    }
+  }
+
+  modalClose = (modal) => {
+    modal.style.display = 'none';
+    this.setState({
+      resStatus: null,
+      resMessage: null
+    });
+  }
+
   render() {
+    // Modal Contents ==========================================================
     let modalContents;
     let modal = document.querySelector('.user-modal-content');
     if (this.state.selectedPageModule === 'title') {
       this.changeClass(modal, 'centered');
-      modalContents = <PageTitle closeModal={this.checkPage} />
+      modalContents = <PageTitle updateState={this.updateState} openModal={this.openModalMessage} closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'image') {
       this.changeClass(modal, 'non-centered');
-      modalContents = <PageImage closeModal={this.checkPage} />
+      modalContents = <PageImage updateState={this.updateState} openModal={this.openModalMessage} closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'search') {
       this.changeClass(modal, 'centered');
-      modalContents = <PageSearch closeModal={this.checkPage} />
+      modalContents = <PageSearch updateState={this.updateState} openModal={this.openModalMessage} closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'pagination') {
       this.changeClass(modal, 'centered');
-      modalContents = <PagePagination closeModal={this.checkPage} />
+      modalContents = <PagePagination updateState={this.updateState} openModal={this.openModalMessage} closeModal={this.checkPage} />
     } else if (this.state.selectedPageModule === 'footer') {
       this.changeClass(modal, 'centered');
-      modalContents = <PageFooter closeModal={this.checkPage} />
+      modalContents = <PageFooter updateState={this.updateState} openModal={this.openModalMessage} closeModal={this.checkPage} />
     } else {
       modalContents = null;
     }
 
+    // Message Modal Contents ==================================================
+    let secondaryModalContents;
+    if (this.state.resStatus) {
+      const modalBG = document.querySelector('.init-message-modal-content');
+      if (this.state.resStatus === '204') {
+        modalBG.classList.remove('fail');
+        modalBG.classList.add('success');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">{this.state.resMessage}</h5>
+        </section>
+      } else if (this.state.resStatus === '400') {
+        modalBG.classList.add('fail');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">Error: {this.state.resMessage}</h5>
+        </section>
+      } else if (this.state.resStatus === '500') {
+        modalBG.classList.add('fail');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">Error: {this.state.resStatus}</h5>
+          <p className="init-message-form-control">{this.state.resMessage}</p>
+        </section>
+      }
+    }
+
     return (
+      /*====================Page Dashboard Panel=======================*/
       <div className="page-block">
         <div className="page-list-wrapper">
+          {/*===============Page Module Selection SVG==================*/}
           <svg version="1.1" id="Layer_10" x="0px" y="0px"
              viewBox="0 0 187.4 246.1">
             <g>
@@ -174,16 +169,31 @@ class DashboardPage extends Component {
               <circle className="st11 svg-pointer" onClick={() => this.checkPage('image')} cx="99.7" cy="40" r="1.3"/>
             </g>
           </svg>
+          {/*============End Page Module Selection SVG=================*/}
         </div>
 
+        {/*==========Action Modal==============*/}
         <div onClick={this.checkModal} className="user-modal">
           <div className="user-modal-content centered">
             <span onClick={() => this.openModal('close')} className="user-modal-close">&times;</span>
             {modalContents}
           </div>
         </div>
+        {/*========End Action Modal============*/}
+
+        {/*=========Message Modal==========*/}
+        <div onClick={this.openModalMessage} className="init-message-modal">
+          <div className="init-message-modal-content">
+            <span onClick={this.openModalMessage} className="init-login-modal-close">&times;</span>
+            {(this.state.resStatus) && (
+              secondaryModalContents
+            )}
+          </div>
+        </div>
+        {/*=======End Message Modal=========*/}
 
       </div>
+      /*=================End Page Dashboar Panel============================*/
     );
   }
 }

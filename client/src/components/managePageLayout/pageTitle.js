@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { validate } from '../../validate.js';
 
 class PageTitle extends Component {
   constructor(props) {
@@ -7,20 +8,15 @@ class PageTitle extends Component {
     this.state = {
       id: null,
       showTitle: false,
-      title: null
+      title: ''
     }
 
-    this.editForm = React.createRef();
+    this.titleForm = React.createRef();
   }
 
   handleChange = (e) => {
     if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
+      const bool = (e.target.checked === true);
       this.setState({
         [e.target.name]: bool
       });
@@ -44,85 +40,86 @@ class PageTitle extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.page._id,
         showTitle: response.data.page.showTitle,
         title: response.data.page.title
       });
-
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
-    const dataObj = {};
-    dataObj.showTitle = this.state.showTitle
-    if (this.state.showTitle) {
-      dataObj.title = this.state.title
-    }
-    axios({
-      method: 'put',
-      url: `/api/v1/page/${this.state.id}`,
-      /*proxy: {
-        host: '127.0.0.1',
-        port: 3001
-      },*/
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: dataObj
-    })
-    .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-
-      this.setState({
-        id: '',
-        username: '',
-        email: '',
-        phone: '',
-        authorization: ''
-      });
-
-      if (this.props.updateList) {
-        this.props.updateList();
+    if (validate(this.titleForm)) {
+      const dataObj = {};
+      dataObj.showTitle = this.state.showTitle
+      if (this.state.showTitle) {
+        dataObj.title = this.state.title
       }
-      */
-      this.props.closeModal('close');
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+      axios({
+        method: 'put',
+        url: `/api/v1/page/${this.state.id}`,
+        /*proxy: {
+          host: '127.0.0.1',
+          port: 3001
+        },*/
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: dataObj
+      })
+      .then(response => {
+        this.props.updateState({
+          resStatus: '204',
+          resMessage: 'Title Updated!'
+        });
+        this.props.closeModal('close');
+        this.props.openModal();
+      })
+      .catch((error) => {
+        console.log(error);
+        this.props.updateState({
+          resStatus: error.response.status.toString(),
+          resMessage: error.response.data.message.toString()
+        });
+        this.props.openModal();
+      });
+    }
   }
 
   render() {
+    // Input Field =============================================================
     let titleInput;
     if (this.state.showTitle === true) {
-      titleInput = <input className="login-form-control" placeholder={this.state.title} name="title" id="title" onChange={this.handleChange} />
+      titleInput = <input className="login-form-control" maxLength="23" value={this.state.title} name="title" id="title" onChange={this.handleChange} />
     } else {
-      titleInput = <input className="login-form-control" disabled placeholder={this.state.title} name="title" id="title" onChange={this.handleChange} />
+      titleInput = <input className="login-form-control" disabled value={this.state.title} name="title" id="title" onChange={this.handleChange} />
     }
 
     return (
-      <form ref={form => this.editForm = form} className="login-form" onSubmit={this.handleSubmit}>
+      <form ref={form => this.titleForm = form} noValidate className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Page Title</h1>
-        <label className="login-form-control" htmlFor="showTitle">Show Title</label>
-        <input type="checkbox" value={this.state.showTitle} className="checkbox" checked={this.state.showTitle} name="showTitle" id="showTitle" onChange={this.handleChange} />
-        <label className="login-form-control disp-blk" htmlFor="title">Title</label>
-        {titleInput}
+        {/*=========Show Title Checkbox==========*/}
+        <div className="form-group">
+          <label className="login-form-control" htmlFor="showTitle">Show Title</label>
+          <input type="checkbox" value={this.state.showTitle} className="checkbox" checked={this.state.showTitle} name="showTitle" id="showTitle" onChange={this.handleChange} />
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*=======Title===========================*/}
+        <div className="form-group">
+          <label className="login-form-control disp-blk" htmlFor="title">Title</label>
+          {titleInput}
+          <span className="invalid-feedback"></span>
+        </div>
+        {/*===========Save=======================*/}
         <button className="login-form-control" type="submit">Save</button>
       </form>
     );

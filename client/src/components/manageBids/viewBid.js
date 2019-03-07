@@ -96,17 +96,6 @@ class ViewBid extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        name: '',
-        email: '',
-        phone: '',
-        amount: '',
-        preference: '',
-        bidDate: '',
-        content: '',
-        contentId: '',
-        viewed: false
-      });
     })
     .catch((error) => {
       console.log(error);

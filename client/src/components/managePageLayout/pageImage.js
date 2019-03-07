@@ -16,17 +16,12 @@ class PageImage extends Component {
       dataNew: null
     }
 
-    this.editForm = React.createRef();
+    this.imageForm = React.createRef();
   }
 
   handleChange = (e) => {
     if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
+      const bool = (e.target.checked === true);
       this.setState({
         [e.target.name]: bool
       });
@@ -50,13 +45,6 @@ class PageImage extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.page._id,
         name: response.data.page.image.name,
@@ -64,10 +52,14 @@ class PageImage extends Component {
         data: response.data.page.image.data,
         src: response.data.src
       });
-
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -78,6 +70,11 @@ class PageImage extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (!this.state.nameNew) {
+      this.props.updateState({
+        resStatus: '400',
+        resMessage: 'There is no new image attached!'
+      });
+      this.props.openModal();
       return;
     }
     const dataObj = {};
@@ -99,49 +96,28 @@ class PageImage extends Component {
       data: dataObj
     })
     .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-
-      this.setState({
-        id: '',
-        username: '',
-        email: '',
-        phone: '',
-        authorization: ''
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'Image Updated!'
       });
-
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
-      */
       this.props.closeModal('close');
+      this.props.openModal();
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
-
-  /*showPic = (e) => {
-    e.preventDefault();
-    const currentImg = document.querySelector('.current-img');
-    /*const bufferArr = new Uint8Array(this.state.data);
-    const blob = new Blob( [bufferArr], {type: this.state.contentType});
-    const urlCreate = window.URL || window.webkitURL;
-    const imageURL = urlCreate.createObjectURL(blob);*/
-    /*currentImg.src = this.state.src;*/
-    //console.log(this.state.src);
-    //currentImg.src = this.state.src;
-  /*  currentImg.hidden = false;
-  }*/
 
   render() {
 
 
     return (
-      <form ref={form => this.editForm = form} className="login-form" onSubmit={this.handleSubmit}>
+      <form ref={form => this.imageForm = form} className="login-form" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Banner Image</h1>
         <h4 className="page-image-header">Current Banner</h4>
         {(this.state.src) && (

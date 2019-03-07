@@ -13,17 +13,12 @@ class PageSearch extends Component {
       priceHighToLow: false
     }
 
-    this.editForm = React.createRef();
+    this.searchForm = React.createRef();
   }
 
   handleChange = (e) => {
     if (e.target.type === 'checkbox') {
-      if (e.target.checked === true) {
-        e.target.value = Boolean(true);
-      } else {
-        e.target.value = Boolean(false);
-      }
-      const bool = (e.target.value === 'true');
+      const bool = (e.target.checked === true);
       this.setState({
         [e.target.name]: bool
       });
@@ -47,13 +42,6 @@ class PageSearch extends Component {
       }
     })
     .then(response => {
-      /*
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      */
-
       this.setState({
         id: response.data.page._id,
         search: response.data.page.search,
@@ -62,10 +50,14 @@ class PageSearch extends Component {
         priceLowToHigh: response.data.page.filterOptions.priceLowToHigh,
         priceHighToLow: response.data.page.filterOptions.priceHighToLow
       });
-
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -87,7 +79,6 @@ class PageSearch extends Component {
         }
       }
     }
-
     axios({
       method: 'put',
       url: `/api/v1/page/${this.state.id}`,
@@ -101,28 +92,20 @@ class PageSearch extends Component {
       data: dataObj
     })
     .then(response => {
-      /*
-      this.editForm[0].value = '';
-      this.editForm[1].value = '';
-      this.editForm[2].value = '';
-      this.editForm[3].value = '';
-
-      this.setState({
-        id: '',
-        username: '',
-        email: '',
-        phone: '',
-        authorization: ''
+      this.props.updateState({
+        resStatus: '204',
+        resMessage: 'Search Bar Updated!'
       });
-
-      if (this.props.updateList) {
-        this.props.updateList();
-      }
-      */
       this.props.closeModal('close');
+      this.props.openModal();
     })
     .catch((error) => {
       console.log(error);
+      this.props.updateState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.props.openModal();
     });
   }
 
@@ -149,7 +132,7 @@ class PageSearch extends Component {
     }
 
     return (
-      <form ref={form => this.editForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
+      <form ref={form => this.searchForm = form} className="login-form form-grid col-1" onSubmit={this.handleSubmit}>
         <h1 className="login-title">Search Bar</h1>
         <label className="login-form-control" htmlFor="search">Show Search Bar</label>
         <input type="checkbox" value={this.state.search} className="checkbox" checked={this.state.search} name="search" id="search" onChange={this.handleChange} />

@@ -66,10 +66,6 @@ class DeleteUser extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: '',
-        username: ''
-      });
     })
     .catch((error) => {
       console.log(error);

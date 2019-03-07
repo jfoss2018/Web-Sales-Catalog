@@ -53,9 +53,6 @@ class Pagination extends Component {
         <div className="pagination-select">
           {(this.props.page.allowChange) && (
             <select id="change-select" onChange={this.handleChange}>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
               <option value="9">9</option>
               <option value="18">18</option>
               <option value="27">27</option>

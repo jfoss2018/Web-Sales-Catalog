@@ -78,13 +78,6 @@ class AnswerQuestion extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: null,
-        question: null,
-        item: null,
-        contentId: null,
-        answer: ''
-      });
     })
     .catch((error) => {
       console.log(error);

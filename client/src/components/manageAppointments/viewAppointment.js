@@ -92,15 +92,6 @@ class ViewAppointment extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        name: '',
-        email: '',
-        phone: '',
-        preference: '',
-        postedDate: '',
-        preferredDate: '',
-        viewed: false
-      });
     })
     .catch((error) => {
       console.log(error);

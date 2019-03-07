@@ -66,10 +66,6 @@ class DeleteAppointment extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: '',
-        appointmentName: ''
-      });
     })
     .catch((error) => {
       console.log(error);

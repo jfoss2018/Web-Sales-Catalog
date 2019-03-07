@@ -52,13 +52,6 @@ class CreateUser extends Component {
         if (this.props.updateList) {
           this.props.updateList();
         }
-        this.setState({
-          username: '',
-          password: '',
-          email: '',
-          phone: '',
-          authorization: ''
-        });
       })
       .catch((error) => {
         console.log(error);

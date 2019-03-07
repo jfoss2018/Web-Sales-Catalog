@@ -119,18 +119,6 @@ class EditContent extends Component {
         if (this.props.updateList) {
           this.props.updateList();
         }
-        this.setState({
-          name: '',
-          description: '',
-          featured: false,
-          price: '',
-          viewable: false,
-          images: [],
-          bids: [],
-          questions: [],
-          postedDate: '',
-          lastEditDate: ''
-        });
       })
       .catch((error) => {
         console.log(error);

@@ -80,14 +80,6 @@ class NewContent extends Component {
         if (this.props.updateList) {
           this.props.updateList();
         }
-        this.setState({
-          name: null,
-          description: null,
-          featured: false,
-          price: null,
-          viewable: false,
-          images: []
-        });
       })
       .catch((error) => {
       console.log(error);

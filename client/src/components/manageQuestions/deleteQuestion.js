@@ -70,12 +70,6 @@ class DeleteQuestion extends Component {
       if (this.props.updateList) {
         this.props.updateList();
       }
-      this.setState({
-        id: '',
-        question: '',
-        item: '',
-        contentId: ''
-      });
     })
     .catch((error) => {
       console.log(error);

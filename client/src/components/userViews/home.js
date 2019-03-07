@@ -5,6 +5,7 @@ import Catalog from './catalog.js';
 import { filterContent } from '../../filterContent.js';
 import axios from 'axios';
 import { compareValues } from '../../sort.js';
+import { paginate } from '../../paginate.js';
 
 class Home extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class Home extends Component {
       contents: null,
       filteredContents: null,
       loading: true,
-      needsUpdate: false
+      needsUpdate: false,
+      btnArr: null
     }
   }
 
@@ -30,20 +32,33 @@ class Home extends Component {
     if (prevState.needsUpdate !== this.state.needsUpdate) {
       this.filterContents();
     }
-
+    if ((prevProps.pageNum !== this.props.pageNum) || (prevProps.itemsPerPage !== this.props.itemsPerPage)) {
+      if (this.state.contents) {
+        /*this.setState({
+          needsUpdate: true
+        });*/
+        this.filterContents();
+      }
+    }
   }
 
   filterContents = () => {
-    let filtItems = filterContent(this.state.contents, this.state.filter, this.state.searchTerm, this.state.featured, this.state.ltoh, this.state.htol);
+    let filtItems = {
+      contents: filterContent(this.state.contents, this.state.filter, this.state.searchTerm, this.state.featured, this.state.ltoh, this.state.htol)
+    }
     if (this.state.filter && this.state.ltoh) {
-      filtItems = filtItems.sort(compareValues('priceNum', 'asc'));
+      filtItems.contents = filtItems.contents.sort(compareValues('priceNum', 'asc'));
     }
     if (this.state.filter && this.state.htol) {
-      filtItems = filtItems.sort(compareValues('priceNum', 'desc'));
+      filtItems.contents = filtItems.contents.sort(compareValues('priceNum', 'desc'));
+    }
+    if (this.props.page.pagination) {
+      filtItems = paginate(filtItems.contents, this.props.pageNum, this.props.itemsPerPage);
     }
     this.setState({
-      filteredContents: filtItems,
-      needsUpdate: false
+      filteredContents: filtItems.contents,
+      needsUpdate: false,
+      btnArr: filtItems.btnArr
     });
   }
 
@@ -60,11 +75,17 @@ class Home extends Component {
       }
     })
     .then(response => {
-      const filtItems = filterContent(response.data.contents, this.state.filter, this.state.searchTerm, this.state.featured, this.state.ltoh, this.state.htol);
+      let filtItems = {
+        contents: filterContent(response.data.contents, this.state.filter, this.state.searchTerm, this.state.featured, this.state.ltoh, this.state.htol)
+      }
+      if (this.props.page.pagination) {
+        filtItems = paginate(filtItems.contents, this.props.pageNum, this.props.itemsPerPage);
+      }
       this.setState({
         contents: response.data.contents,
-        filteredContents: filtItems,
-        loading: false
+        filteredContents: filtItems.contents,
+        loading: false,
+        btnArr: filtItems.btnArr
       });
 
     })
@@ -82,9 +103,9 @@ class Home extends Component {
       <main>
         <Header page={this.props.page} src={this.props.src} />
         {(this.props.page.search) && (
-          <Toolbar page={this.props.page} updateState={this.updateState} />
+          <Toolbar page={this.props.page} updatePagination={this.props.updateState} updateState={this.updateState} />
         )}
-        <Catalog updateState={this.updateState} contents={this.state.filteredContents} loading={this.state.loading} page={this.props.page} browserPath={this.props.browserPath} />
+        <Catalog updateState={this.updateState} updatePagination={this.props.updateState} contents={this.state.filteredContents} loading={this.state.loading} page={this.props.page} browserPath={this.props.browserPath} pageNum={this.props.pageNum} btnArr={this.state.btnArr} itemsPerPage={this.props.itemsPerPage} />
       </main>
     );
   }

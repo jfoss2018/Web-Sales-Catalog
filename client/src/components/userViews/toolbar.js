@@ -7,13 +7,13 @@ const Toolbar = (props) => {
     <nav>
       <section className="toolbar">
         {(props.page.filter) && (
-          <Filter page={props.page} filterContents={props.filterContents} updateState={props.updateState} />
+          <Filter page={props.page} updatePagination={props.updatePagination} filterContents={props.filterContents} updateState={props.updateState} />
         )}
         {/*
 
         <Menu />
         */}
-        <SearchApp filterContents={props.filterContents} updateState={props.updateState} />
+        <SearchApp filterContents={props.filterContents} updatePagination={props.updatePagination} updateState={props.updateState} />
         {/*
         <input type="text" placeholder="Search..." />
         <button className="search">

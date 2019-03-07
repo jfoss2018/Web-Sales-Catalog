@@ -1898,4 +1898,102 @@ input.init-login-form-control:hover {
   margin-top: 0;
 }
 /*==========================================================================
+Pagination
 ==========================================================================*/
+
+.pagination-wrapper {
+  width: 100%;
+  height: 120px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+.pagination-btn-list {
+  grid-column: 1 / 13;
+  grid-row: 2 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-btn-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+  margin-top: 5px;
+}
+
+.page-btn-container > li {
+  margin: 5px;
+}
+
+.page-btn-container > li > button {
+  padding: 0;
+  width: 20px;
+  height: 35px;
+  border-radius: 4px;
+  outline: none;
+  text-align: center;
+}
+
+.page-btn-container > li > button.btn-wide {
+  width: 26px;
+}
+
+.page-btn-active {
+  background-image: linear-gradient(#72c7ff, #7d81ff)
+}
+
+.page-btn-blank {
+  background-color: transparent;
+  border: none;
+  padding-bottom: 10px;
+}
+
+.pagination-select {
+  grid-column: 11 / 13;
+  grid-row: 1 / 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#change-select {
+  width: 50px;
+  height: 35px;
+}
+
+@media screen and (min-width: 750px) {
+  .pagination-wrapper {
+    height: 80px;
+  }
+
+  .pagination-btn-list {
+    grid-column: 3 / 11;
+    grid-row: 1 / 2;
+  }
+
+  /*.pagination-select {
+    grid-column: 11 / 13;
+    grid-row: 1 / 2;
+  }*/
+
+  .page-btn-container {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+@media screen and (min-width: 970px) {
+  .page-btn-container > li > button {
+    width: 30px;
+    height: 40px;
+  }
+
+  .page-btn-container > li > button.btn-wide {
+    width: 35px;
+  }
+}

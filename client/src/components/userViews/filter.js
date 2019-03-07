@@ -11,6 +11,7 @@ class Filter extends Component {
     }
   }
 
+
   filterBtn = () => {
     const filterB = document.querySelector('.filter-btn');
     (filterB.classList.contains('pressed-2')) ? filterB.classList.remove('pressed-2') : filterB.classList.add('pressed-2');
@@ -22,6 +23,9 @@ class Filter extends Component {
         filter: true,
         needsUpdate: true
       });
+      this.props.updatePagination({
+        pageNum: 1
+      });
     } else {
       this.setState({
         filter: false
@@ -29,6 +33,9 @@ class Filter extends Component {
       this.props.updateState({
         filter: false,
         needsUpdate: true
+      });
+      this.props.updatePagination({
+        pageNum: 1
       });
     }
   }
@@ -79,6 +86,11 @@ class Filter extends Component {
       [key]: cond,
       needsUpdate: true
     });
+    if (key === 'featured' && this.state.filter === true) {
+      this.props.updatePagination({
+        pageNum: 1
+      });
+    }
   }
 
   render() {

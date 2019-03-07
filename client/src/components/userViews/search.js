@@ -20,6 +20,9 @@ class SearchApp extends Component {
       searchTerm: term,
       needsUpdate: true
     });
+    this.props.updatePagination({
+      pageNum: 1
+    });
   }
 
 }

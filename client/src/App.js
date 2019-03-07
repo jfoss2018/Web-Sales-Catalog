@@ -16,7 +16,9 @@ class App extends Component {
     super();
     this.state = {
       page: {},
-      src: null
+      src: null,
+      pageNum: 1,
+      itemsPerPage: null
     }
   }
 
@@ -42,7 +44,8 @@ class App extends Component {
 
       this.setState({
         page: response.data.page,
-        src: response.data.src
+        src: response.data.src,
+        itemsPerPage: response.data.page.itemsPerPage
       });
 
     })
@@ -65,7 +68,7 @@ class App extends Component {
 
         <Router history={history}>
           <Switch>
-            <Route exact path="/" render={() => <Home page={this.state.page} src={this.state.src} browserPath={this.browserPath} />} />
+            <Route exact path="/" render={() => <Home page={this.state.page} updateState={this.updateState} src={this.state.src} browserPath={this.browserPath} pageNum={this.state.pageNum} itemsPerPage={this.state.itemsPerPage} />} />
             <Route path="/catalog/:item" render={() => <Detail page={this.state.page} browserPath={this.browserPath} />} />
             <Route path="/dashboard" render={() => <Dashboard />} />
             <Route path="/login" render={() => <LoginPage />} />

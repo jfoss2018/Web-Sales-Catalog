@@ -12,17 +12,11 @@ const BidSchema = new Schema({
   },
   email: {
     type: String,
-    validate: {
-      validator: function(v) {
-        return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/.test(v);
-      },
-      message: props => `${props.value} is not a valid email address!`
-    },
-    required: [true, 'Bidder Email is required.']
+    required: false
   },
   phone: {
     type: String,
-    required: [true, 'Phone Number is required.']
+    required: false
   },
   amount: {
     type: String,

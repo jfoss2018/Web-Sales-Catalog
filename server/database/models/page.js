@@ -11,7 +11,8 @@ const PageSchema = new Schema({
   },
   title: {
     type: String,
-    maxlength: [23, 'Title has a maximum length of 23 characters.']
+    maxlength: [23, 'Title has a maximum length of 23 characters.'],
+    required: false
   },
   showTitle: {
     type: Boolean,
@@ -56,7 +57,8 @@ const PageSchema = new Schema({
   },
   message: {
     type: String,
-    maxlength: [30, 'Footer has a maximum length of 30 characters.']
+    maxlength: [30, 'Footer has a maximum length of 30 characters.'],
+    required: false
   }
 });
 

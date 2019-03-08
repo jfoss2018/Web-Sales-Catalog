@@ -36,7 +36,7 @@ function validate(form) {
         }
       }
     }
-    testFields(passwordField, cPasswordField, phoneField, emailField);
+    testFields(passwordField, cPasswordField, phoneField, emailField, form);
     return false;
   } else {
     // If the form fields are valid, the span elements are emptied, and true is returned.
@@ -48,36 +48,63 @@ function validate(form) {
         errorLabel.textContent = '';
       }
     }
-    return testFields(passwordField, cPasswordField, phoneField, emailField);
+    return testFields(passwordField, cPasswordField, phoneField, emailField, form);
   }
 }
 
 // Custom field validation tests that will be called whether the HTML form validation
 // passes or not.
-function testFields(pw, cp, p, e) {
+function testFields(pw, cp, p, e, t) {
   let returnBool = true;
+  let phoneBool = true;
+  let emailBool = true;
   if (pw && cp) {
     if (pw !== cp) {
       const errorLabel = document.querySelector('.c-pass');
       errorLabel.style.display = 'inline-block';
-      errorLabel.textContent = 'The confirm password field must match the password field.'
+      errorLabel.textContent = 'The confirm password field must match the password field.';
       returnBool = false;
     }
   }
   if (p) {
     if (!/^\(\d{3}\)\s\d{3}-\d{4}$/.test(p) && !/^([^0-9]*)$/.test(p)) {
-      const errorLabel = document.querySelector('.phone-val');
+      let errorLabel = document.querySelector('.phone-val');
+      if (t.dataset.name === 'modal') {
+        const elem = t[2];
+        errorLabel = elem.parentNode.querySelector('.invalid-feedback');
+      }
       errorLabel.style.display = 'inline-block';
-      errorLabel.textContent = 'Please complete the phone number.'
+      errorLabel.textContent = 'Please complete the phone number.';
       returnBool = false;
+      phoneBool = false;
     }
   }
   if (e) {
     if (e !== '' && !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(e)) {
-      const errorLabel = document.querySelector('.email-val');
+      let errorLabel = document.querySelector('.email-val');
+      if (t.dataset.name === 'modal') {
+        const elem = t[1];
+        errorLabel = elem.parentNode.querySelector('.invalid-feedback');
+      }
       errorLabel.style.display = 'inline-block';
-      errorLabel.textContent = 'Please correct invalid email address.'
+      errorLabel.textContent = 'Please correct invalid email address.';
       returnBool = false;
+      emailBool = false;
+    }
+  }
+  if (t.dataset.name === 'modal') {
+    if (phoneBool && emailBool) {
+      if (p === '' && e === '') {
+        const elem = t[1];
+        const elem2 = t[2];
+        const errorLabel = elem.parentNode.querySelector('.invalid-feedback');
+        const errorLabel2 = elem2.parentNode.querySelector('.invalid-feedback');
+        errorLabel.style.display = 'inline-block';
+        errorLabel2.style.display = 'inline-block';
+        errorLabel.textContent = 'Phone or Email required.';
+        errorLabel2.textContent = 'Phone or Email required.';
+        returnBool = false;
+      }
     }
   }
   return returnBool;

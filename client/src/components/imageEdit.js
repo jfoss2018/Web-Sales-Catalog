@@ -124,6 +124,9 @@ class Edit extends PureComponent {
   }
 
   clear = (e) => {
+    if (this.props.width > 1000) {
+      return;
+    }
     this.props.pushList();
     const fileInput = document.querySelector('#newImage');
     fileInput.value = null;
@@ -137,15 +140,28 @@ class Edit extends PureComponent {
     })
   }
 
+  addFirstBanner = () => {
+    this.savePic();
+    this.props.closeModal();
+  }
+
   render(props) {
     const { crop, croppedImageUrl, src } = this.state;
     const formGrid = document.querySelector('.form-grid');
     let addBtn = false;
+    let saveBtn = false;
+    let firstBtn = false;
     if (src && this.props.btn === 'add') {
       formGrid.classList.add('col-3');
     }
     if (croppedImageUrl && this.props.btn === 'add') {
       addBtn = true;
+    }
+    if (croppedImageUrl && this.props.btn === 'save') {
+      saveBtn = true;
+    }
+    if (croppedImageUrl && this.props.btn === 'first') {
+      firstBtn = true;
     }
     if (src && croppedImageUrl && this.props.btn === 'add') {
       formGrid.classList.add('col-4');
@@ -177,6 +193,12 @@ class Edit extends PureComponent {
         )}
         {addBtn && (
           <button type="button" className="img-save-btn" onClick={this.clear}>Save Image to List</button>
+        )}
+        {saveBtn && (
+          <button className="login-form-control" type="submit">Save</button>
+        )}
+        {firstBtn && (
+          <button className="login-form-control" type="button" onClick={this.addFirstBanner}>Save</button>
         )}
       </div>
     );

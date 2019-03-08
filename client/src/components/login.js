@@ -189,83 +189,85 @@ class Login extends Component {
     }
 
     return (
-      <div>
-        {/*===============Login Form==============*/}
-        <form ref={form => this.loginForm = form} className="init-login-form" noValidate>
-          <h5 className="init-login-title">Login</h5>
-          <hr className="init-login-hr" />
-          <label className="init-login-form-control" htmlFor="username">Username</label>
-          <input className="init-login-form-control" type="text" name="username" id="username" onChange={this.handleChange} />
-          <label className="init-login-form-control" htmlFor="password">Password</label>
-          <input className="init-login-form-control" type="password" name="password" id="password" onChange={this.handleChange} />
-          <hr className="init-login-hr-2" />
-          <button className="init-login-form-control init-login-btn" name="login" type="button" onClick={this.handleSubmit}>Let's Go!</button>
-          <p className="init-register">Register <button type="button" onClick={this.openModalSecondary} className="init-login-register-btn">here</button> as a new user.</p>
-        </form>
-        {/*============Login Form End=============*/}
+      <div className="init-login-wrapper">
+        <div>
+          {/*===============Login Form==============*/}
+          <form ref={form => this.loginForm = form} className="init-login-form" noValidate>
+            <h5 className="init-login-title">Login</h5>
+            <hr className="init-login-hr" />
+            <label className="init-login-form-control" htmlFor="username">Username</label>
+            <input className="init-login-form-control" type="text" name="username" id="username" onChange={this.handleChange} />
+            <label className="init-login-form-control" htmlFor="password">Password</label>
+            <input className="init-login-form-control" type="password" name="password" id="password" onChange={this.handleChange} />
+            <hr className="init-login-hr-2" />
+            <button className="init-login-form-control init-login-btn" name="login" type="button" onClick={this.handleSubmit}>Let's Go!</button>
+            <p className="init-register">Register <button type="button" onClick={this.openModalSecondary} className="init-login-register-btn">here</button> as a new user.</p>
+          </form>
+          {/*============Login Form End=============*/}
 
-        {/*===========Register Form============*/}
-        <form ref={form => this.registerForm = form} className="init-login-form" noValidate>
-          {/*==============Modal===================*/}
-          <div onClick={this.openModalSecondary} className="init-login-modal">
-            <div className="init-login-modal-content">
-              <span onClick={this.openModalSecondary} className="init-login-modal-close">&times;</span>
-              <section>
-                <h5 className="init-login-title">Register</h5>
-                <hr className="init-login-hr" />
-                <div className="form-group">
-                  <label className="init-login-form-control" htmlFor="registerName">Username</label>
-                  <input className="init-login-form-control" type="text" required minLength="4" maxLength="28" name="registerName" id="registerName" onChange={this.handleChange} />
-                  <span className="invalid-feedback"></span>
-                </div>
-                <div className="form-group">
-                  <label className="init-login-form-control" htmlFor="registerPassword">Password</label>
-                  <input className="init-login-form-control" data-category="password" required minLength="4" type="password" name="registerPassword" id="registerPassword" onChange={this.handleChange} />
-                  <span className="invalid-feedback"></span>
-                </div>
-                <div className="form-group">
-                  <label className="init-login-form-control" htmlFor="registerCPassword">Confirm Password</label>
-                  <input className="init-login-form-control" data-category="cPassword" required minLength="4" type="password" name="registerCPassword" id="registerCPassword" onChange={this.handleChange} />
-                  <span className="invalid-feedback c-pass"></span>
-                </div>
-                <div className="form-group">
-                  <label className="init-login-form-control" htmlFor="registerPhone">Phone</label>
-                  <MaskedInput
-                  mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-                  id="registerPhone"
-                  name="registerPhone"
-                  className="init-login-form-control"
-                  onChange={this.handleChange}
-                  required
-                  data-category="phone"
-                  type="text"
-                  />
-                  <span className="invalid-feedback phone-val"></span>
-                </div>
-                <div className="form-group">
-                  <label className="init-login-form-control" htmlFor="registerEmail">Email</label>
-                  <input className="init-login-form-control" data-category="email" required type="email" name="registerEmail" id="registerEmail" onChange={this.handleChange} />
-                  <span className="invalid-feedback email-val"></span>
-                </div>
-                <hr className="init-login-hr-2" />
-                <button className="init-login-form-control init-login-btn" name="register" type="button" onClick={this.handleSubmit}>Submit</button>
-              </section>
+          {/*===========Register Form============*/}
+          <form ref={form => this.registerForm = form} className="init-login-form" noValidate>
+            {/*==============Modal===================*/}
+            <div onClick={this.openModalSecondary} className="init-login-modal">
+              <div className="init-login-modal-content">
+                <span onClick={this.openModalSecondary} className="init-login-modal-close">&times;</span>
+                <section>
+                  <h5 className="init-login-title">Register</h5>
+                  <hr className="init-login-hr" />
+                  <div className="form-group">
+                    <label className="init-login-form-control" htmlFor="registerName">Username</label>
+                    <input className="init-login-form-control" type="text" required minLength="4" maxLength="28" name="registerName" id="registerName" onChange={this.handleChange} />
+                    <span className="invalid-feedback"></span>
+                  </div>
+                  <div className="form-group">
+                    <label className="init-login-form-control" htmlFor="registerPassword">Password</label>
+                    <input className="init-login-form-control" data-category="password" required minLength="4" type="password" name="registerPassword" id="registerPassword" onChange={this.handleChange} />
+                    <span className="invalid-feedback"></span>
+                  </div>
+                  <div className="form-group">
+                    <label className="init-login-form-control" htmlFor="registerCPassword">Confirm Password</label>
+                    <input className="init-login-form-control" data-category="cPassword" required minLength="4" type="password" name="registerCPassword" id="registerCPassword" onChange={this.handleChange} />
+                    <span className="invalid-feedback c-pass"></span>
+                  </div>
+                  <div className="form-group">
+                    <label className="init-login-form-control" htmlFor="registerPhone">Phone</label>
+                    <MaskedInput
+                    mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+                    id="registerPhone"
+                    name="registerPhone"
+                    className="init-login-form-control"
+                    onChange={this.handleChange}
+                    required
+                    data-category="phone"
+                    type="text"
+                    />
+                    <span className="invalid-feedback phone-val"></span>
+                  </div>
+                  <div className="form-group">
+                    <label className="init-login-form-control" htmlFor="registerEmail">Email</label>
+                    <input className="init-login-form-control" data-category="email" required type="email" name="registerEmail" id="registerEmail" onChange={this.handleChange} />
+                    <span className="invalid-feedback email-val"></span>
+                  </div>
+                  <hr className="init-login-hr-2" />
+                  <button className="init-login-form-control init-login-btn" name="register" type="button" onClick={this.handleSubmit}>Submit</button>
+                </section>
+              </div>
+            </div>
+            {/*=============Modal End===============*/}
+          </form>
+          {/*=============Register Form End================*/}
+
+          {/*==============Message Modal============*/}
+          <div onClick={this.openModalMessage} className="init-message-modal">
+            <div className="init-message-modal-content">
+              <span onClick={this.openModalMessage} className="init-login-modal-close">&times;</span>
+              {(this.state.resStatus) && (
+                modalContents
+              )}
             </div>
           </div>
-          {/*=============Modal End===============*/}
-        </form>
-        {/*=============Register Form End================*/}
-
-        {/*==============Message Modal============*/}
-        <div onClick={this.openModalMessage} className="init-message-modal">
-          <div className="init-message-modal-content">
-            <span onClick={this.openModalMessage} className="init-login-modal-close">&times;</span>
-            {(this.state.resStatus) && (
-              modalContents
-            )}
-          </div>
+          {/*============Message Modal End==========*/}
         </div>
-        {/*============Message Modal End==========*/}
       </div>
     );
   }

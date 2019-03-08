@@ -90,7 +90,7 @@ function retrieve(req, res, next) {
 }
 
 function retrieveSingle(req, res, next) {
-  Content.findById(req.params.id).populate('questions').exec(function(err, content) {
+  Content.findById(req.params.id).populate('questions').populate('bids').exec(function(err, content) {
     if (err) return next(err);
     for (let i = 0; i < content.images.length; i += 1) {
       if (content.images[i].data) {
@@ -104,6 +104,11 @@ function retrieveSingle(req, res, next) {
           thumbnail: `data:${content.images[i].contentType};base64,${content.images[i].data.toString('base64')}`
         }
         content.images[i] = newImage;
+      }
+    }
+    for (let i = 0; i < content.bids.length; i += 1) {
+      if (content.bids[i].amount) {
+        content.bids[i].amountNum = parseFloat(content.bids[i].amount.replace(/[^\d.-]/g, ''));
       }
     }
     res.status('200').json({content: content})

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Item from './item.js';
-import axios from 'axios';
 import Pagination from './pagination.js';
 
 class Catalog extends Component {

@@ -100,6 +100,7 @@ class PageImage extends Component {
         resStatus: '204',
         resMessage: 'Image Updated!'
       });
+      this.closeModalSecondary();
       this.props.closeModal('close');
       this.props.openModal();
     })
@@ -111,6 +112,26 @@ class PageImage extends Component {
       });
       this.props.openModal();
     });
+  }
+
+  closeModalSecondary = () => {
+    const modal = document.querySelector('.secondary-modal');
+    modal.style.display = 'none';
+  }
+
+  checkModalSecondary = (e) => {
+    const modal = document.querySelector('.secondary-modal');
+    if (e.target === modal) {
+      modal.style.display = "none";
+    }
+  }
+
+  openModalSecondary = (e) => {
+    const modal = document.querySelector('.secondary-modal');
+    modal.style.display = 'block';
+    if (e.target.className === 'secondary-modal-close' || e.target.className === 'img-save-btn') {
+      modal.style.display = 'none';
+    }
   }
 
   render() {
@@ -125,9 +146,20 @@ class PageImage extends Component {
             <img className="current-img" src={this.state.src} alt="Current Banner" />
           </div>
         )}
-        <label className="login-form-control" htmlFor="newImage">Upload New Banner</label>
-        <Edit updateState={this.updateState} width={1440} height={400} aspectRatio={3.6} quality={.9}/>
-        <button className="login-form-control" type="submit">Save</button>
+        <button className="login-form-control" type="button" onClick={this.openModalSecondary}>Add new Banner</button>
+
+        {/*========Add Image Modal==========*/}
+        <div onClick={this.checkModalSecondary} className="secondary-modal">
+          <div className="secondary-modal-content">
+            <span onClick={this.openModalSecondary} className="secondary-modal-close">&times;</span>
+            <section className="login-form">
+              <label className="login-form-control" htmlFor="newImage">Upload New Banner</label>
+              <Edit updateState={this.updateState} width={1440} height={400} aspectRatio={3.6} quality={.9} btn={'save'} closeModal={this.openModalSecondary} />
+            </section>
+          </div>
+        </div>
+        {/*======End Add Image Modal==========*/}
+
       </form>
     );
   }

@@ -79,10 +79,11 @@ header {
 }
 
 .imgborder-2 {
-   display:inline-block;
+   display: block;
    position:relative;
    border:1px solid #ccc;
    padding:5px;
+   margin: 10px auto 0 auto;
    width: calc(100% - 30px);
    /*background:#f2f2f2;*/
    background-image: linear-gradient(#ddd, #888);
@@ -730,6 +731,11 @@ section h1.detail {
   cursor: pointer;
 }
 
+.bid-num {
+  font-size: 1.2rem;
+  color: red;
+}
+
 @media screen and (min-width: 590px) {
   section button.detail {
     margin-left: 20px;
@@ -791,7 +797,7 @@ section h1.detail {
   }
 
   section.detail-section {
-    grid-template-rows: 65px 30px 27px min-content min-content auto;
+    grid-template-rows: 65px min-content 30px repeat(5, min-content) auto;
     max-width: 1100px;
   }
 
@@ -861,7 +867,8 @@ Modal
 ==========================================================================*/
 
 section.modal-section > div > div > div:first-child {
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   width: 100vw;
   max-width: 414px;
   overflow-y: scroll;
@@ -1823,7 +1830,7 @@ input.init-login-form-control:hover {
 }
 
 .init-message-modal {
-  z-index: 7;
+  z-index: 100;
 }
 
 .init-login-modal-content,
@@ -1897,6 +1904,7 @@ input.init-login-form-control:hover {
 .email-val {
   margin-top: 0;
 }
+
 /*==========================================================================
 Pagination
 ==========================================================================*/
@@ -1995,5 +2003,136 @@ Pagination
 
   .page-btn-container > li > button.btn-wide {
     width: 35px;
+  }
+}
+
+/*==========================================================================
+Initialize
+==========================================================================*/
+
+.initialize-page-wrapper {
+  width: 100%;
+  height: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+  background-image: linear-gradient(#7bd1e6, #3b95ab);
+
+  margin: 0;
+  padding: 0;
+}
+
+.initialize-content-wrapper {
+  background-image: linear-gradient(#eee, #bbb);
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.initial-title {
+  color: #69c6ff;
+  height: auto;
+}
+
+.initialize-content-message {
+  grid-column: 1 / 2;
+}
+
+.initialize-form {
+  grid-column: 1 / 2;
+  display: grid;
+  grid-template-columns: auto;
+}
+
+.initialize-message-1 {
+  margin: 40px 35px;
+}
+
+.initialize-message-2 {
+  margin: 0 35px 18px 35px;
+  padding: 3px;
+  border: 1px solid #777;
+  background-color: #ccc;
+}
+
+.initialize-btn {
+  width: calc(100% - 40px);
+  height: 35px;
+  margin: 15px 20px;
+}
+
+.bottom-btn {
+  margin-bottom: 30px;
+}
+
+.init-form-group-grid {
+  display: grid;
+  grid-template-columns: 220px 50px auto;
+}
+
+.ifgg-p {
+  grid-column: 1 / 4;
+}
+
+.ifgg-l {
+  grid-column: 1 / 2;
+}
+
+.ifgg-i {
+  grid-column: 2 / 3;
+  margin-top: 0;
+}
+
+.ifgg-s {
+  grid-column: 1 / 4;
+}
+
+.exp-show {
+  display: none;
+}
+
+@media screen and (min-width: 901px) {
+  .initialize-content-wrapper {
+    max-width: 900px;
+  }
+
+  .initialize-form {
+    grid-template-columns: 450px 1px 450px;
+  }
+
+  .initialize-user {
+    grid-column: 1 / 2;
+  }
+
+  .initialize-separator {
+    grid-column: 2 / 3;
+    height: 100%;
+    border-left: 1px solid #aaa;
+  }
+
+  .initialize-page {
+    grid-column: 3 / 4;
+  }
+
+  .initialize-submit {
+    grid-column: 1 / 4;
+  }
+
+  .exp-hide {
+    display: none;
+  }
+
+  .exp-show {
+    display: block;
+  }
+
+  .mt-exp {
+    margin-top: 25px;
   }
 }

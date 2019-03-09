@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Item = (props) => {
-  //{props.itemInfo.mainImg}
-  //onClick={() => props.browserPath('/catalog/' + props.itemInfo.id)}
   let imgSrc;
   if (props.itemInfo.images.length > 0) {
     imgSrc = props.itemInfo.images[0].src

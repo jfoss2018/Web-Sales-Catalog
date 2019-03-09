@@ -11,4 +11,28 @@ function duplicateItem() {
   return err;
 }
 
-module.exports = { duplicateUser, duplicateItem }
+function login() {
+  const err = new Error('Username or Password is not valid.');
+  err.status = '401';
+  return err;
+}
+
+function forbidden() {
+  const err = new Error('Unauthorized');
+  err.status = '403';
+  return err;
+}
+
+function delUser() {
+  const err = new Error('Cannot delete current user.');
+  err.status = '409';
+  return err;
+}
+
+function loginAuth() {
+  const err = new Error('User Authorization Level is not Set.');
+  err.status = '401';
+  return err;
+}
+
+module.exports = { duplicateUser, duplicateItem, login, forbidden, delUser, loginAuth }

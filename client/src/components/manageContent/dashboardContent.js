@@ -225,6 +225,12 @@ class DashboardContent extends Component {
         secondaryModalContents = <section>
           <h5 className="init-message-title">{this.state.resMessage}</h5>
         </section>
+      } else if (this.state.resStatus === '403') {
+        modalBG.classList.add('fail');
+        secondaryModalContents = <section>
+          <h5 className="init-message-title">Error: 403, Unauthorized</h5>
+          <p className="init-message-form-control">{this.state.resMessage}</p>
+        </section>
       } else if (this.state.resStatus === '409') {
         modalBG.classList.add('fail');
         secondaryModalContents = <section>

@@ -34,9 +34,6 @@ class Home extends Component {
     }
     if ((prevProps.pageNum !== this.props.pageNum) || (prevProps.itemsPerPage !== this.props.itemsPerPage)) {
       if (this.state.contents) {
-        /*this.setState({
-          needsUpdate: true
-        });*/
         this.filterContents();
       }
     }
@@ -95,7 +92,32 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this.updateContents();
+    axios({
+      method: 'get',
+      url: `/api/v1/page`,
+      /*proxy: {
+        host: '127.0.0.1',
+        port: 3001
+      },*/
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.data.page) {
+        this.props.updateState({
+          page: response.data.page,
+          src: response.data.src,
+          itemsPerPage: response.data.page.itemsPerPage
+        });
+        this.updateContents();
+      } else {
+        this.props.browserPath("/initialize");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {

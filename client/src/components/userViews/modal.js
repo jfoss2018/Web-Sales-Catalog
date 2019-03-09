@@ -188,8 +188,6 @@ export default class ModalBox extends Component {
           </div>
       }
 
-
-
         return (
             <section className="modal-section">
                 <input className="offer-btn" type="button" value={this.props.text} onClick={() => this.openModal()} />
@@ -232,8 +230,6 @@ export default class ModalBox extends Component {
                         </select>
                         <span className="invalid-feedback"></span>
                       </div>
-
-
                       {displayForm}
                       <button className="sub-btn">Submit</button>
                     </form>

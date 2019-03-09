@@ -24,7 +24,6 @@ class SearchApp extends Component {
       pageNum: 1
     });
   }
-
 }
 
 export default SearchApp;

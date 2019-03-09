@@ -92,19 +92,7 @@ class Edit extends PureComponent {
       this.compress(canvas.toDataURL('image/jpeg'));
     });
   }
-/*
-  changeGrid = () => {
-    const fileInput = document.querySelector('#newImage');
-    if (this.props.btn === 'add') {
-      const formGrid = document.querySelector('.form-grid');
-      if (fileInput.value !== null) {
-        formGrid.classList.add('col-3');
-      } else {
-        formGrid.classList.remove('col-3');
-      }
-    }
-  }
-*/
+
   compress = (url) => {
     const newImage = new Image();
     const width = this.props.width;
@@ -170,7 +158,7 @@ class Edit extends PureComponent {
     return (
       <div className="App">
         <div>
-          <input type="file" className="login-form-control" id="newImage" name="newImage" onChange={this.onSelectFile} />
+          <input type="file" className="login-form-control" id="newImage" name="newImage" accept="image/jpeg" onChange={this.onSelectFile} />
         </div>
         {src && (
           <h4 className="page-image-header">Select Image and Crop</h4>

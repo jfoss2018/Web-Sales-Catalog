@@ -44,7 +44,7 @@ const UserSchema = new Schema({
 
 UserSchema.plugin(uniqueValidator);
 
-/*
+
 // The verifyPassword method is used compare provided password with the saved
 // hashed password.
 UserSchema.methods.verifyPassword = function(password) {
@@ -66,7 +66,7 @@ UserSchema.pre('save', function(next) {
 		next();
 	}
 });
-*/
+
 
 const User = mongoose.model('User', UserSchema);
 

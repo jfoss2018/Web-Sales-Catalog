@@ -27,6 +27,41 @@ class Login extends Component {
     });
   }
 
+  componentWillMount() {
+    axios({
+      method: 'get',
+      url: '/api/v1/login',
+      /*proxy: {
+        host: '127.0.0.1',
+        port: 3001
+      },*/
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response => {
+      if (response.status === 200) {
+        if (response.data.message === 'Please forward.') {
+          this.props.browserPath('/dashboard');
+        }
+      } else {
+        this.setState({
+          resStatus: '500',
+          resMessage: 'Something went wrong!'
+        });
+        this.openModalMessage();
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+      this.setState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.openModalMessage();
+    });
+  }
+
   login = () => {
     axios({
       method: 'post',
@@ -40,41 +75,34 @@ class Login extends Component {
       },
       data: {
         username: this.state.username,
-        password: this.state.password,
-        email: this.state.email,
-        phone: this.state.phone,
-        authorization: this.state.authorization
+        password: this.state.password
       }
     })
     .then(response => {
-
-      this.loginForm[0].value = '';
-      this.loginForm[1].value = '';
-      this.loginForm[2].value = '';
-      this.loginForm[3].value = '';
-      this.loginForm[4].value = '';
-
-      this.setState({
-        username: '',
-        password: '',
-        email: '',
-        phone: '',
-        authorization: ''
-      });
-
-      if (this.props.updateList) {
-        this.props.updateList();
+      if (response.status === 200) {
+        this.props.browserPath('/dashboard');
+      } else {
+        this.setState({
+          resStatus: '500',
+          resMessage: 'Something went wrong!'
+        });
+        this.openModalMessage();
       }
     })
     .catch((error) => {
       console.log(error);
+      this.setState({
+        resStatus: error.response.status.toString(),
+        resMessage: error.response.data.message.toString()
+      });
+      this.openModalMessage();
     });
   }
 
   register = () => {
     axios({
       method: 'post',
-      url: '/api/v1/users',
+      url: '/api/v1/register',
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
@@ -171,6 +199,12 @@ class Login extends Component {
         modalBG.classList.add('success');
         modalContents = <section>
           <h5 className="init-message-title">Thank you for Registering!</h5>
+          <p className="init-message-form-control">{this.state.resMessage}</p>
+        </section>
+      } else if (this.state.resStatus === '401') {
+        modalBG.classList.add('fail');
+        modalContents = <section>
+          <h5 className="init-message-title">Error: 401, Unauthorized</h5>
           <p className="init-message-form-control">{this.state.resMessage}</p>
         </section>
       } else if (this.state.resStatus === '409') {

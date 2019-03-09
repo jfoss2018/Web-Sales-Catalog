@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+/*import React, { Component } from 'react';
 import axios from 'axios';
 import Edit from './imageEdit.js';
 
@@ -55,7 +55,7 @@ class Page extends Component {
         host: '127.0.0.1',
         port: 3001
       },*/
-      headers: {
+      /*headers: {
         'Content-Type': 'application/json'
       },
       data:
@@ -77,7 +77,7 @@ class Page extends Component {
         phone: ''
       });
       */
-    })
+    /*})
     .catch((error) => {
       console.log(error);
     });
@@ -132,4 +132,4 @@ class Page extends Component {
 }
 
 
-export default Page;
+export default Page;*/

@@ -1,9 +1,17 @@
 const Content = require('../../database/models/content.js');
 const moment = require('moment');
 const error = require('./errorRoute.js');
+const defaultImage = require('./defaultImg.js');
 
 function setup(req, res, next) {
   const { name, description, price, featured, viewable, images } = req.body;
+  /*for (let i = 0; i < images.length; i += 1) {
+    if (images[i].contentType !== 'image/jpeg') {
+      images[i].contentType = 'image/jpeg';
+      images[i].data = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAGAAgADASIAAhEBAxEB/8QAHAABAAMAAwEBAAAAAAAAAAAAAAIDBAEFBgcI/8QAVhAAAQEHAQQDCwYHDQgCAwAAAAECAwQFERITYQYHIVEUMXEIF0FVVpOVsbTS4SJzdHWBoRUjJjI1ZfAWJCUnQkVSYmSRssHTGDY3Q0RjctGCkjODlP/EABgBAQEBAQEAAAAAAAAAAAAAAAABAgME/8QAIhEBAQEAAwACAgIDAAAAAAAAAAERAiExEkEDMhMiUWFx/...";
+      images[i].name = 'item-default.jpg';
+    }
+  }*/
   const contentSetup = new Content({
     name: name,
     description: description,
@@ -53,9 +61,14 @@ function pictureMid(req, res, next) {
     const imgArr = req.body.images;
     for (let i = 0; i < imgArr.length; i += 1) {
       if (!imgArr[i].hasOwnProperty('_id')) {
+        if (imgArr[i].contentType !== 'image/jpeg') {
+          imgArr[i].contentType = defaultImage.contentType;
+          imgArr[i].name = defaultImage.itemName;
+          imgArr[i].data = defaultImage.itemData;
+        }
         const data = imgArr[i].data;
         const newData = data.replace(/^data:image\/\w+;base64,/, "");
-        const newDataBuf = new Buffer(newData, 'base64');
+        const newDataBuf = new Buffer.from(newData, 'base64');
         imgArr[i].data = newDataBuf;
       }
     }

@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const routes = require('./routes/routes.js');
 const db = require('./database/index.js');
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(bodyParser.urlencoded({extended: false, limit: '5mb'}));
 app.use(bodyParser.json({limit: '5mb'}));
+app.use(cookieParser());
 
 app.use('/api/v1', routes);
 

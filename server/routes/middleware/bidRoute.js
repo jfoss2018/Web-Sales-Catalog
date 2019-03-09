@@ -21,7 +21,7 @@ function setup(req, res, next) {
 }
 
 function retrieve(req, res, next) {
-  Bid.find({}).sort({bidDate: -1}).populate('content', 'name').exec(function(err, bids) {
+  Bid.find({}).sort({bidDate: 1}).populate('content', 'name').exec(function(err, bids) {
     if (err) return next(err);
     for (let i = 0; i < bids.length; i += 1) {
       bids[i].contentName = bids[i].content.name;

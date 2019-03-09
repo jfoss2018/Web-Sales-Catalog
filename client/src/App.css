@@ -1007,6 +1007,25 @@ Dashboard
   grid-template-rows: min-content min-content auto;
 }
 
+.show-when-large {
+  display: none;
+}
+
+.dashboard-username-intro {
+  margin-left: 30px;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #777;
+}
+
+.dashboard-username {
+  margin: 0 0 0 30px;
+  font-weight: bold;
+  font-size: 1.2rem;
+  font-family: 'exo', cursive;
+  color: #555;
+}
+
 .dashboard-title {
   margin: 10px 0 10px 0;
   height: 35px;
@@ -1098,6 +1117,11 @@ Dashboard
     background-image: linear-gradient(#eee, #777);
     grid-template-rows: min-content min-content auto;
     /*box-shadow: rgba(30, 22, 54, 0.4);*/
+  }
+
+  .show-when-large {
+    display: block;
+    grid-column: 1 / 5;
   }
 
   .dashboard-title {

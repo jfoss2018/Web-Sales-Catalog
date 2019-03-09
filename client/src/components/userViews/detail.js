@@ -110,9 +110,6 @@ class Detail extends Component {
     if (e.target === modal) {
       modal.style.display = "none";
       textareaQ.value = '';
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
     }
   }
 
@@ -123,13 +120,6 @@ class Detail extends Component {
     if (e.target.className === 'user-modal-close') {
       modal.style.display = 'none';
       textareaQ.value = '';
-      /*this.setState({
-        selectedAction: 'empty'
-      });*/
-    } else {
-      /*this.setState({
-        selectedAction: e.target.value
-      });*/
     }
   }
 
@@ -168,35 +158,22 @@ class Detail extends Component {
         </section>
       }
     }
-    /*
-    let returnQuestionList = '';
-    if (!this.state.loading) {
-      const qAndADiv = document.querySelector('.q-and-a-div');
-      this.state.contents.questions.map(function(question, i) {
-        qAndADiv.innerHTML += <div key={i} className="question-div"><p className="question-p">{question.question}</p><p className="question-date">{moment(question.askDate).format('LLL')}</p></div>
-        if (question.answer.answer) {
-          qAndADiv.innerHTML += <div className="answer-div"><p className="answer-p">{question.answer.answer}</p><p className="answer-name">{question.answer.answerName}</p><p className="answer-date">{moment(question.answer.answerDate).format('LLL')}</p></div>
-        }
-      });
-      for (let i = 0; i < this.state.contents.quesitons.length; i += 1) {
-        returnQuestionList += <div key={i} className="question-div"><p className="question-p">{this.state.contents.questions[i].question}</p><p className="question-date">{moment(this.state.contents.questions[i].askDate).format('LLL')}</p></div>
-        if (this.state.contents.questions[i].answer.answer) {
-          returnQuestionList += <div className="answer-div"><p className="answer-p">{this.state.contents.questions[i].answer.answer}</p><p className="answer-name">{this.state.contents.questions[i].answer.answerName}</p><p className="answer-date">{moment(this.state.contents.questions[i].answer.answerDate).format('LLL')}</p></div>
-        }
+
+    let imgSrclist;
+    if (this.state.contents) {
+      if (this.state.contents.images.length > 0) {
+        imgSrclist = this.state.contents.images
+      } else {
+        imgSrclist = [{
+          name: 'default-item.jpg',
+          contentType: 'image/jpeg',
+          data: '',
+          src: '/images/Item-default.jpg',
+          original: '/images/Item-default.jpg',
+          thumbnail: '/images/Item-default.jpg'
+        }]
       }
     }
-    this.state.contents.questions.map(function(question, i) {
-      let returnJSX;
-      returnJSX = <div classname="q-and-a-wrapper"><div key={i} className="question-div"><p className="question-p">{question.question}</p><p className="question-date">{moment(question.askDate).format('LLL')}</p></div>
-      {(question.answer.answer) && (
-        returnJSX += <div className="answer-div"><p className="answer-p">{question.answer.answer}</p><p className="answer-name">{question.answer.answerName}</p><p className="answer-date">{moment(question.answer.answerDate).format('LLL')}</p></div>
-      )}
-      returnJSX += </div>
-      return returnJSX;
-    })}
-*/
-
-
 
     const title = this.props.page.title;
     const message = this.props.page.message;
@@ -216,7 +193,7 @@ class Detail extends Component {
         </div>
         <div className="gallery-wrapper">
           <div className="imgborder-2">
-            <MyComponent images={this.state.contents.images} />
+            <MyComponent images={imgSrclist} />
           </div>
         </div>
         <p className="price">{this.state.contents.price}</p>
@@ -235,7 +212,7 @@ class Detail extends Component {
         </div>
 
         <div onClick={this.checkModalDetail} className="user-modal">
-          <div className="user-modal-content">
+          <div className="user-modal-content centered">
             <span onClick={this.openModalDetail} className="user-modal-close">&times;</span>
             <section className="login-form">
               <h1 className="login-title">Ask Question</h1>

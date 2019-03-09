@@ -43,7 +43,7 @@ class PageTitle extends Component {
       this.setState({
         id: response.data.page._id,
         showTitle: response.data.page.showTitle,
-        title: response.data.page.title
+        title: response.data.page.title || ''
       });
     })
     .catch((error) => {
@@ -59,7 +59,7 @@ class PageTitle extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (validate(this.titleForm)) {
-      const dataObj = {};
+      const dataObj = {};                                                                  
       dataObj.showTitle = this.state.showTitle
       if (this.state.showTitle) {
         dataObj.title = this.state.title

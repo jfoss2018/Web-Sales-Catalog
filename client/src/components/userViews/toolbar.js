@@ -9,17 +9,7 @@ const Toolbar = (props) => {
         {(props.page.filter) && (
           <Filter page={props.page} updatePagination={props.updatePagination} filterContents={props.filterContents} updateState={props.updateState} />
         )}
-        {/*
-
-        <Menu />
-        */}
         <SearchApp filterContents={props.filterContents} updatePagination={props.updatePagination} updateState={props.updateState} />
-        {/*
-        <input type="text" placeholder="Search..." />
-        <button className="search">
-          <img src={require("../images/magnifier.png")} alt="magnifier icon" />
-        </button>
-        */}
       </section>
     </nav>
   );

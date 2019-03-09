@@ -50,14 +50,14 @@ class Initial extends Component {
   }
 
   componentWillMount() {
-    /*axios({
+    axios({
       method: 'get',
       url: `/api/v1/page`,
       /*proxy: {
         host: '127.0.0.1',
         port: 3001
       },*/
-      /*headers: {
+      headers: {
         'Content-Type': 'application/json'
       }
     })
@@ -68,7 +68,7 @@ class Initial extends Component {
     })
     .catch((error) => {
       console.log(error);
-    });*/
+    });
   }
 
   submitCreatePage = (e) => {

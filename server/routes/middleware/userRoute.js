@@ -22,6 +22,26 @@ function setup(req, res, next) {
   });
 }
 
+function setupRegister(req, res, next) {
+  const { username, password, email, phone } = req.body;
+  User.findOne({username: username}, function(err, user) {
+    if (err) return next(err);
+    if (user) return next(error.duplicateUser());
+    const newUser = new User({
+      username: username,
+      password: password,
+      email: email,
+      phone: phone,
+      authorization: '0',
+      createDate: moment.utc()
+    });
+    newUser.save(function(err, savedUser) {
+      if (err) return next(err);
+      res.status('201').json({message: 'User created!'});
+    });
+  });
+}
+
 function all(req, res, next) {
   User.find({}, null, {sort: {createDate: 1}}, function(err, docs) {
     if (err) return next(err);
@@ -44,10 +64,16 @@ function edit(req, res, next) {
 }
 
 function deleteOne(req, res, next) {
-  User.deleteOne({_id: req.params.id}, function(err) {
-    if (err) return next(err);
-    res.status('204').json({message: 'User Deleted!'});
+  User.findOne({_id: req.authUser._id}, function(err, user) {
+    if (user._id.toString() === req.params.id) {
+      return next(error.delUser());
+    } else {
+      User.deleteOne({_id: req.params.id}, function(err) {
+        if (err) return next(err);
+        res.status('204').json({message: 'User Deleted!'});
+      });
+    }
   });
 }
 
-module.exports = { all, single, edit, deleteOne, setup };
+module.exports = { all, single, edit, deleteOne, setup, setupRegister };

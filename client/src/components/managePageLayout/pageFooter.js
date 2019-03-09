@@ -43,7 +43,7 @@ class PageFooter extends Component {
       this.setState({
         id: response.data.page._id,
         footer: response.data.page.footer,
-        message: response.data.page.message
+        message: response.data.page.message || ''
       });
     })
     .catch((error) => {

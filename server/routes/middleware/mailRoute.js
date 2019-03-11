@@ -13,23 +13,6 @@ function send(req) {
   oauth2Client.setCredentials({
     refresh_token: email.refreshToken
   });
-<<<<<<< HEAD
-=======
-  /*async function getStuff() {
-    const tokens = await oauth2Client.refreshAccessToken();
-  }
-  const accessToken = tokens.credential.access_token;
-  console.log(accessToken);*/
-  /*
-  const auth = {
-    type: 'oauth2',
-    user: email.address,
-    clientId: email.clientID,
-    clientSecret: email.clientSecret,
-    refreshToken: email.refreshToken
-  };
-*/
->>>>>>> 3ae5dfbcf4e00933edad0034ab4b9116cc94076c
 
   const smtpTransport = nodemailer.createTransport({
     service: 'gmail',
@@ -53,11 +36,6 @@ function send(req) {
   smtpTransport.sendMail(mailOptions, (err, response) => {
     if (err) {
       return console.log(err);
-<<<<<<< HEAD
-=======
-    } else {
-      console.log(response);
->>>>>>> 3ae5dfbcf4e00933edad0034ab4b9116cc94076c
     }
     smtpTransport.close();
   });

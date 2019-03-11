@@ -29,10 +29,16 @@ function delUser() {
   return err;
 }
 
+function authUser() {
+  const err = new Error('Cannot decrease authorization level of current user.');
+  err.status = '409';
+  return err;
+}
+
 function loginAuth() {
   const err = new Error('User Authorization Level is not Set.');
   err.status = '401';
   return err;
 }
 
-module.exports = { duplicateUser, duplicateItem, login, forbidden, delUser, loginAuth }
+module.exports = { duplicateUser, duplicateItem, login, forbidden, delUser, authUser, loginAuth }

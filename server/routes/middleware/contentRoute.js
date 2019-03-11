@@ -2,6 +2,7 @@ const Content = require('../../database/models/content.js');
 const moment = require('moment');
 const error = require('./errorRoute.js');
 const defaultImage = require('./defaultImg.js');
+const { bidTemp, questionTemp } = require('./createTemplate.js');
 
 function setup(req, res, next) {
   const { name, description, price, featured, viewable, images } = req.body;
@@ -140,7 +141,9 @@ function pushQuestion(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
     if (err) return next(err);
     content.questions.push(req.question);
-    content.save(function(err, updatedContnet) {
+    content.save(function(err, updatedContent) {
+      req.content = updatedContent;
+      questionTemp(req, res, next);
       next();
     })
   })
@@ -150,7 +153,9 @@ function pushBid(req, res, next) {
   Content.findById(req.params.id).exec(function(err, content) {
     if (err) return next(err);
     content.bids.push(req.bid._id);
-    content.save(function(err, updatedContnet) {
+    content.save(function(err, updatedContent) {
+      req.content = updatedContent;
+      bidTemp(req, res, next);
       res.status('201').json({message: 'Your bid was successfully submitted!'});
     });
   });

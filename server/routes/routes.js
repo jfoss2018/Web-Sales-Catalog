@@ -8,6 +8,7 @@ const contentMid = require('./middleware/contentRoute.js');
 const questionMid = require('./middleware/questionRoute.js');
 const appointmentMid = require('./middleware/appointmentRoute.js');
 const bidMid = require('./middleware/bidRoute.js');
+const mailMid = require('./middleware/mailRoute.js');
 
 router.get('/login', authMid.checkTokenExists);
 
@@ -17,7 +18,7 @@ router.post('/login', authMid.login);
 
 router.post('/users', authMid.checkAuth2, userMid.setup);
 
-router.post('/register', userMid.setupRegister);
+router.post('/register', userMid.setupRegister); ///////////////////////////////////
 
 router.get('/users', authMid.checkAuth2, userMid.all);
 
@@ -55,7 +56,7 @@ router.get('/contents/:id', contentMid.retrieveSingle);
 
 router.put('/contents/:id', authMid.checkAuth1, contentMid.pictureMid, contentMid.edit);
 
-router.post('/contents/:id/questions', questionMid.question, contentMid.pushQuestion, contentMid.retrieveSingle);
+router.post('/contents/:id/questions', questionMid.question, contentMid.pushQuestion, contentMid.retrieveSingle); /////////////////////////////////////
 
 router.post('/contents/:id/bids', bidMid.setup, contentMid.pushBid);
 
@@ -63,7 +64,7 @@ router.post('/contents', authMid.checkAuth1, contentMid.pictureMid, contentMid.s
 
 router.delete('/contents/:id', authMid.checkAuth1, contentMid.retrieveDelete, questionMid.deletedContent, bidMid.deletedContent, contentMid.deleteContent);
 
-router.post('/appointments', appointmentMid.setup);
+router.post('/appointments', appointmentMid.setup); //////////////////////////////////////////
 
 router.get('/appointments', authMid.checkAuth1, appointmentMid.retrieve);
 

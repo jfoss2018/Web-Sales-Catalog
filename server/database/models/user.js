@@ -34,7 +34,7 @@ const UserSchema = new Schema({
     required: [true, 'Phone Number is required.']
   },
   authorization: {
-    type: String
+    type: Number
   },
   createDate: {
     type: Date,

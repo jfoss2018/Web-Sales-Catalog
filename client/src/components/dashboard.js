@@ -33,13 +33,13 @@ class Dashboard extends Component {
     })
     .then(response => {
       if (response.status === 200) {
-        if (response.data.auth === '1') {
+        if (response.data.auth === 1) {
           this.setState({
             dashboardBtn: 'contents',
             auth: 1,
             username: response.data.username
           });
-        } else if (response.data.auth === '2') {
+        } else if (response.data.auth === 2) {
           this.setState({
             dashboardBtn: 'users',
             auth: 2,

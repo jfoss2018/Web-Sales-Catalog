@@ -12,6 +12,10 @@ function question(req, res, next) {
   newQuestion.save(function(err, q) {
     if (err) return next(err);
     req.question = q;
+    const subject = 'New Question!';
+    req.mail = {
+      subject: subject
+    }
     next();
   });
 }

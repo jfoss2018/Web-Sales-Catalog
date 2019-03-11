@@ -1,5 +1,6 @@
 const Appointment = require('../../database/models/appointment.js');
 const moment = require('moment');
+const { appointmentTemp } = require('./createTemplate.js');
 
 function setup(req, res, next) {
   const { name, email, phone, preference, preferredDate, preferredTime } = req.body;
@@ -17,6 +18,12 @@ function setup(req, res, next) {
   });
   appoint.save(function(err, appointment) {
     if (err) return next(err);
+    req.appointment = appointment;
+    const subject = 'New Appointment!';
+    req.mail = {
+      subject: subject
+    }
+    appointmentTemp(req, res, next);
     res.status('201').json({appointment: appointment});
   });
 }

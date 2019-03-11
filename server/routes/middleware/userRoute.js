@@ -1,6 +1,7 @@
 const User = require('../../database/models/user.js');
 const error = require('./errorRoute.js');
 const moment = require('moment');
+const { userTemp } = require('./createTemplate.js');
 
 function setup(req, res, next) {
   const { username, password, email, phone, authorization } = req.body;
@@ -12,7 +13,7 @@ function setup(req, res, next) {
       password: password,
       email: email,
       phone: phone,
-      authorization: authorization || '0',
+      authorization: authorization || 0,
       createDate: moment.utc()
     });
     newUser.save(function(err, savedUser) {
@@ -32,11 +33,17 @@ function setupRegister(req, res, next) {
       password: password,
       email: email,
       phone: phone,
-      authorization: '0',
+      authorization: 0,
       createDate: moment.utc()
     });
     newUser.save(function(err, savedUser) {
       if (err) return next(err);
+      req.user = savedUser;
+      const subject = 'New User!';
+      req.mail = {
+        subject: subject
+      }
+      userTemp(req, res, next);
       res.status('201').json({message: 'User created!'});
     });
   });
@@ -57,14 +64,27 @@ function single(req, res, next) {
 }
 
 function edit(req, res, next) {
-  User.updateOne({_id: req.params.id}, req.body, {runValidators: true, context: 'query'}, function(err, result) {
+  User.findOne({_id: req.authUser._id}, function(err, user) {
     if (err) return next(err);
-    res.status('204').json({message: 'User Updated!'});
+    if (user._id.toString() === req.params.id) {
+      if (req.body.authorization) {
+        return next(error.authUser());
+      }
+    } else {
+      if (req.body.authorization) {
+        req.body.authorization = parseInt(req.body.authorization);
+      }
+    }
+    User.updateOne({_id: req.params.id}, req.body, {runValidators: true, context: 'query'}, function(err, result) {
+      if (err) return next(err);
+      res.status('204').json({message: 'User Updated!'});
+    });
   });
 }
 
 function deleteOne(req, res, next) {
   User.findOne({_id: req.authUser._id}, function(err, user) {
+    if (err) return next(err);
     if (user._id.toString() === req.params.id) {
       return next(error.delUser());
     } else {

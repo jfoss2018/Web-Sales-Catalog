@@ -1,5 +1,6 @@
 const Bid = require('../../database/models/bid.js');
 const moment = require('moment');
+const { bidTemp } = require('./createTemplate.js');
 
 function setup(req, res, next) {
   const { name, email, phone, preference, amount } = req.body;
@@ -10,12 +11,17 @@ function setup(req, res, next) {
     preference: preference,
     bidDate: moment.utc(),
     amount: amount,
+    amountNum: parseFloat(amount.replace(/[^\d.-]/g, '')),
     content: req.params.id,
     viewed: false
   });
   bid.save(function(err, bid) {
     if (err) return next(err);
     req.bid = bid;
+    const subject = 'New Bid!';
+    req.mail = {
+      subject: subject
+    }
     next();
   });
 }
@@ -25,7 +31,6 @@ function retrieve(req, res, next) {
     if (err) return next(err);
     for (let i = 0; i < bids.length; i += 1) {
       bids[i].contentName = bids[i].content.name;
-      bids[i].amountNum = parseFloat(bids[i].amount.replace(/[^\d.-]/g, ''));
     }
     res.status('200').json({bids: bids});
   });
